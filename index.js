@@ -2,7 +2,7 @@ import {foodItem} from './fooditem.js'
 
 function displayItems(){
     var biryani= document.getElementById('biryani');
-    var paneer=  document.getElementById('paneer');;
+    var paneer=  document.getElementById('paneer');
     var chicken=  document.getElementById('chicken');
     var vegetable=  document.getElementById('vegetable');
     var chinese=  document.getElementById('chinese');
@@ -17,6 +17,8 @@ function displayItems(){
     const chineseData= foodItem.filter((item)=>item.category=='chinese');
     const southData= foodItem.filter((item)=>item.category=='south indian');
     biryaniData.map(item=>{
+        var link = document.createElement("a")
+        link.setAttribute("href","food_ar/index.html")
         
         var itemCard= document.createElement('div');
         itemCard.setAttribute('id','item-card')
@@ -53,12 +55,15 @@ function displayItems(){
         itemCard.appendChild(img);
         itemCard.appendChild(itemName);
         itemCard.appendChild(itemPrice);
-        biryani.appendChild(itemCard);
-        
+        link.appendChild(itemCard)
+        biryani.appendChild(link);
     })
 
 
     chickenData.map(item=>{
+        var link = document.createElement("a")
+        link.setAttribute("href","food_ar/index.html")
+
         var itemCard= document.createElement('div');
         itemCard.setAttribute('id','item-card')
 
@@ -94,15 +99,14 @@ function displayItems(){
         itemCard.appendChild(img);
         itemCard.appendChild(itemName);
         itemCard.appendChild(itemPrice);
-        img.addEventListener("click",() => {
-            alert("clicked element");
-          });
-        chicken.appendChild(itemCard)
-       
-
+        link.appendChild(itemCard)
+        biryani.appendChild(link);
     })
 
     PaneerData.map(item=>{
+        var link = document.createElement("a")
+        link.setAttribute("href","food_ar/index.html")
+
         var itemCard= document.createElement('div');
         itemCard.setAttribute('id','item-card')
 
@@ -138,11 +142,15 @@ function displayItems(){
         itemCard.appendChild(itemName);
         itemCard.appendChild(itemPrice);
         
-        paneer.appendChild(itemCard)
+        link.appendChild(itemCard)
+        biryani.appendChild(link);
 
     })
 
     vegetableData.map(item=>{
+        var link = document.createElement("a")
+        link.setAttribute("href","food_ar/index.html")
+
         var itemCard= document.createElement('div');
         itemCard.setAttribute('id','item-card')
 
@@ -179,11 +187,15 @@ function displayItems(){
         itemCard.appendChild(itemPrice);
 
         
-        vegetable.appendChild(itemCard)
+        link.appendChild(itemCard)
+        biryani.appendChild(link);
     
     })
 
     chineseData.map(item=>{
+        var link = document.createElement("a")
+        link.setAttribute("href","food_ar/index.html")
+
         var itemCard= document.createElement('div');
         itemCard.setAttribute('id','item-card')
 
@@ -220,11 +232,15 @@ function displayItems(){
         itemCard.appendChild(itemPrice);
 
         
-        chinese.appendChild(itemCard)
+        link.appendChild(itemCard)
+        biryani.appendChild(link);
         
     })
 
     southData.map(item=>{
+        var link = document.createElement("a")
+        link.setAttribute("href","food_ar/index.html")
+
         var itemCard= document.createElement('div');
         itemCard.setAttribute('id','item-card')
 
@@ -260,7 +276,8 @@ function displayItems(){
         itemCard.appendChild(itemName);
         itemCard.appendChild(itemPrice);
 
-        southIndian.appendChild(itemCard)
+        link.appendChild(itemCard)
+        biryani.appendChild(link);
 
     })
 }
@@ -446,8 +463,6 @@ function cartToggle(){
         alert("Currently no item in cart!");
     }
 }
-
-
 
 window.onresize= window.onload= function(){
     var size= window.screen.width;
