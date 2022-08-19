@@ -11,16 +11,13 @@
 <body>
 
     <!-- desktop view -->
-    <div class="container" id="container">
+    <div class="container app-screen id="container">
         <div id="menu">
             <div class="title">
                 <img src="images/foodie hunter.png" alt="">
             </div>
             <div class="menu-item">
                 <a href="#">About</a>
-                <a href="#">Services</a>
-                <a href="#">Your Orders</a>
-                <a href="#">Wishlists</a>
                 <a href="#">Cart</a>
                 <a href="#">Contact</a>
                 <a href="#">Checkout</a>
@@ -29,9 +26,9 @@
 
         <div id="food-container">
             <div id="header">
-                <div class="add-box">
+                <!-- <div class="add-box">
                     <i class="fa fa-map-marker your-address" id="add-address"> Your Address</i>
-                </div>
+                </div> -->
                 <div class="util">
                     <i class="fa fa-search"> Search</i>
                     <i class="fa fa-tags"> Offers</i>
@@ -87,8 +84,7 @@
         <div id="cart">
             <div class="taste-header">
                 <div class="user">
-                    <i class="fa fa-user-circle" id="circle"> Account</i>
-                    
+                    <a href="account.html"><i class="fa fa-user-circle" id="circle"> My Account</i></a>
                 </div>
             </div>
             <div id="category-list">
@@ -98,19 +94,18 @@
             <div id="checkout" class="cart-toggle">
                 <p id="total-item">Total Item : 5</p>
                 <p id="total-price"></p>
-                <p id="delievery">Free delievery on $ 40</p>
+                <p id="delievery">Free delievery on $40</p>
                 <button class="cart-btn">Checkout</button>
             </div>
         </div>
     </div>
-
 
     <!-- mobile view -->
     <div id="mobile-view" class="mobile-view">
         <div class="mobile-top">
             <div class="logo-box">
                 <img src="images/foodielogo.png" alt="" id="logo">
-                <i class="fa fa-map-marker your-address" id="m-add-address"> Your Address</i>
+                <!-- <i class="fa fa-map-marker your-address" id="m-add-address"> Your Address</i> -->
             </div>
             <div class="top-menu">
                 <i class="fa fa-search"></i>

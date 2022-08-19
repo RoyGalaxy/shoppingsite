@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover">
+        <title>Food Website</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>>
+<body>
+    
+    <div id="my-account" class="app-screen container">
+        <div class="left">
+            <div class="title">
+                <img src="images/foodie hunter.png" alt="">
+            </div>
+            <div class="menu-item">
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Cart</a>
+                <a href="#">Contact</a>
+                <a href="#">Wishlist</a>
+                <a href="#">Checkout</a>
+            </div>
+        </div>
+        <div class="center">
+            <div class="heading">
+                <h1><i class="fa fa-user-circle" id="circle" id="user-name" ></i> Roy Galaxy</h1>
+            </div>
+            <div class="main-content">
+                <span class="label">Email</span>
+                <div class="text-container" id="address">
+                    <p>example0123@gmail.com</p>
+                </div>
+                <span class="label">Phone</span>
+                <div class="text-container" id="address">
+                    <p>9876543210</p>
+                </div>
+                <span class="label">Your Addresses</span>
+                <div class="text-container" id="address">
+                    <p>Some random address</p>
+                </div>
+                <button class="btn" id="add_address_btn" class="active" >Add an address</button>
+                <form class="" id="add_address_form">
+                    <input type="text" class="add_address_input">
+                    <button type="submit" class="btn reverse">Save Address</button>
+                </form>
+
+                <span class="label">Previous Orders</span>
+                <div class="previous-orders">
+                    <div class="prev-order" id="item-card">
+                        <img src="images/paneer/palak-paneer.jpg">
+                        <p id="item-price">Price: $10</p>
+                        <p class="item-quantity">Quantity: 2</p>
+                        <!-- <p id="item-price">Price: $10</p> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right"></div>
+    </div>
+
+
+    <script>
+        const add_address_btn = document.getElementById("add_address_btn")
+        const add_address_input = document.getElementById("add_address_form")
+
+        add_address_btn.onclick = () => {
+            add_address_input.classList.toggle("active")
+            add_address_btn.classList.toggle("active")
+        }
+
+    </script>
+</body>
+</html>

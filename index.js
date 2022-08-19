@@ -15,7 +15,8 @@ function displayItems(){
     const PaneerData= foodItem.filter((item)=>item.category=='paneer');
     const vegetableData= foodItem.filter((item)=>item.category=='vegetable');
     const chineseData= foodItem.filter((item)=>item.category=='chinese');
-    const southData= foodItem.filter((item)=>item.category=='south indian');
+    const southData= foodItem.filter((item)=>item.category=='south-indian');
+    
     biryaniData.map(item=>{
         var link = document.createElement("a")
         link.setAttribute("href","food_ar/index.html")
@@ -49,16 +50,15 @@ function displayItems(){
 
         var itemPrice= document.createElement('p');
         itemPrice.setAttribute('id','item-price');
-        itemPrice.innerText= 'Price : $ ' + item.price;
+        itemPrice.innerText= 'Price : $' + item.price;
 
         itemCard.appendChild(cardTop);
-        itemCard.appendChild(img);
-        itemCard.appendChild(itemName);
-        itemCard.appendChild(itemPrice);
-        link.appendChild(itemCard)
-        biryani.appendChild(link);
+        itemCard.appendChild(link)
+        link.appendChild(img);
+        link.appendChild(itemName);
+        link.appendChild(itemPrice);
+        biryani.appendChild(itemCard);
     })
-
 
     chickenData.map(item=>{
         var link = document.createElement("a")
@@ -93,14 +93,14 @@ function displayItems(){
 
         var itemPrice= document.createElement('p');
         itemPrice.setAttribute('id','item-price');
-        itemPrice.innerText= 'Price : $ ' + item.price;
+        itemPrice.innerText= 'Price : $' + item.price;
 
         itemCard.appendChild(cardTop);
-        itemCard.appendChild(img);
-        itemCard.appendChild(itemName);
-        itemCard.appendChild(itemPrice);
-        link.appendChild(itemCard)
-        biryani.appendChild(link);
+        itemCard.appendChild(link)
+        link.appendChild(img);
+        link.appendChild(itemName);
+        link.appendChild(itemPrice);
+        chicken.appendChild(itemCard);
     })
 
     PaneerData.map(item=>{
@@ -135,15 +135,14 @@ function displayItems(){
 
         var itemPrice= document.createElement('p');
         itemPrice.setAttribute('id','item-price');
-        itemPrice.innerText= 'Price : $ ' + item.price;
+        itemPrice.innerText= 'Price : $' + item.price;
 
         itemCard.appendChild(cardTop);
-        itemCard.appendChild(img);
-        itemCard.appendChild(itemName);
-        itemCard.appendChild(itemPrice);
-        
-        link.appendChild(itemCard)
-        biryani.appendChild(link);
+        itemCard.appendChild(link)
+        link.appendChild(img);
+        link.appendChild(itemName);
+        link.appendChild(itemPrice);
+        paneer.appendChild(itemCard);
 
     })
 
@@ -179,17 +178,14 @@ function displayItems(){
 
         var itemPrice= document.createElement('p');
         itemPrice.setAttribute('id','item-price');
-        itemPrice.innerText= 'Price : $ ' + item.price;
+        itemPrice.innerText= 'Price : $' + item.price;
 
         itemCard.appendChild(cardTop);
-        itemCard.appendChild(img);
-        itemCard.appendChild(itemName);
-        itemCard.appendChild(itemPrice);
-
-        
-        link.appendChild(itemCard)
-        biryani.appendChild(link);
-    
+        itemCard.appendChild(link)
+        link.appendChild(img);
+        link.appendChild(itemName);
+        link.appendChild(itemPrice);
+        vegetable.appendChild(itemCard);
     })
 
     chineseData.map(item=>{
@@ -224,16 +220,14 @@ function displayItems(){
 
         var itemPrice= document.createElement('p');
         itemPrice.setAttribute('id','item-price');
-        itemPrice.innerText= 'Price : $ ' + item.price;
+        itemPrice.innerText= 'Price : $' + item.price;
 
         itemCard.appendChild(cardTop);
-        itemCard.appendChild(img);
-        itemCard.appendChild(itemName);
-        itemCard.appendChild(itemPrice);
-
-        
-        link.appendChild(itemCard)
-        biryani.appendChild(link);
+        itemCard.appendChild(link)
+        link.appendChild(img);
+        link.appendChild(itemName);
+        link.appendChild(itemPrice);
+        chinese.appendChild(itemCard);
         
     })
 
@@ -269,15 +263,14 @@ function displayItems(){
 
         var itemPrice= document.createElement('p');
         itemPrice.setAttribute('id','item-price');
-        itemPrice.innerText= 'Price : $ ' + item.price;
+        itemPrice.innerText= 'Price : $' + item.price;
 
         itemCard.appendChild(cardTop);
-        itemCard.appendChild(img);
-        itemCard.appendChild(itemName);
-        itemCard.appendChild(itemPrice);
-
-        link.appendChild(itemCard)
-        biryani.appendChild(link);
+        itemCard.appendChild(link)
+        link.appendChild(img);
+        link.appendChild(itemName);
+        link.appendChild(itemPrice);
+        southIndian.appendChild(itemCard);
 
     })
 }
@@ -298,13 +291,13 @@ function selectTaste(){
         var listImg= document.createElement('img');
         listImg.src= item.img;
     
-        var listName= document.createElement('a');
+        var listName= document.createElement('span');
         listName.setAttribute('class','list-name');
         listName.innerText= item.category;
-        listName.setAttribute('href','#'+item.category)
-    
+        
         listCard.appendChild(listImg);
         listCard.appendChild(listName);
+        listCard.setAttribute('onclick',`document.getElementById("${item.category}").scrollIntoView()`)
 
         var cloneListCard= listCard.cloneNode(true);
         categoryList.appendChild(listCard);
