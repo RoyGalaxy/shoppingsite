@@ -5,7 +5,6 @@
 *{
     margin: 0;
     padding: 0;
-    /* box-sizing: border-box; */
     text-decoration: none;
     outline: none;
     border: none;
@@ -17,7 +16,7 @@ html{
 }
 :root{
     --primary: hsl(240, 20%, 8%);
-    --primary-light:hsl(240, 20%, 10%);
+    --primary-light:hsl(240, 20%, 13%);
     --primary-text: hsl(0, 0%, 80%);
     --primary-text-light: hsl(0, 0%, 70%);
     --secondary: hsl(56, 100%, 50%);
@@ -91,16 +90,20 @@ body{
     color: var(--primaryt);
     font-weight: bold;
 }
-.previous-orders #item-card{
+.previous-orders #item-card,
+.cart #item-card{
     padding: 0 12px;
     display: flex;
-    flex-direction: row;
     align-items: center;
     justify-content: space-between;
     height: 70px;
     width: 90%;
 }
-.previous-orders #item-card img{
+.cart #item-card{
+    flex-direction: column;
+}
+.previous-orders #item-card img,
+.cart #item-card img{
     justify-self: flex-start;
     margin: 0;
     height: 60px;
@@ -120,9 +123,11 @@ input{
     background-color: var(--primary-light);
     border-radius: 10px;
     padding: 0 16px;
+    transition: all 0.2s ease;
 }
 input:focus{
-    outline: 4px solid var(--secondary-light);
+    border: 1px solid var(--secondary-light);
+    box-sizing:border-box;
 }
 #add_address_form{
     overflow: hidden;
@@ -185,6 +190,9 @@ input:focus{
     margin-top: 86px;
     min-height: calc(100vh - 86px);
 }
+.remove{
+    display: none !important;
+}
 #header{
     display: flex;
     justify-content: space-between;
@@ -199,38 +207,6 @@ input:focus{
 ::-webkit-scrollbar{
     display: none;
 }
-/* #header .address{
-    font-size: 20px;
-    
-} */
-/* #map{
-    font-size: 25px;
-    color: blue;
-} */
-/* .your-address{
-    border: 1px solid blue;
-    color: indianred;
-    padding: 5px 10px;
-    border-radius: 5px;
-    width: 150px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    cursor: pointer;
-} */
-/* .add-box i{
-    font-size: 20px;;
-} */
-
-/* #header select{
-    width: 150px;
-    overflow: hidden;
-    border: none;
-    outline: none;
-    background: none;
-    color: rosybrown;
-    padding: 0 5px;
-} */
 .cart-toggle{
     display: block;
 }
@@ -274,6 +250,7 @@ input:focus{
 #card-top{
     display: flex;
     margin: 5px 0;
+    width: 100%;
     justify-content: space-between;
 }
 #rating{
@@ -283,16 +260,18 @@ input:focus{
     font-size: 14px;
     border-radius: 15px;
 }
-.fa-heart-o{
+.fa-cart-plus{
     padding: 6px;
     border-radius: 50%;
-    background: white;
+    background: var(--primary);
+    padding-left: -2px;
+    color: var(--primary-text);
     cursor: pointer;
 }
 /* Needs change in color  */
 .toggle-heart{
-background: orangered;
-color: white; 
+    background: orangered;;
+    color: var(--primary-text); 
 }
 #item-card img{
     width: 120px;
@@ -315,21 +294,20 @@ color: white;
     font-weight: 500;
     font-size: 14px;
 }
-.cart-toggle{
-    display: none;
-}
 #cart-page{
+    display: block;
     background: var(--primary);
     margin: 40px 10px;
     margin-right: 50px;
-    padding: 20px 30px;
+    padding: 20px 10px;
     padding-bottom: 30px;
     position: relative;
 }
 #cart-title{
-    font-size: 35px;
+    font-size: 32px;
+    font-weight: 600;
     margin: 0;
-    color: indianred;
+    color: var(--secondary);
 }
 #cart-page table{
     width: 100%;
@@ -337,6 +315,8 @@ color: white;
     text-align: center;
 }
 #cart-page table thead td{
+    background: var(--primary-light);
+    color: var(--primary-text-light);;
     font-size: 25px;
     padding-bottom: 10px;
 }
@@ -355,6 +335,7 @@ color: white;
 }
 #cart-page table tbody td{
     padding: 10px 0;
+    color: var(--primary-text);
     font-size: 20px;
 }
 #cart-page table tbody button{
@@ -374,23 +355,28 @@ color: white;
     border-radius: 50%;
 }
 #checkout{
+    display: inline-block;
     text-align: center;
     margin: 40px auto;
     border-radius: 5px;
-    background: white;
+    background: var(--primary-light);
     padding: 10px 20px;
 }
 #checkout p{
     margin: 15px 0;
     float: left;
+    font-size: 22px;
+    color: var(--primary-text-light);
 }
-#total-price,#total-item{
-    font-size: 25px;
-    color: indianred;
-}
-#delievery{
+#delievery span{
     font-size: 20px;
     color: limegreen;
+}
+.checkout-btn{
+    background-color: var(--secondary);
+    color: var(--primary);
+    font-size: 24px;
+    font-weight: bold;
 }
 #cart{
     background: var(--primary);
@@ -503,11 +489,6 @@ color: white;
         cursor: pointer;
         padding: 12px 5px ;
         border-radius: 50%;
-    }
-    
-    .m-cart-toggle{
-        color: var(--primary-text);
-        /* background: blue; */
     }
     .category-header{
         display: flex;

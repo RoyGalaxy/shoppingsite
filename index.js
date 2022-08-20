@@ -33,7 +33,7 @@ function displayItems(){
         star.innerText= ' ' + item.rating;
 
         var heart= document.createElement('i');
-        heart.setAttribute('class','fa fa-heart-o add-to-cart');
+        heart.setAttribute('class','fa fa-cart-plus add-to-cart');
         heart.setAttribute('id',item.id)
 
         cardTop.appendChild(star);
@@ -76,7 +76,7 @@ function displayItems(){
         star.innerText= ' ' + item.rating;
 
         var heart= document.createElement('i');
-        heart.setAttribute('class','fa fa-heart-o add-to-cart');
+        heart.setAttribute('class','fa fa-cart-plus add-to-cart');
         heart.setAttribute('id',item.id)
 
         cardTop.appendChild(star);
@@ -119,7 +119,7 @@ function displayItems(){
         star.innerText= ' ' + item.rating;
 
         var heart= document.createElement('i');
-        heart.setAttribute('class','fa fa-heart-o add-to-cart');
+        heart.setAttribute('class','fa fa-cart-plus add-to-cart');
         heart.setAttribute('id',item.id)
 
         cardTop.appendChild(star);
@@ -162,7 +162,7 @@ function displayItems(){
         star.innerText= ' ' + item.rating;
 
         var heart= document.createElement('i');
-        heart.setAttribute('class','fa fa-heart-o add-to-cart');
+        heart.setAttribute('class','fa fa-cart-plus add-to-cart');
         heart.setAttribute('id',item.id)
 
         cardTop.appendChild(star);
@@ -204,7 +204,7 @@ function displayItems(){
         star.innerText= ' ' + item.rating;
 
         var heart= document.createElement('i');
-        heart.setAttribute('class','fa fa-heart-o add-to-cart');
+        heart.setAttribute('class','fa fa-cart-plus add-to-cart');
         heart.setAttribute('id',item.id)
 
         cardTop.appendChild(star);
@@ -247,7 +247,7 @@ function displayItems(){
         star.innerText= ' ' + item.rating;
 
         var heart= document.createElement('i');
-        heart.setAttribute('class','fa fa-heart-o add-to-cart');
+        heart.setAttribute('class','fa fa-cart-plus add-to-cart');
         heart.setAttribute('id',item.id)
 
         cardTop.appendChild(star);
@@ -311,21 +311,19 @@ document.querySelectorAll('.add-to-cart').forEach(item=>{
     item.addEventListener('click',addToCart)
 })
 
-var cartData= [];
+var cartData = [];
 function addToCart(){
-    
-    var itemToAdd= this.parentNode.nextSibling.nextSibling.innerText;
+    var itemToAdd= this.parentNode.nextSibling.firstChild.nextSibling.innerText;
     var itemObj= foodItem.find(element=>element.name==itemToAdd);
 
     var index= cartData.indexOf(itemObj);
     if(index=== -1){
-        document.getElementById(itemObj.id).classList.add('toggle-heart');
-        cartData= [...cartData,itemObj];
+        cartData.push(itemObj)
     }
     else if(index > -1){
-        alert("Added to cart!");
+        cartData.splice(index,1)
     }
-    
+    document.getElementById(itemObj.id).classList.toggle('toggle-heart');
     document.getElementById('cart-plus').innerText=
     ' ' + cartData.length + ' Items';
     document.getElementById('m-cart-plus').innerText=
@@ -443,12 +441,12 @@ document.getElementById('m-cart-plus').addEventListener('click',cartToggle);
 var flag= false;
 function cartToggle(){
     if(cartData.length > 0){
-        document.getElementById('food-items').classList.toggle('food-items');
-        document.getElementById('category-list').classList.toggle('food-items');
-        document.getElementById('category-header').classList.toggle('toggle-category');
-        document.getElementById('m-cart-plus').classList.toggle('m-cart-toggle')
-        document.getElementById('cart-page').classList.toggle('cart-toggle');
-        document.getElementById('checkout').classList.toggle('cart-toggle');
+        document.getElementById('food-items').classList.toggle('remove');
+        document.getElementById('category-list').classList.toggle('remove');
+        document.getElementById('category-header').classList.toggle('remove');
+        document.getElementById('m-cart-plus').classList.toggle('remove')
+        document.getElementById('cart-page').classList.toggle('remove');
+        document.getElementById('checkout').classList.toggle('remove');
         flag= true;
         console.log(flag)
     }
@@ -457,7 +455,7 @@ function cartToggle(){
     }
 }
 
-window.onresize= window.onload= function(){
+window.onresize = window.window.onload = function(){
     var size= window.screen.width;
     console.log(size)
     if(size<800){
@@ -470,10 +468,6 @@ window.onresize= window.onload= function(){
         addEvents()
     }
     if(size>800){
-        var cloneFoodItems= document.getElementById('food-items').cloneNode(true);
-        document.getElementById('food-items').remove();
-        document.getElementById('header').after(cloneFoodItems);
-
         var cloneCartPage= document.getElementById('cart-page').cloneNode(true);
         document.getElementById('cart-page').remove();
         document.getElementById('food-items').after(cloneCartPage);
@@ -492,18 +486,4 @@ function addEvents(){
     document.querySelectorAll('.decrease-item').forEach(item=>{
         item.addEventListener('click',decrementItem)
     })
-}
-
-document.getElementById('add-address').addEventListener('click',addAddress);
-
-document.getElementById('m-add-address').addEventListener('click',addAddress);
-
-function addAddress(){
-    var address= prompt('Enter your address','');
-    if(address){
-        document.getElementById('add-address').innerText= ' ' + address;
-    }
-    else{
-        alert("Address not added")
-    }
 }
