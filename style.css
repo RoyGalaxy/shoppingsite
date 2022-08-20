@@ -261,6 +261,7 @@ input:focus{
     border-radius: 15px;
 }
 .fa-cart-plus{
+    display: inline;
     padding: 6px;
     border-radius: 50%;
     background: var(--primary);
@@ -506,6 +507,9 @@ input:focus{
     .toggle-category{
         display: none;
         position: relative;
+    }
+    .m-cart-plus{
+        display: block;
     }
     .list-card{
         margin: 0 10px;
