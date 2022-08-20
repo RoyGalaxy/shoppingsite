@@ -461,8 +461,6 @@ window.onresize = window.window.onload = function(){
     if(size<800){
         var cloneFoodItems= document.getElementById('food-items').cloneNode(true);
         var cloneCartPage= document.getElementById('cart-page').cloneNode(true);
-        document.getElementById('food-items').remove();
-        document.getElementById('cart-page').remove();
         document.getElementById('category-header').after(cloneFoodItems);
         document.getElementById('food-items').after(cloneCartPage);
         addEvents()
