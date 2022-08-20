@@ -297,7 +297,7 @@ function selectTaste(){
         
         listCard.appendChild(listImg);
         listCard.appendChild(listName);
-        listCard.setAttribute('onclick',`document.getElementById("${item.category}").scrollIntoView()`)
+        listCard.setAttribute('onclick',`document.getElementById("${item.category}").scrollIntoView({behavior: "smooth"})`)
 
         var cloneListCard= listCard.cloneNode(true);
         categoryList.appendChild(listCard);

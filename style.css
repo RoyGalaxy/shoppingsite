@@ -45,7 +45,6 @@ body{
     grid-template-columns: 250px 1fr 300px;
     min-height: 100vh;
     /* min-height: -webkit-fill-available; */
-    overflow: hidden;
 }
 .heading{
     text-align: center;
@@ -135,6 +134,9 @@ input:focus{
     height: 150px;
 }
 #menu{
+    position: sticky;
+    top: 0;
+    max-height: 100vh;
     background: var(--primary);
 }
 .title{
@@ -180,8 +182,8 @@ input:focus{
 }
 #food-items{
     background: var(--primary);
-    overflow: auto;
-    height: calc(100vh - 86px);
+    margin-top: 86px;
+    min-height: calc(100vh - 86px);
 }
 #header{
     display: flex;
@@ -229,9 +231,6 @@ input:focus{
     color: rosybrown;
     padding: 0 5px;
 } */
-.food-items{
-    display: none;
-}
 .cart-toggle{
     display: block;
 }
@@ -251,12 +250,6 @@ input:focus{
 #biryani,#paneer,#chicken,#vegetable,#chinese,#south-indian{
     margin-top: 40px;   
 }
-#paneer #item-card,#vegetable #item-card{
-    background: var(--secondary);
-}
-#chinese #item-card,#south-indian #item-card{
-    background: var(--secondary);
-}
 #category-name,.item-menu{
     margin: 10px;
     font-size: 35px;   
@@ -271,7 +264,6 @@ input:focus{
     display: inline-block;
     border-radius: 5px;
     background: var(--secondary);
-    box-shadow: 0 0 4px var(--secondary-light);
     cursor: pointer;
     box-shadow: 0 0 ;
     transition: 0.5s all step-end;
@@ -315,17 +307,13 @@ color: white;
     margin: 5px 0;
     font-weight: 600;
     color: var(--primary);
-    font-size: 18px;
+    font-size: 16px;
 }
 #item-price{
     margin: 0;
     color: var(--primary);
     font-weight: 500;
-    font-size: 18px;
-}
-
-.food-items{
-    display: none;
+    font-size: 14px;
 }
 .cart-toggle{
     display: none;
@@ -352,7 +340,6 @@ color: white;
     font-size: 25px;
     padding-bottom: 10px;
 }
-
 .cart-btn{
     outline: none;
     border: none;
@@ -407,6 +394,9 @@ color: white;
 }
 #cart{
     background: var(--primary);
+    max-height: 100vh;
+    position: sticky;
+    top: 0;
     padding-right: 30px;
     overflow-y: scroll;
 }
@@ -425,6 +415,7 @@ color: white;
     margin-top: 15px;
     border-radius: 25px;
     cursor: pointer;
+    user-select: none;
     transition: 0.3s all ease-in-out;
 }
 .list-card:hover{
@@ -467,7 +458,7 @@ color: white;
     display: none;
 }
 @media screen and (max-width : 800px) and (-webkit-min-device-pixel-ratio: 2){
-    .container{
+    #d-home-screen{
         display: none;
     }
     #mobile-view{
@@ -504,7 +495,7 @@ color: white;
         text-overflow: ellipsis;
     } */
     .top-menu{
-        color: indianred;
+        color: var(--primary-text);
         /* background: var(--primary); */
     }
     .top-menu i{
@@ -515,7 +506,7 @@ color: white;
     }
     
     .m-cart-toggle{
-        color: white;
+        color: var(--primary-text);
         /* background: blue; */
     }
     .category-header{
@@ -551,6 +542,9 @@ color: white;
         transform: none;
         transition: none;
     }
+    .list-card:hover .list-name{
+        color: var(--secondary);
+    }
     .list-name{
         margin: 5px 0;
         color: var(--primary-text);
@@ -566,11 +560,13 @@ color: white;
         justify-content: space-between;
         align-items: center;
         padding: 5px 15px;
+        position: fixed;
+        bottom: 0; left: 0;
         background: var(--primary);
         /* border-top: 1px solid rgb(219, 219, 219); */
     }
     .mobile-footer{
-        color: indianred;
+        color: var(--secondary);
         text-transform: uppercase;
         font-size: 16px;
         position: static;
@@ -581,7 +577,8 @@ color: white;
     }
     #item-card{
         width: 150px;
-        height: 200px;
+        min-height: 200px;
+        height: 100%;
     }
     #item-card img{
         width: 100px;
@@ -639,7 +636,7 @@ color: white;
         min-height: -webkit-fill-available;
     }
     #item-card{
-        height: 200px;
+        min-height: 200px;
         width: 140px;
     }
     #food-items{
