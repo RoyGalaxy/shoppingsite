@@ -1,290 +1,41 @@
-import {foodItem} from './fooditem.js'
+'use strict'
+
+import {menu} from './food_items.js'
+const catagories = []
 
 function displayItems(){
-    var biryani= document.getElementById('biryani');
-    var paneer=  document.getElementById('paneer');
-    var chicken=  document.getElementById('chicken');
-    var vegetable=  document.getElementById('vegetable');
-    var chinese=  document.getElementById('chinese');
-    var southIndian=  document.getElementById('south-indian');
-
-    
-
-    const biryaniData= foodItem.filter((item)=>item.category=='biryani');
-    const chickenData= foodItem.filter((item)=>item.category=='chicken');
-    const PaneerData= foodItem.filter((item)=>item.category=='paneer');
-    const vegetableData= foodItem.filter((item)=>item.category=='vegetable');
-    const chineseData= foodItem.filter((item)=>item.category=='chinese');
-    const southData= foodItem.filter((item)=>item.category=='south-indian');
-    
-    biryaniData.map(item=>{
-        var link = document.createElement("a")
-        link.setAttribute("href","food_ar/index.html")
-        
-        var itemCard= document.createElement('div');
-        itemCard.setAttribute('id','item-card')
-
-        var cardTop= document.createElement('div');
-        cardTop.setAttribute('id','card-top');
-
-        var star= document.createElement('i');
-        star.setAttribute('class','fa fa-star');
-        star.setAttribute('id','rating');
-        star.innerText= ' ' + item.rating;
-
-        var heart= document.createElement('i');
-        heart.setAttribute('class','fa fa-cart-plus add-to-cart');
-        heart.setAttribute('id',item.id)
-
-        cardTop.appendChild(star);
-        cardTop.appendChild(heart);
-
-
-        var img= document.createElement('img');
-        img.src=item.img;
-
-
-        var itemName= document.createElement('p');
-        itemName.setAttribute('id','item-name');
-        itemName.innerText= item.name;
-
-        var itemPrice= document.createElement('p');
-        itemPrice.setAttribute('id','item-price');
-        itemPrice.innerText= 'Price : $' + item.price;
-
-        itemCard.appendChild(cardTop);
-        itemCard.appendChild(link)
-        link.appendChild(img);
-        link.appendChild(itemName);
-        link.appendChild(itemPrice);
-        biryani.appendChild(itemCard);
-    })
-
-    chickenData.map(item=>{
-        var link = document.createElement("a")
-        link.setAttribute("href","food_ar/index.html")
-
-        var itemCard= document.createElement('div');
-        itemCard.setAttribute('id','item-card')
-
-        var cardTop= document.createElement('div');
-        cardTop.setAttribute('id','card-top');
-
-        var star= document.createElement('i');
-        star.setAttribute('class','fa fa-star');
-        star.setAttribute('id','rating');
-        star.innerText= ' ' + item.rating;
-
-        var heart= document.createElement('i');
-        heart.setAttribute('class','fa fa-cart-plus add-to-cart');
-        heart.setAttribute('id',item.id)
-
-        cardTop.appendChild(star);
-        cardTop.appendChild(heart);
-
-
-        var img= document.createElement('img');
-        img.src=item.img;
-        
-
-        var itemName= document.createElement('p');
-        itemName.setAttribute('id','item-name');
-        itemName.innerText= item.name;
-
-        var itemPrice= document.createElement('p');
-        itemPrice.setAttribute('id','item-price');
-        itemPrice.innerText= 'Price : $' + item.price;
-
-        itemCard.appendChild(cardTop);
-        itemCard.appendChild(link)
-        link.appendChild(img);
-        link.appendChild(itemName);
-        link.appendChild(itemPrice);
-        chicken.appendChild(itemCard);
-    })
-
-    PaneerData.map(item=>{
-        var link = document.createElement("a")
-        link.setAttribute("href","food_ar/index.html")
-
-        var itemCard= document.createElement('div');
-        itemCard.setAttribute('id','item-card')
-
-        var cardTop= document.createElement('div');
-        cardTop.setAttribute('id','card-top');
-
-        var star= document.createElement('i');
-        star.setAttribute('class','fa fa-star');
-        star.setAttribute('id','rating');
-        star.innerText= ' ' + item.rating;
-
-        var heart= document.createElement('i');
-        heart.setAttribute('class','fa fa-cart-plus add-to-cart');
-        heart.setAttribute('id',item.id)
-
-        cardTop.appendChild(star);
-        cardTop.appendChild(heart);
-
-
-        var img= document.createElement('img');
-        img.src=item.img;
-
-        var itemName= document.createElement('p');
-        itemName.setAttribute('id','item-name');
-        itemName.innerText= item.name;
-
-        var itemPrice= document.createElement('p');
-        itemPrice.setAttribute('id','item-price');
-        itemPrice.innerText= 'Price : $' + item.price;
-
-        itemCard.appendChild(cardTop);
-        itemCard.appendChild(link)
-        link.appendChild(img);
-        link.appendChild(itemName);
-        link.appendChild(itemPrice);
-        paneer.appendChild(itemCard);
-
-    })
-
-    vegetableData.map(item=>{
-        var link = document.createElement("a")
-        link.setAttribute("href","food_ar/index.html")
-
-        var itemCard= document.createElement('div');
-        itemCard.setAttribute('id','item-card')
-
-        var cardTop= document.createElement('div');
-        cardTop.setAttribute('id','card-top');
-
-        var star= document.createElement('i');
-        star.setAttribute('class','fa fa-star');
-        star.setAttribute('id','rating');
-        star.innerText= ' ' + item.rating;
-
-        var heart= document.createElement('i');
-        heart.setAttribute('class','fa fa-cart-plus add-to-cart');
-        heart.setAttribute('id',item.id)
-
-        cardTop.appendChild(star);
-        cardTop.appendChild(heart);
-
-
-        var img= document.createElement('img');
-        img.src=item.img;
-
-        var itemName= document.createElement('p');
-        itemName.setAttribute('id','item-name');
-        itemName.innerText= item.name;
-
-        var itemPrice= document.createElement('p');
-        itemPrice.setAttribute('id','item-price');
-        itemPrice.innerText= 'Price : $' + item.price;
-
-        itemCard.appendChild(cardTop);
-        itemCard.appendChild(link)
-        link.appendChild(img);
-        link.appendChild(itemName);
-        link.appendChild(itemPrice);
-        vegetable.appendChild(itemCard);
-    })
-
-    chineseData.map(item=>{
-        var link = document.createElement("a")
-        link.setAttribute("href","food_ar/index.html")
-
-        var itemCard= document.createElement('div');
-        itemCard.setAttribute('id','item-card')
-
-        var cardTop= document.createElement('div');
-        cardTop.setAttribute('id','card-top');
-
-        var star= document.createElement('i');
-        star.setAttribute('class','fa fa-star');
-        star.setAttribute('id','rating');
-        star.innerText= ' ' + item.rating;
-
-        var heart= document.createElement('i');
-        heart.setAttribute('class','fa fa-cart-plus add-to-cart');
-        heart.setAttribute('id',item.id)
-
-        cardTop.appendChild(star);
-        cardTop.appendChild(heart);
-
-
-        var img= document.createElement('img');
-        img.src=item.img;
-
-        var itemName= document.createElement('p');
-        itemName.setAttribute('id','item-name');
-        itemName.innerText= item.name;
-
-        var itemPrice= document.createElement('p');
-        itemPrice.setAttribute('id','item-price');
-        itemPrice.innerText= 'Price : $' + item.price;
-
-        itemCard.appendChild(cardTop);
-        itemCard.appendChild(link)
-        link.appendChild(img);
-        link.appendChild(itemName);
-        link.appendChild(itemPrice);
-        chinese.appendChild(itemCard);
-        
-    })
-
-    southData.map(item=>{
-        var link = document.createElement("a")
-        link.setAttribute("href","food_ar/index.html")
-
-        var itemCard= document.createElement('div');
-        itemCard.setAttribute('id','item-card')
-
-        var cardTop= document.createElement('div');
-        cardTop.setAttribute('id','card-top');
-
-        var star= document.createElement('i');
-        star.setAttribute('class','fa fa-star');
-        star.setAttribute('id','rating');
-        star.innerText= ' ' + item.rating;
-
-        var heart= document.createElement('i');
-        heart.setAttribute('class','fa fa-cart-plus add-to-cart');
-        heart.setAttribute('id',item.id)
-
-        cardTop.appendChild(star);
-        cardTop.appendChild(heart);
-
-
-        var img= document.createElement('img');
-        img.src=item.img;
-
-        var itemName= document.createElement('p');
-        itemName.setAttribute('id','item-name');
-        itemName.innerText= item.name;
-
-        var itemPrice= document.createElement('p');
-        itemPrice.setAttribute('id','item-price');
-        itemPrice.innerText= 'Price : $' + item.price;
-
-        itemCard.appendChild(cardTop);
-        itemCard.appendChild(link)
-        link.appendChild(img);
-        link.appendChild(itemName);
-        link.appendChild(itemPrice);
-        southIndian.appendChild(itemCard);
-
-    })
+    for(let i = 0;i < catagories.length;i++){
+        const foodData = menu.filter((item)=>item.category==catagories[i]);
+        let itemCards = foodData.map(item => {
+
+            return `<div id="item-card">
+                <div id="card-top">
+                    <i class="fa fa-star" id="rating">${item.rating}</i>
+                    <i class="fa fa-cart-plus add-to-cart" id="${item.name.replace(/ /g,"")}"></i>
+                </div>
+                <a href="${item.url}">
+                    <img src="${item.img}" />
+                    <p id="item-name">${item.name}</p>
+                    <p id="item-price">Price : $${item.price}</p>
+                </a>
+            </div>`
+        })
+        const text = `<div id=${catagories[i].replace(/ /g,'')}" class="${catagories[i].replace(/ /g,'')}">
+            <p id="category-name">${catagories[i]}</p>
+            ${itemCards.map(item => item)}    
+        </div>`
+        document.getElementById("food-items").innerHTML += text
+    }
 }
-displayItems();
 
-
-const vegData= [...new Map(foodItem.map(item=> [item['category'],item])).values()];
-console.log(vegData);
+const vegData= [...new Map(menu.map(item=> [item['category'],item])).values()];
 
 function selectTaste(){
     var categoryList= document.getElementById('category-list');
-
-    vegData.map(item=>{
-        console.log(item)
+    var listcards = []
+    vegData.map(item=>{      
+        catagories.push(item.category)
+        
         var listCard= document.createElement('div');
         listCard.setAttribute('class','list-card');
     
@@ -297,12 +48,12 @@ function selectTaste(){
         
         listCard.appendChild(listImg);
         listCard.appendChild(listName);
-        listCard.setAttribute('onclick',`document.getElementById("${item.category}").scrollIntoView({behavior: "smooth"})`)
-
-        var cloneListCard= listCard.cloneNode(true);
-        categoryList.appendChild(listCard);
-        document.querySelector('.category-header').appendChild(cloneListCard)
+        listCard.setAttribute('onclick',`document.querySelector(".${item.category.replace(/ /g,'')}").scrollIntoView({behavior: "smooth"})`)
+        
+        listcards.push(listCard)
     })
+    displayItems();
+    listcards.map((listCard) => categoryList.appendChild(listCard))
 }
 selectTaste();
 
@@ -313,8 +64,8 @@ document.querySelectorAll('.add-to-cart').forEach(item=>{
 
 var cartData = [];
 function addToCart(){
-    var itemToAdd= this.parentNode.nextSibling.firstChild.nextSibling.innerText;
-    var itemObj= foodItem.find(element=>element.name==itemToAdd);
+    var itemToAdd= this.id
+    var itemObj= menu.find(element=>element.name.replace(/ /g,"")==itemToAdd);
 
     var index= cartData.indexOf(itemObj);
     if(index=== -1){
@@ -323,11 +74,9 @@ function addToCart(){
     else if(index > -1){
         cartData.splice(index,1)
     }
-    document.getElementById(itemObj.id).classList.toggle('toggle-heart');
+    document.getElementById(this.id).classList.toggle('toggle-heart');
     document.getElementById('cart-plus').innerText=
     ' ' + cartData.length + ' Items';
-    document.getElementById('m-cart-plus').innerText=
-    ' ' + cartData.length;
     totalAmount();
     cartItems();
 }
@@ -384,7 +133,6 @@ function cartItems(){
 
 function incrementItem(){
     let itemToInc= this.parentNode.previousSibling.innerText;
-    console.log(itemToInc)
     var incObj= cartData.find(element=>element.name==itemToInc);
     incObj.quantity+=1;
     
@@ -405,19 +153,15 @@ function decrementItem(){
         decObj.price= currPrice*decObj.quantity;
     }
     else{
-        document.getElementById(decObj.id).classList.remove('toggle-heart')
+        document.getElementById(decObj.name.replace(/ /g,"")).classList.remove('toggle-heart')
         cartData.splice(ind,1);
         document.getElementById('cart-plus').innerText= ' ' + cartData.length + ' Items';
-        document.getElementById('m-cart-plus').innerText= ' ' + cartData.length;
         if(cartData.length < 1 && flag){
-            document.getElementById('food-items').classList.toggle('food-items');
-            document.getElementById('category-list').classList.toggle('food-items');
-            document.getElementById('m-cart-plus').classList.toggle('m-cart-toggle')
-            document.getElementById('cart-page').classList.toggle('cart-toggle');
-            document.getElementById('category-header').classList.toggle('toggle-category');
-            document.getElementById('checkout').classList.toggle('cart-toggle');
+            document.getElementById('food-items').classList.toggle('remove');
+            document.getElementById('category-list').classList.toggle('remove');
+            document.getElementById('cart-page').classList.toggle('remove');
+            document.getElementById('checkout').classList.toggle('remove');
             flag= false;
-            alert("Currently no item in cart!");
             console.log(flag)
         }
     }
@@ -436,15 +180,12 @@ function totalAmount(){
 }
 
 document.getElementById('cart-plus').addEventListener('click',cartToggle);
-document.getElementById('m-cart-plus').addEventListener('click',cartToggle);
 
 var flag= false;
 function cartToggle(){
     if(cartData.length > 0){
         document.getElementById('food-items').classList.toggle('remove');
         document.getElementById('category-list').classList.toggle('remove');
-        document.getElementById('category-header').classList.toggle('remove');
-        document.getElementById('m-cart-plus').classList.toggle('m-cart-toggle')
         document.getElementById('cart-page').classList.toggle('remove');
         document.getElementById('checkout').classList.toggle('remove');
         flag= true;
@@ -455,27 +196,17 @@ function cartToggle(){
     }
 }
 
-window.onresize = window.window.onload = function(){
-    var size= window.screen.width;
-    console.log(size)
-    if(size<800){
-        var cloneFoodItems= document.getElementById('food-items').cloneNode(true);
-        var cloneCartPage= document.getElementById('cart-page').cloneNode(true);
-        document.getElementById('food-items').remove();
-        document.getElementById('cart-page').remove();
-        document.getElementById('category-header').after(cloneFoodItems);
-        document.getElementById('food-items').after(cloneCartPage);
-        addEvents()
-    }
-    if(size>800){
-        var cloneCartPage= document.getElementById('cart-page').cloneNode(true);
-        document.getElementById('cart-page').remove();
-        document.getElementById('food-items').after(cloneCartPage);
-        addEvents()
-    }
+function toggleMenu(){
+    document.getElementById("menu").classList.toggle("active")
+}
+
+window.onload = function(){
+    addEvents()
 }
 
 function addEvents(){
+    document.getElementById('m-cart-btn').addEventListener('click',cartToggle);
+    
     document.querySelectorAll('.add-to-cart').forEach(item=>{
         item.addEventListener('click',addToCart)
     });
@@ -485,5 +216,8 @@ function addEvents(){
 
     document.querySelectorAll('.decrease-item').forEach(item=>{
         item.addEventListener('click',decrementItem)
+    })
+    document.getElementById("menu-toggle-btn").addEventListener("click",() => {
+        toggleMenu()
     })
 }

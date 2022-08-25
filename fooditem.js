@@ -1,7 +1,7 @@
-const foodItem= [
+const foodItem = [
     {
     id: 1,
-    name: 'Ambur Biryani',
+    name: 'Classic Slider Box',
     category : 'biryani',
     rating : 4.3,
     price: 13,
@@ -11,7 +11,7 @@ const foodItem= [
 },
 {
     id: 2,
-    name: 'Hyderabadi Biryani',
+    name: 'Essentials Slider Box',
     category : 'biryani',
     rating : 4.3,
     price: 15,
@@ -21,7 +21,7 @@ const foodItem= [
 },
 {
     id: 3,
-    name: 'Egg Biryani',
+    name: 'Exotic Slider Box',
     category : 'biryani',
     rating : 4.3,
     price: 18,
@@ -31,7 +31,7 @@ const foodItem= [
 },
 {
     id: 4,
-    name: 'Goan Fish Biryani',
+    name: 'Make Your Own (MYO) Slider Box',
     category : 'biryani',
     rating : 4.3,
     price: 15,
@@ -41,7 +41,7 @@ const foodItem= [
 },
 {
     id: 5,
-    name: 'Mutton Biryani',
+    name: 'OG Beef Slider (Big)',
     category : 'biryani',
     rating : 4.3,
     price: 10,
@@ -51,7 +51,7 @@ const foodItem= [
 },
 {
     id: 6,
-    name: 'Kamrupi Biryani',
+    name: 'OG Beef slider (Small)',
     category : 'biryani',
     rating : 4.3,
     price: 12,
@@ -61,7 +61,7 @@ const foodItem= [
 },
 {
     id: 7,
-    name: 'Kashmiri Biryani',
+    name: 'Brisket Delight',
     category : 'biryani',
     rating : 4.3,
     price: 13,
