@@ -1,4 +1,4 @@
-﻿const menu = [
+﻿const foodItems = [
     {
         "id": 1,
         "name": "Classic Slider Box",
@@ -663,5 +663,3 @@
         "img": 'images/biryani/Ambur-Chicken-Biryani.jpg',
     }
 ]
-
-export {menu}

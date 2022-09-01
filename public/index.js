@@ -1,19 +1,18 @@
 'use strict'
 
-import {menu} from './food_items.js'
+// import {foodItems} from './food_items.js'
 const catagories = []
 
 function displayItems(){
     for(let i = 0;i < catagories.length;i++){
-        const foodData = menu.filter((item)=>item.category==catagories[i]);
+        const foodData = foodItems.filter((item)=>item.category==catagories[i]);
         let itemCards = foodData.map(item => {
 
             return `<div id="item-card">
                 <div id="card-top">
                     <i class="fa fa-star" id="rating">${item.rating}</i>
-                    <i class="fa fa-cart-plus add-to-cart" id="${item.name.replace(/ /g,"")}"></i>
                 </div>
-                <a href="${item.url}">
+                <a href="#" class='item-card-link' id="${item.name.replace(/ /g,'')}" onclick="toggleProductPage(this.id)">
                     <img src="${item.img}" />
                     <p id="item-name">${item.name}</p>
                     <p id="item-price">Price : $${item.price}</p>
@@ -28,7 +27,7 @@ function displayItems(){
     }
 }
 
-const vegData= [...new Map(menu.map(item=> [item['category'],item])).values()];
+const vegData= [...new Map(foodItems.map(item=> [item['category'],item])).values()];
 
 function selectTaste(){
     var categoryList= document.getElementById('category-list');
@@ -65,7 +64,7 @@ document.querySelectorAll('.add-to-cart').forEach(item=>{
 var cartData = [];
 function addToCart(){
     var itemToAdd= this.id
-    var itemObj= menu.find(element=>element.name.replace(/ /g,"")==itemToAdd);
+    var itemObj= foodItems.find(element=>element.name.replace(/ /g,"")==itemToAdd);
 
     var index= cartData.indexOf(itemObj);
     if(index=== -1){
@@ -179,8 +178,6 @@ function totalAmount(){
     document.getElementById('m-total-amount').innerText= 'Total Price : $ ' + sum;
 }
 
-document.getElementById('cart-plus').addEventListener('click',cartToggle);
-
 var flag= false;
 function cartToggle(){
     if(cartData.length > 0){
@@ -201,15 +198,19 @@ function toggleMenu(){
 }
 
 window.onload = function(){
-    addEvents()
+    // addEvents()
 }
 
 function addEvents(){
     document.getElementById('m-cart-btn').addEventListener('click',cartToggle);
+    document.getElementById('menu-cart-btn').addEventListener('click',cartToggle);
     
     document.querySelectorAll('.add-to-cart').forEach(item=>{
         item.addEventListener('click',addToCart)
     });
+    // document.querySelectorAll('.item-card-link').forEach(item=>{
+    //     item.addEventListener('click',toggleProductPage(this))
+    // });
     document.querySelectorAll('.increase-item').forEach(item=>{
         item.addEventListener('click',incrementItem)
     })

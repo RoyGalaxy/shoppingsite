@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Shopping Cart UI</title>
+	<style>
+		:root{
+			--primary: hsl(240, 20%, 8%);
+			--primary-light:hsl(240, 20%, 11%);
+			--primary-text: hsl(0, 0%, 80%);
+			--primary-text-light: hsl(0, 0%, 70%);
+			--secondary: hsl(56, 100%, 50%);
+			--secondary-light: hsl(56, 100%, 40%);
+		}
+	</style>
+	<link rel="stylesheet" type="text/css" href="cart-page.css">
+	<link rel="stylesheet" href="product-page-style.css">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,900" rel="stylesheet">
+	<script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
+</head>
+<body>
+	<div style="min-height: 100vh; display: flex;flex-direction: column;">
+        <div class="body-wrapper"></div>
+
+        <!-- Header -->
+        <header class="head">
+        <div class="head-lft">
+            <button class="head-lft__btn">
+            <img
+                src="product-page/images/icon-menu.svg"
+                alt="menu image"
+                class="head-lft__btn-img"
+            />
+            </button>
+            <!-- <img src="product-page/images/logo.svg" alt="logo" class="head-logo" /> -->
+            <ul class="head-nav">
+            <li class="head-nav__item"><a href="index.html">Home</a></li>
+            <li class="head-nav__item"><a href="account.html">My Account</a></li>
+            </ul>
+        </div>
+
+        <div class="head-rgt">
+            <button class="head-rgt__btn">
+            <a href="cart.html">
+                <img
+                    src="product-page/images/icon-cart.svg"
+                    alt="cart image"
+                    class="head-cart__btn-img"
+                />
+            </a>
+            </button>
+
+            <img
+            src="product-page/images/image-avatar.png"
+            alt="person image"
+            class="head-rgt__img"
+            />
+        </div>
+        </header>
+
+        <!-- Main item container -->
+        <main style="width:100vw;"">
+            <div class="CartContainer">
+				<div class="Header">
+					<h3 class="Heading">Shopping Cart</h3>
+					<h5 class="Action">Remove all</h5>
+				</div>
+	  
+				<div class="Cart-Items">
+					  <div class="image-box">
+						  <img src="images/paneer/Matar-Paneer.jpg" style="height:120px"/>
+					  </div>
+					  <div class="about">
+						  <h1 class="title">Classic Slider Box</h1>
+					  </div>
+					  <div class="counter">
+						  <div class="btn">+</div>
+						  <div class="count">2</div>
+						  <div class="btn">-</div>
+					  </div>
+					  <div class="prices">
+						  <div class="amount">$180</div>
+						  <div class="remove"><u>Remove</u></div>
+					  </div>
+				</div>
+	  
+				<div class="Cart-Items pad">
+					  <div class="image-box">
+						  <img src="images/paneer/Matar-Paneer.jpg" style="height:120px" />
+					  </div>
+					  <div class="about">
+						  <h1 class="title">Essentials Slider Box</h1>
+					  </div>
+					  <div class="counter">
+						  <div class="btn">+</div>
+						  <div class="count">1</div>
+						  <div class="btn">-</div>
+					  </div>
+					  <div class="prices">
+						  <div class="amount">$230</div>
+				  <div class="remove"><u>Remove</u></div>
+					  </div>
+				</div>
+			  <hr> 
+			  <div class="checkout">
+				<div class="total">
+					<div>
+						<div class="Subtotal">Sub-Total</div>
+						<div class="items">2 items</div>
+					</div>
+					<div class="total-amount">$230</div>
+				</div>
+				<button class="button">Checkout</button>
+			</div>
+		 </div>
+        </main>
+    </div>
+
+	<div id="product-page" style="display: none;">
+        <div class="body-wrapper"></div>
+
+        <!-- Overlay image Modal -->
+        <div class="overlay-container">
+        <div class="item-overlay">
+            <button class="item-overlay__btn">
+            <img
+                src="product-page/images/icon-close.svg"
+                alt="close image"
+                class="item-overlay__btn-img"
+            />
+            </button>
+            <div class="item-overlay__mainImg">
+            <img
+                src="product-page/images/image-product-1.jpg"
+                alt=""
+                class="item-overlay__img"
+            />
+            <button class="item-overlay__btnlft overlay-btn">
+                <img
+                src="product-page/images/icon-next.svg"
+                alt="next symbol image"
+                class="item-overlay__btnlft-img overlay-btn__img"
+                />
+            </button>
+            <button class="item-overlay__btnrgt overlay-btn">
+                <img
+                src="product-page/images/icon-next.svg"
+                alt="next symbol image"
+                class="item-overlay__btnrgt-img overlay-btn__img"
+                />
+            </button>
+            </div>
+            <div class="overlay-img__btns">
+            <button class="overlay-img__btn" data-img="0">
+                <img
+                src="product-page/images/image-product-1-thumbnail.jpg"
+                alt="shoe product image"
+                class="overlay-img__btn-img"
+                />
+            </button>
+            <button class="overlay-img__btn" data-img="1">
+                <img
+                src="product-page/images/image-product-2-thumbnail.jpg"
+                alt="shoe product image"
+                class="overlay-img__btn-img"
+                />
+            </button>
+            <button class="overlay-img__btn" data-img="2">
+                <img
+                src="product-page/images/image-product-3-thumbnail.jpg"
+                alt="shoe product image"
+                class="overlay-img__btn-img"
+                />
+            </button>
+            <button class="overlay-img__btn" data-img="3">
+                <img
+                src="product-page/images/image-product-4-thumbnail.jpg"
+                alt="shoe product image"
+                class="overlay-img__btn-img"
+                />
+            </button>
+            </div>
+        </div>
+        </div>
+
+        <!-- Cart -->
+        <div class="head-cart">
+        <h3 class="head-cart__heading">Cart</h3>
+        <div class="head-cart__txt">Your cart is empty.</div>
+        <div class="head-cart__item">
+            <div class="head-cart__item-wrapper">
+            <img
+                src="product-page/images/image-product-1-thumbnail.jpg"
+                alt="cart product image"
+                class="head-cart__item-img"
+            />
+            <div class="head-cart__des">
+                <p class="head-cart__des-txt">Fall Limited Edition Sneakers</p>
+                <div class="head-cart__price">
+                <span class="head-cart__price-single">$125.00*3</span>
+                <span class="head-cart__price-total">$375.00</span>
+                </div>
+            </div>
+            <button class="head-cart__item-btn">
+                <img
+                src="product-page/images/icon-delete.svg"
+                alt="delete image"
+                class="head-cart__btn-img"
+                />
+            </button>
+            </div>
+
+            <button class="head-cart__btn btn--orange">Checkout</button>
+        </div>
+        </div>
+
+        <!-- Header -->
+        <header class="head">
+        <div class="head-lft">
+            <button class="head-lft__btn">
+            <img
+                src="product-page/images/icon-menu.svg"
+                alt="menu image"
+                class="head-lft__btn-img"
+            />
+            </button>
+            <!-- <img src="product-page/images/logo.svg" alt="logo" class="head-logo" /> -->
+            <ul class="head-nav">
+            <li class="head-nav__item">Cart</li>
+            <li class="head-nav__item">Men</li>
+            <li class="head-nav__item">Women</li>
+            <li class="head-nav__item">About</li>
+            <li class="head-nav__item">Contact</li>
+            </ul>
+        </div>
+
+        <div class="head-rgt">
+            <button class="head-rgt__btn">
+            <img
+                src="product-page/images/icon-cart.svg"
+                alt="cart image"
+                class="head-cart__btn-img"
+            />
+            </button>
+
+            <img
+            src="product-page/images/image-avatar.png"
+            alt="person image"
+            class="head-rgt__img"
+            />
+        </div>
+        </header>
+
+        <!-- Main item container -->
+        <main class="item">
+        <section class="img">
+            <button class="img-main__btnlft img-main__btn">
+            <!-- <img
+                src="product-page/images/icon-next.svg"
+                alt="next symbol image"
+                class="img-main__btnlft-img img-main__btn-img"
+            /> -->
+            </button>
+            <!-- <button class="img-main__btnrgt img-main__btn">
+            <img
+                src="product-page/images/icon-next.svg"
+                alt="next symbol image"
+                class="img-main__btnrgt-img img-main__btn-img"
+            />
+            </button> -->
+            <img src="images/paneer/Matar-Paneer.jpg" alt="" class="img-main" id="productPageMainImg"/>
+            <div class="img-btns">
+            <button class="img-btn">
+                <img
+                src="product-page/images/image-product-1-thumbnail.jpg"
+                alt="shoe product image"
+                class="img-btn__img"
+                />
+            </button>
+            <button class="img-btn">
+                <img
+                src="product-page/images/image-product-2-thumbnail.jpg"
+                alt="shoe product image"
+                class="img-btn__img"
+                />
+            </button>
+            <button class="img-btn">
+                <img
+                src="product-page/images/image-product-3-thumbnail.jpg"
+                alt="shoe product image"
+                class="img-btn__img"
+                />
+            </button>
+            <button class="img-btn">
+                <img
+                src="product-page/images/image-product-4-thumbnail.jpg"
+                alt="shoe product image"
+                class="img-btn__img"
+                />
+            </button>
+            </div>
+        </section>
+
+        <section class="price">
+            <h2 class="price-sub__heading">Sneaker Company</h2>
+            <h1 class="price-main__heading">Fall Limited Edition Sneakers</h1>
+            <p class="price-txt">
+            These low-profile sneakers are your perfect casual wear companion.
+            Featuring a durable rubber outer sole, they’ll withstand everything
+            the weather can offer.
+            </p>
+            <div class="price-box">
+            <div class="price-box__main">
+                <span class="price-box__main-new">$125.00</span>
+                <!-- <span class="price-box__main-discount"> 50%</span> -->
+            </div>
+            <span class="price-box__old">$250.00</span>
+            </div>
+
+            <div class="price-btnbox">
+            <div class="price-btns">
+                <button class="price-btn__add price-btn">
+                <img
+                    src="product-page/images/icon-plus.svg"
+                    alt="plus sign"
+                    class="price-btn__add-img price-btn__img"
+                />
+                </button>
+                <span class="price-btn__txt">0</span>
+                <button class="price-btn__remove price-btn">
+                <img
+                    src="product-page/images/icon-minus.svg"
+                    alt="minus sign"
+                    class="price-btn__remove-img price-btn__img"
+                />
+                </button>
+            </div>
+            <button class="price-cart__btn btn--orange">
+                <img
+                src="product-page/images/icon-cart.svg"
+                alt="cart image"
+                class="price-cart__btn-img"
+                />
+                Add to cart
+            </button>
+            </div>
+        </section>
+        </main>
+    </div>
+	
+	<script src="./product-page/script.js"></script>
+</body>
+</html>
