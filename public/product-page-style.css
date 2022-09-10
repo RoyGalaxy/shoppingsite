@@ -63,13 +63,6 @@
     position: fixed;
     background-color: rgba(0, 0, 0, 0.7);
   }
-  model-viewer{
-    width: 250px;
-    display: flex;
-    height: 250px;
-    border-radius: 12px;
-    background-color: var(--pale-yellow);
-  }
   
   .item-overlay {
     max-width: 50rem;

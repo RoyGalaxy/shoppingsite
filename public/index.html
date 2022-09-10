@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Food Website</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="product-page-style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -24,7 +23,54 @@
 </head>
 <body>
 
-    <div id="d-home-screen">
+    <div class="container">
+        <div class="top">
+            <div id="preview-window" class="preview-window">
+                <model-viewer
+                    src="food_ar/assets/breakfast.glb"
+                    ios-src="food_ar/assets/breakfast.usdz"
+                    poster="food_ar/assets/breakfast.jpeg"
+                    alt="A 3D model of an astronaut"
+                    shadow-intensity="1"
+                    camera-controls
+                    auto-rotate ar>
+                </model-viewer>
+                <div id="product-info">
+                    <h2 id="product-name">Classic Slider Box</h2>
+                    <p id="product-description">
+                        OG (B) +  (B) + Laban Up chicken Plus Fries and 2 Dip Bowls
+                    </p>
+                    <div class="price">
+                        <p id="product-price">Price: $180</p>
+                        <div class="cart-options">
+                            <i class="fa fa-plus" onclick="incrementItem()"></i>
+                            <span id="product-quantity">0</span>
+                            <i class="fa fa-minus" onclick="decrementItem()"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div id="cart">
+                <div id="category-list">
+                                    
+                </div>
+            </div>
+        </div>
+    
+        <div id="food-container">
+            <div id="food-items" class="d-food-items">
+
+            </div>
+        </div>
+
+        <div class="footer">
+            <button class="view-cart"><a href="cart.html">View Cart</a></button>
+            <button class="add-to-cart" onclick="addToCart()"><i class="fa fa-cart-plus"></i> Add To Cart</button>
+        </div>
+    </div>
+
+    <div id="d-home-screen" style="display: none;">
         <div class="body-wrapper"></div>
 
         <!-- Header -->
@@ -159,20 +205,6 @@
         <!-- Main item container -->
         <main class="item">
         <section class="img">
-            <!-- <button class="img-main__btnlft img-main__btn">
-            <img
-                src="product-page/images/icon-next.svg"
-                alt="next symbol image"
-                class="img-main__btnlft-img img-main__btn-img"
-            />
-            </button> -->
-            <!-- <button class="img-main__btnrgt img-main__btn">
-            <img
-                src="product-page/images/icon-next.svg"
-                alt="next symbol image"
-                class="img-main__btnrgt-img img-main__btn-img"
-            />
-            </button> -->
             <img src="product-page/images/image-product-1.jpg" alt="" class="img-main" id="productPageMainImg"/>
             <div class="img-btns">
             </div>
@@ -221,43 +253,22 @@
     </div>
 
     
-    <script src="product-page/script.js"></script>
+    <!-- <script src="product-page/script.js"></script> -->
     <script>
-        const productPageMainImg = document.getElementById("productPageMainImg")
-        const productPageMainTitle = document.getElementById("productPageMainTitle")
-        const productPageMainDescription = document.getElementById("productPageMainDescription")
-        const productPageMainPrice = document.getElementById("productPageMainPrice")
+        let itemCount = 0
+        let currentItem = Object.assign({quantity: itemCount},foodItems[0])
+        const foodContainer = document.getElementById("food-items")
+        const topContainer = document.querySelector(".top")
+        const productName = document.getElementById("product-name")
+        const productDesc = document.getElementById("product-description")
+        const productPrice = document.getElementById("product-price")
+        const productQty = document.getElementById("product-quantity")
 
-        window.onscroll= () => {
-            const cartElm = document.getElementById("cart")
-            document.querySelectorAll(".head-nav").forEach(child => child.classList.remove("open-menu"))
-            if(window.scrollY <= 100){
-                cartElm.style.top = 100 - window.scrollY + "px"
-            }
-            else if (window.scrollY > 100) {
-                cartElm.style.top = 0+"px"
-                
-            }
-        }
-        function hideProductPage(){
-            document.getElementById("product-page").classList.toggle('remove');
-            document.getElementById("d-home-screen").classList.toggle('remove');
-        }
-        function toggleProductPage(item){
-            foodItems.forEach(element => {
-                if(element.name.replace(/ /g,"") == item){
-                    productPageMainImg.src = element.img
-                    productPageMainTitle.innerHTML = element.name
-                    productPageMainDescription.innerHTML = element["description - English"]
-                    productPageMainPrice.innerHTML = "$"+element.price
-                    addToCart.id = element.name;
-
-                    document.getElementById("product-page").classList.toggle('remove');
-                    document.getElementById("d-home-screen").classList.toggle('remove');
-                }
-            });
+        window.onload = () => {
+            foodContainer.style.marginTop = topContainer.clientHeight + "px"
         }
     </script>
+    <script src="script.js" defer></script>
     <script src="index.js" type="module"></script>
     <script
       type="module"

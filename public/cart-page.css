@@ -15,7 +15,12 @@ body{
 	height: 90%;
     border-radius: 20px;
 }
-
+.empty-cart{
+	width: 100vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 .Header{
 	margin: auto;
 	width: 90%;
@@ -53,6 +58,12 @@ body{
 	width: 15%;
 	text-align: center;
 	overflow: hidden;
+	border-radius: 50%;
+}
+.image-box img{
+	width: 80px !important;
+	height: 80px !important;
+	object-fit: cover;
 	border-radius: 50%;
 }
 .about{

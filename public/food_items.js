@@ -2,7 +2,6 @@
     {
         "id": 1,
         "name": "Classic Slider Box",
-        "quantity": 1,
         "rating": 4,
         "price": 180,
         "category": "Slider Box",
@@ -13,7 +12,6 @@
     {
         "id": 2,
         "name": "Essentials Slider Box",
-        "quantity": 1,
         "rating": 4,
         "price": 230,
         "category": "Slider Box",
@@ -24,7 +22,6 @@
     {
         "id": 3,
         "name": "Exotic Slider Box",
-        "quantity": 1,
         "rating": 4,
         "price": 250,
         "category": "Slider Box",
@@ -35,7 +32,6 @@
     {
         "id": 4,
         "name": "Make Your Own (MYO) Slider Box",
-        "quantity": 1,
         "rating": 4,
         "price": 300,
         "category": "Slider Box",
@@ -46,7 +42,6 @@
     {
         "id": 5,
         "name": "OG Beef Slider (Big)",
-        "quantity": 1,
         "rating": 4,
         "price": 52,
         "category": "Slider Surprise",
@@ -57,7 +52,6 @@
     {
         "id": 6,
         "name": "OG Beef Slider (Small)",
-        "quantity": 1,
         "rating": 4,
         "price": 42,
         "category": "Slider Surprise",
@@ -68,7 +62,6 @@
     {
         "id": 7,
         "name": "Brisket Delight (Big)",
-        "quantity": 1,
         "rating": 4,
         "price": 55,
         "category": "Slider Surprise",
@@ -79,7 +72,6 @@
     {
         "id": 8,
         "name": "Brisket Delight (Small)",
-        "quantity": 1,
         "rating": 4,
         "price": 49,
         "category": "Slider Surprise",
@@ -89,7 +81,6 @@
     {
         "id": 9,
         "name": "Charcoal Shawarma",
-        "quantity": 1,
         "rating": 4,
         "price": 46,
         "category": "Slider Surprise",
@@ -100,7 +91,6 @@
     {
         "id": 10,
         "name": "Spicy Chicken Slider",
-        "quantity": 1,
         "rating": 4,
         "price": 38,
         "category": "Slider Surprise",
@@ -111,7 +101,6 @@
     {
         "id": 11,
         "name": "LabanUp Chicken Slider",
-        "quantity": 1,
         "rating": 4,
         "price": 38,
         "category": "Slider Surprise",
@@ -121,7 +110,6 @@
     {
         "id": 12,
         "name": "Camel Slider (Big)",
-        "quantity": 1,
         "rating": 4,
         "price": 58,
         "category": "Slider Surprise",
@@ -132,7 +120,6 @@
     {
         "id": 13,
         "name": "Camel Slider (Small)",
-        "quantity": 1,
         "rating": 4,
         "price": 45,
         "category": "Slider Surprise",
@@ -143,7 +130,6 @@
     {
         "id": 14,
         "name": "Deer Slider",
-        "quantity": 1,
         "rating": 4,
         "price": 59,
         "category": "Slider Surprise",
@@ -154,7 +140,6 @@
     {
         "id": 15,
         "name": "Oceanic Slider",
-        "quantity": 1,
         "rating": 4,
         "price": 62,
         "category": "Slider Surprise",
@@ -165,7 +150,6 @@
     {
         "id": 16,
         "name": "Imposible Slider",
-        "quantity": 1,
         "rating": 4,
         "price": 49,
         "category": "Slider Surprise",
@@ -176,7 +160,6 @@
     {
         "id": 17,
         "name": "Falafel Twister",
-        "quantity": 1,
         "rating": 4,
         "price": 39,
         "category": "Slider Surprise",
@@ -187,7 +170,6 @@
     {
         "id": 18,
         "name": "Gold Burger",
-        "quantity": 1,
         "rating": 4,
         "price": 110,
         "category": "Signature Burgers",
@@ -198,7 +180,6 @@
     {
         "id": 19,
         "name": "Laban Up Chicken Burger",
-        "quantity": 1,
         "rating": 4,
         "price": 60,
         "category": "Signature Burgers",
@@ -209,7 +190,6 @@
     {
         "id": 20,
         "name": "Camel Truffle Burger",
-        "quantity": 1,
         "rating": 4,
         "price": 65,
         "category": "Signature Burgers",
@@ -220,7 +200,6 @@
     {
         "id": 21,
         "name": "Short Rib Burger",
-        "quantity": 1,
         "rating": 4,
         "price": 110,
         "category": "Signature Burgers",
@@ -231,7 +210,6 @@
     {
         "id": 22,
         "name": "Oceanic Burger",
-        "quantity": 1,
         "rating": 4,
         "price": 72,
         "category": "Signature Burgers",
@@ -242,7 +220,6 @@
     {
         "id": 23,
         "name": "Deer Delight Burger",
-        "quantity": 1,
         "rating": 4,
         "price": 85,
         "category": "Signature Burgers",
@@ -253,7 +230,6 @@
     {
         "id": 24,
         "name": "Impossible Burger",
-        "quantity": 1,
         "rating": 4,
         "price": 84,
         "category": "Signature Burgers",
@@ -264,7 +240,6 @@
     {
         "id": 25,
         "name": "OG Beef Burger",
-        "quantity": 1,
         "rating": 4,
         "price": 60,
         "category": "Signature Burgers",
@@ -275,7 +250,6 @@
     {
         "id": 26,
         "name": "Saffron Risoto Balls 4 Pcs",
-        "quantity": 1,
         "rating": 4,
         "price": 52,
         "category": "Side Showstopper",
@@ -286,7 +260,6 @@
     {
         "id": 27,
         "name": "Blackpepper Chicken Wings  7 Pcs",
-        "quantity": 1,
         "rating": 4,
         "price": 40,
         "category": "Side Showstopper",
@@ -297,7 +270,6 @@
     {
         "id": 28,
         "name": "Hot Sweet Caramel Shrimp 7 Pcs",
-        "quantity": 1,
         "rating": 4,
         "price": 48,
         "category": "Side Showstopper",
@@ -308,7 +280,6 @@
     {
         "id": 29,
         "name": "Corn off the COB",
-        "quantity": 1,
         "rating": 4,
         "price": 39,
         "category": "Side Showstopper",
@@ -319,7 +290,6 @@
     {
         "id": 30,
         "name": "Chicken Tenders",
-        "quantity": 1,
         "rating": 4,
         "price": 39,
         "category": "Side Showstopper",
@@ -330,7 +300,6 @@
     {
         "id": 31,
         "name": "Chicken Crunchy Tacos",
-        "quantity": 1,
         "rating": 4,
         "price": 39,
         "category": "Tiki Tacos",
@@ -341,7 +310,6 @@
     {
         "id": 32,
         "name": "Briskit Taco",
-        "quantity": 1,
         "rating": 4,
         "price": 55,
         "category": "Tiki Tacos",
@@ -352,7 +320,6 @@
     {
         "id": 33,
         "name": "Oceanic Taco",
-        "quantity": 1,
         "rating": 4,
         "price": 55,
         "category": "Tiki Tacos",
@@ -363,7 +330,6 @@
     {
         "id": 34,
         "name": "Tuna Taco",
-        "quantity": 1,
         "rating": 4,
         "price": 48,
         "category": "Tiki Tacos",
@@ -374,7 +340,6 @@
     {
         "id": 35,
         "name": "Impossible Taco",
-        "quantity": 1,
         "rating": 4,
         "price": 75,
         "category": "Tiki Tacos",
@@ -385,7 +350,6 @@
     {
         "id": 36,
         "name": "Tahini Kale Salad",
-        "quantity": 1,
         "rating": 4,
         "price": 48,
         "category": "Salad",
@@ -396,7 +360,6 @@
     {
         "id": 37,
         "name": "Avacado Forest Salad",
-        "quantity": 1,
         "rating": 4,
         "price": 56,
         "category": "Salad",
@@ -407,7 +370,6 @@
     {
         "id": 38,
         "name": "Beetroot Quinoa Salad",
-        "quantity": 1,
         "rating": 4,
         "price": 35,
         "category": "Salad",
@@ -418,7 +380,6 @@
     {
         "id": 39,
         "name": "Loaded Brisket fries",
-        "quantity": 1,
         "rating": 4,
         "price": 36,
         "category": "On the Side",
@@ -429,7 +390,6 @@
     {
         "id": 40,
         "name": "Loaded chicken fries",
-        "quantity": 1,
         "rating": 4,
         "price": 42,
         "category": "On the Side",
@@ -440,7 +400,6 @@
     {
         "id": 41,
         "name": "Lorded Keema Nachos",
-        "quantity": 1,
         "rating": 4,
         "price": 59,
         "category": "On the Side",
@@ -451,7 +410,6 @@
     {
         "id": 42,
         "name": "Truffle fries",
-        "quantity": 1,
         "rating": 4,
         "price": 33,
         "category": "On the Side",
@@ -462,7 +420,6 @@
     {
         "id": 43,
         "name": "Robabsa",
-        "quantity": 1,
         "rating": 4,
         "price": 19,
         "category": "Freezer Coolers",
@@ -471,7 +428,6 @@
     {
         "id": 44,
         "name": "BerryMint",
-        "quantity": 1,
         "rating": 4,
         "price": 19,
         "category": "Freezer Coolers",
@@ -480,7 +436,6 @@
     {
         "id": 45,
         "name": "Passion Boba",
-        "quantity": 1,
         "rating": 4,
         "price": 19,
         "category": "Freezer Coolers",
@@ -489,7 +444,6 @@
     {
         "id": 46,
         "name": "Black Lemon",
-        "quantity": 1,
         "rating": 4,
         "price": 25,
         "category": "Freezer Coolers",
@@ -498,7 +452,6 @@
     {
         "id": 47,
         "name": "Asai Shake",
-        "quantity": 1,
         "rating": 4,
         "price": 48,
         "category": "ThickShakes",
@@ -507,7 +460,6 @@
     {
         "id": 48,
         "name": "Cookie and Cream",
-        "quantity": 1,
         "rating": 4,
         "price": 28,
         "category": "ThickShakes",
@@ -516,7 +468,6 @@
     {
         "id": 49,
         "name": "Banotus Shake",
-        "quantity": 1,
         "rating": 4,
         "price": 25,
         "category": "ThickShakes",
@@ -525,7 +476,6 @@
     {
         "id": 50,
         "name": "Tiramisu",
-        "quantity": 1,
         "rating": 4,
         "price": 45,
         "category": "Dessert",
@@ -535,7 +485,6 @@
     {
         "id": 51,
         "name": "Cheese Cake",
-        "quantity": 1,
         "rating": 4,
         "price": 31,
         "category": "Dessert",
@@ -544,7 +493,6 @@
     {
         "id": 52,
         "name": "Mustard Dip Bowl",
-        "quantity": 1,
         "rating": 4,
         "price": 10,
         "category": "Add Ons",
@@ -553,7 +501,6 @@
     {
         "id": 53,
         "name": "Ranch Dip Bowl",
-        "quantity": 1,
         "rating": 4,
         "price": 10,
         "category": "Add Ons",
@@ -562,7 +509,6 @@
     {
         "id": 54,
         "name": "Siracha Dip Bowl",
-        "quantity": 1,
         "rating": 4,
         "price": 10,
         "category": "Add Ons",
@@ -571,7 +517,6 @@
     {
         "id": 55,
         "name": "BBQ Dip Bowl",
-        "quantity": 1,
         "rating": 4,
         "price": 10,
         "category": "Add Ons",
@@ -580,7 +525,6 @@
     {
         "id": 56,
         "name": "Labanup Dip Bowl",
-        "quantity": 1,
         "rating": 4,
         "price": 10,
         "category": "Add Ons",
@@ -589,7 +533,6 @@
     {
         "id": 57,
         "name": "Tartar Dip Bowl",
-        "quantity": 1,
         "rating": 4,
         "price": 10,
         "category": "Add Ons",
@@ -598,7 +541,6 @@
     {
         "id": 58,
         "name": "Piri Fries",
-        "quantity": 1,
         "rating": 4,
         "price": 10,
         "category": "Add Ons",
