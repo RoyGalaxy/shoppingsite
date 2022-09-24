@@ -1,75 +1,151 @@
-let cartItems = localStorage.cartItems ? JSON.parse(localStorage.cartItems) : []
+// let cartItems = localStorage.cartItems ? JSON.parse(localStorage.cartItems) : []
 
-function toggleProduct(item){
+function toggleProduct(item,event,thisElm){
+    if(event){
+        if (thisElm.children[2].children[1] === event.target.parentNode || thisElm.children[2].children[2] == event.target){
+            return
+        }
+    }
     foodItems.forEach(element => {
         if(element.name.replace(/ /g,"") == item){
-            productName.innerHTML = element.name
-            productPrice.innerHTML = "Price: $"+element.price
-            productDesc.innerHTML = element["description - English"] ? element["description - English"] : ""
+            let i = checkItemInCart(element)
+            itemCount = ( i === false) ? 0 : cartItems[i].quantity
+            
 
-            itemCount = 0
-            updateItemCount()
-            currentItem = Object.assign({quantity: itemCount},element)
+            productName.innerHTML = element.name
+            productPrice.innerHTML = "$"+element.price
+            productDesc.innerHTML = element["description - English"] ? element["description - English"] : ""
+            currentItem = element
+            currentItem.quantity = itemCount
+            console.log(cartBtns.children[0].className)
+            if(currentItem.quantity == 0 && !cartBtns.children[0].className.includes("remove") || currentItem.quantity > 0 && cartBtns.children[0].className.includes("remove")){
+                cartBtns.children[0].classList.toggle("remove")
+                cartBtns.children[1].classList.toggle("remove")
+            }
+            updateItemCount(currentItem)
         }
     });
 }
 
-function addToCart(){
+function addToCart(item){
+    if(item){
+        cartItems.push(item)
+        return
+    }
     if(cartItems.length > 0 && itemCount > 0){
         for (let i = 0; i < cartItems.length; i++) {
             if(currentItem.name == cartItems[i].name){
-                alert("Item already in cart")
                 return
             }
         }
     }
     if(currentItem.quantity > 0){
-        alert("Item added to cart")
         cartItems.push(currentItem)
-        saveCart()
     }
+    saveCart()
 }
 
-function incrementItem(index){
-    if(index !== undefined){
-        cartItems[index].quantity += 1
-        saveCart()
+function checkItemInCart(item){
+    if(cartItems.length > 0){
+        for (let i = 0; i < cartItems.length; i++) {
+            if(item.name == cartItems[i].name){
+                return i
+            }
+        }
+    }
+    return false
+}
+
+function incrementItem(cartIndex,foodIndex,thisElm){
+    if(cartIndex !== undefined){
+        cartItems[cartIndex].quantity += 1
         displayCart()
-        return
     }
-    if(currentItem){
-        itemCount+=1
-        currentItem.quantity = itemCount
-        updateItemCount()
+    else if(foodIndex !== undefined){
+        i = checkItemInCart(foodItems[foodIndex])
+        let qty = 0
+        if(i === false){
+            let item = foodItems[foodIndex]
+            item.quantity = 1
+            addToCart(item)
+            i = cartItems.length - 1 
+            qty = item.quantity
+        } else{
+            cartItems[i].quantity += 1
+            qty = cartItems[i].quantity
+        }
+        (qty === 1) ? updateItemCount(cartItems[i],true) : updateItemCount(cartItems[i]) 
+        // thisElm.parentNode.children[1].innerHTML = qty
     }
+    else if(currentItem){
+        i = checkItemInCart(currentItem)
+        if(i !== false){
+            currentItem = cartItems[i]
+        }
+        currentItem.quantity +=1
+        currentItem.quantity == 1 && addToCart()
+        if(currentItem.quantity == 1){
+            updateItemCount(currentItem,true)
+        }
+        else updateItemCount(currentItem)
+    }
+    saveCart()
+}
+function decrementItem(cartIndex,foodIndex,thisElm){
+    if(cartIndex !== undefined){
+        if(cartItems[cartIndex].quantity >= 1) cartItems[cartIndex].quantity -= 1
+        if(cartItems[cartIndex].quantity == 0) removeItem(cartIndex)
+        displayCart()
+    }
+    else if(foodIndex !== undefined){
+        i = checkItemInCart(foodItems[foodIndex])
+        let qty = 0
+        if(i !== false){
+            cartItems[i].quantity -= 1
+            qty = cartItems[i].quantity;
+            (qty === 0) ? updateItemCount(cartItems[i],true) : updateItemCount(cartItems[i]) 
+            if(qty < 1)cartItems.splice(i,1)
+        }
+    }
+    else if(currentItem){
+        i = checkItemInCart(currentItem)
+        if(i !== false){
+            currentItem = cartItems[i]
+        }
+        if(currentItem.quantity >= 1){
+            currentItem.quantity-=1
+            updateItemCount(currentItem)
+        } 
+        if(currentItem.quantity == 0){
+            cartItems.splice(i,1)
+            updateItemCount(currentItem,true)
+        }
+    }
+    saveCart()
 }
 
 function removeItem(index){
+    if(index === undefined) return
     cartItems.splice(index,1)
     saveCart()
     displayCart()
 }
-function removeAllItems(){
-    cartItems = []
-    saveCart()
-    displayCart()
-}
-function decrementItem(index){
-    if(index !== undefined && cartItems[index].quantity > 1){
-        cartItems[index].quantity -= 1
-        saveCart()
-        displayCart()
-        return
+
+function updateItemCount(item,toggle){
+    if(currentItem.name === item.name){
+        currentItem.quantity = item.quantity
+        productQty.innerHTML = item.quantity;
+        if(toggle){
+            cartBtns.children[0].classList.toggle("remove")
+            cartBtns.children[1].classList.toggle("remove")
+        }
     }
-    if(currentItem && itemCount > 0){
-        itemCount-=1
-        currentItem.quantity = itemCount
-        updateItemCount()
+    const listCard = document.getElementById(item.name.replace(/ /g,''))
+    listCard.children[2].children[1].children[1].innerHTML = item.quantity
+    if(toggle){
+        listCard.children[2].children[1].classList.toggle("remove")
+        listCard.children[2].children[2].classList.toggle("remove")
     }
-}
-function updateItemCount(){
-    currentItem.quantity = itemCount
-    productQty.innerHTML = itemCount;
 }
 
 function saveCart(){

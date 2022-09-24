@@ -3,20 +3,10 @@
 <head>
 	<meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
 	<title>Shopping Cart UI</title>
-	<style>
-		:root{
-			--primary: hsl(240, 20%, 8%);
-			--primary-light:hsl(240, 20%, 11%);
-			--primary-text: hsl(0, 0%, 80%);
-			--primary-text-light: hsl(0, 0%, 70%);
-			--secondary: hsl(56, 100%, 50%);
-			--secondary-light: hsl(56, 100%, 40%);
-		}
-	</style>
-	<link rel="stylesheet" type="text/css" href="cart-page.css">
 	<link rel="stylesheet" href="product-page-style.css">
+	<link rel="stylesheet" type="text/css" href="cart-page.css">
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,900" rel="stylesheet">
     <!-- <script src="//cdn.jsdelivr.net/npm/eruda"></script>
     <script>eruda.init();</script> -->
@@ -311,6 +301,7 @@
 
     <script src="script.js"></script>
     <script>
+        let cartItems = localStorage.cartItems ? JSON.parse(localStorage.cartItems) : []
         const headerHeight = document.querySelector("header").clientHeight
         const cartContainer = document.getElementById("cartContainer")
         function displayCart(){
@@ -333,21 +324,19 @@
                         <div class="about">
                             <h1 class="title">${item.name}</h1>
                         </div>
-                        <div class="counter">
+                        <div class="counter" >
                             <div class="btn" onclick="incrementItem(${index})">+</div>
                             <div class="count">${item.quantity}</div>
                             <div class="btn" onclick="decrementItem(${index})">-</div>
                         </div>
                         <div class="prices">
-                            <div class="amount">${item.price}</div>
-                            <div class="remove" onclick="removeItem(${index})"><u>Remove</u></div>
+                            <div class="amount">$${item.price}</div>
                         </div>
                     </div>`
                 })
                 cartContainer.innerHTML = `
                 <div class="Header">
                     <h3 class="Heading">Your Cart</h3>
-                    <h5 class="Action" onclick="removeAllItems()">Remove all</h5>
                 </div>
                 ${cartTxt}
                 <hr> 

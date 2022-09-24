@@ -1,5 +1,14 @@
 html{
 	margin: 0;
+	box-sizing: border-box;
+}
+:root{
+	--primary: hsl(0, 0%, 98%);
+	--primary-light:hsl(0, 0%, 90%);
+	--primary-text:hsl(240, 20%, 11%);
+	--primary-text-light: hsl(240, 20%, 8%);
+	--secondary: hsl(0, 75%, 50%);
+	--secondary-light: hsl(0, 75%, 70%);
 }
 body{
 	margin: 0;
@@ -70,10 +79,10 @@ body{
 	height: 100%;
 	display: flex;
 	align-items: center;
-	width: 24%;
+	width: 45%;
 }
 .title{
-	font-size: 32px;
+	font-size: 24px;
 	font-family: 'Open Sans';
 	text-align: left;
 	font-weight: 800;
@@ -102,6 +111,7 @@ body{
 	justify-content: center;
 	align-items: center;
 	font-size: 20px;
+	line-height: 20px;
 	font-family: 'Open Sans';
 	font-weight: 900;
 	color: var(--primary);
@@ -115,12 +125,13 @@ body{
 }
 
 .prices{
+	width: 15%;
 	height: 100%;
 	text-align: right;
 }
 .amount{
-	padding-top: 20px;
 	font-size: 26px;
+	line-height: 26px;
 	font-family: 'Open Sans';
 	font-weight: 800;
 	color: var(--primary-text);
@@ -144,8 +155,8 @@ hr{
 	margin-right: 5%;
 }
 .checkout{
-	float: right;
-	margin-right: 5%;
+	display: block;
+	margin: 50px auto;
 	width: 28%;
 }
 .total{
@@ -193,7 +204,7 @@ hr{
 		border-radius: 50%;
 	}
 	.title{
-		margin-left: -35px;
+		/* margin-left: -35px; */
 		font-size: 16px;
 	}
 	.btn{

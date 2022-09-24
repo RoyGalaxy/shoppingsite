@@ -18,13 +18,23 @@
       src="https://unpkg.com/focus-visible@5.0.2/dist/focus-visible.js"
       defer
     ></script>
-    <!-- <script src="//cdn.jsdelivr.net/npm/eruda"></script>
-    <script>eruda.init();</script> -->
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
 </head>
 <body>
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+     
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+     
+    </div>
 
     <div class="container">
         <div class="top">
+            <header>
+                <img src="images/black-pepper.png" height="50">
+            </header>
             <div id="preview-window" class="preview-window">
                 <model-viewer
                     src="food_ar/assets/breakfast.glb"
@@ -37,16 +47,19 @@
                 </model-viewer>
                 <div id="product-info">
                     <h2 id="product-name">Classic Slider Box</h2>
-                    <p id="product-description">
-                        OG (B) +  (B) + Laban Up chicken Plus Fries and 2 Dip Bowls
-                    </p>
                     <div class="price">
-                        <p id="product-price">Price: $180</p>
-                        <div class="cart-options">
+                        <span id="product-price">$180</span>
+                    </div>
+                    <span id="product-description" class="ellipsis">
+                        OG (B) +  (B) + Laban Up chicken Plus Fries and 2 Dip Bowls
+                    </span>
+                    <div class="add-to-cart-btns">
+                        <span class="cart-options remove">
                             <i class="fa fa-plus" onclick="incrementItem()"></i>
                             <span id="product-quantity">0</span>
                             <i class="fa fa-minus" onclick="decrementItem()"></i>
-                        </div>
+                        </span>
+                        <span class="add" onclick="incrementItem()">Add +</span>
                     </div>
                 </div>
             </div>
@@ -64,192 +77,8 @@
             </div>
         </div>
 
-        <div class="footer">
-            <button class="view-cart"><a href="cart.html">View Cart</a></button>
-            <button class="add-to-cart" onclick="addToCart()"><i class="fa fa-cart-plus"></i> Add To Cart</button>
-        </div>
-    </div>
-
-    <div id="d-home-screen" style="display: none;">
-        <div class="body-wrapper"></div>
-
-        <!-- Header -->
-        <header class="head">
-        <div class="head-lft">
-            <button class="head-lft__btn">
-            <img
-                src="product-page/images/icon-menu.svg"
-                alt="menu image"
-                class="head-lft__btn-img"
-            />
-            </button>
-            <!-- <img src="product-page/images/logo.svg" alt="logo" class="head-logo" /> -->
-            <ul class="head-nav">
-            <li class="head-nav__item"><a href="cart.html">Cart</a></li>
-            <li class="head-nav__item"><a href="account.html">My Account</a></li>
-            </ul>
-        </div>
-
-        <div class="head-rgt">
-            <button class="head-rgt__btn">
-                <a href="cart.html">
-                    <img
-                        src="product-page/images/icon-cart.svg"
-                        alt="cart image"
-                        class="head-cart__btn-img"
-                        />
-                </a>
-            </button>
-
-            <img
-            src="product-page/images/image-avatar.png"
-            alt="person image"
-            class="head-rgt__img"
-            />
-        </div>
-        </header>
-
-        <!-- Main item container -->
-        <main style="display: flex;">
-            <div id="food-container">
-                <div id="food-items" class="d-food-items">
-
-                </div>
-            </div>
-            
-            <div id="cart">
-                <div id="category-list">
-                    <p class="item-menu">Go For Hunt</p>
-                    <div class="border"></div>                
-                </div>
-                <div id="checkout" class="remove">
-                    <p id="total-item">Total Item : 0</p>
-                    <p id="total-price"></p>
-                    <p id="delievery">Free delievery on <span>$40</span></p>
-                    <button class="btn checkout-btn">Checkout</button>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <div id="product-page" class="remove">
-        <div class="body-wrapper"></div>
-
-        <!-- Overlay image Modal -->
-        <div class="overlay-container">
-        <div class="item-overlay">
-            <button class="item-overlay__btn">
-            <img
-                src="product-page/images/icon-close.svg"
-                alt="close image"
-                class="item-overlay__btn-img"
-            />
-            </button>
-            <div class="item-overlay__mainImg">
-                <model-viewer
-                    src="food_ar/assets/breakfast.glb"
-                    ios-src="food_ar/assets/breakfast.usdz"
-                    poster="food_ar/assets/breakfast.jpeg"
-                    alt="A 3D model of an astronaut"
-                    shadow-intensity="1"
-                    camera-controls
-                    auto-rotate ar>
-                </model-viewer>
-            <!-- <img
-                src="product-page/images/image-product-1.jpg"
-                alt=""
-                class="item-overlay__img"
-            /> -->
-            </div>
-        </div>
-        </div>
-
-        <!-- Header -->
-        <header class="head">
-        <div class="head-lft">
-            <button class="head-lft__btn">
-            <img
-                src="product-page/images/icon-menu.svg"
-                alt="menu image"
-                class="head-lft__btn-img"
-            />
-            </button>
-            <!-- <img src="product-page/images/logo.svg" alt="logo" class="head-logo" /> -->
-            <ul class="head-nav">
-            <li class="head-nav__item" onclick="hideProductPage()">Home</li>
-            <li class="head-nav__item"><a href="cart.html">Cart</a></li>
-            <li class="head-nav__item"><a href="account.html">My Account</a></li>
-            </ul>
-        </div>
-
-        <div class="head-rgt">
-            <button class="head-rgt__btn">
-                <a href="cart.html">
-                    <a href="cart.html">
-                        <img
-                            src="product-page/images/icon-cart.svg"
-                            alt="cart image"
-                            class="head-cart__btn-img"
-                        />
-                    </a>
-                </a>
-            </button>
-
-            <img
-            src="product-page/images/image-avatar.png"
-            alt="person image"
-            class="head-rgt__img"
-            />
-        </div>
-        </header>
-        <!-- Main item container -->
-        <main class="item">
-        <section class="img">
-            <img src="product-page/images/image-product-1.jpg" alt="" class="img-main" id="productPageMainImg"/>
-            <div class="img-btns">
-            </div>
-        </section>
-
-        <section class="price">
-            <h1 class="price-main__heading" id="productPageMainTitle"></h1>
-            <p class="price-txt" id="productPageMainDescription"></p>
-            <div class="price-box">
-            <div class="price-box__main">
-                <span class="price-box__main-new" id="productPageMainPrice"></span>
-                <!-- <span class="price-box__main-discount"> 50%</span> -->
-            </div>
-            <!-- <span class="price-box__old">$250.00</span> -->
-            </div>
-
-            <div class="price-btnbox">
-            <div class="price-btns">
-                <button class="price-btn__add price-btn">
-                <img
-                    src="product-page/images/icon-plus.svg"
-                    alt="plus sign"
-                    class="price-btn__add-img price-btn__img"
-                />
-                </button>
-                <span class="price-btn__txt">0</span>
-                <button class="price-btn__remove price-btn">
-                <img
-                    src="product-page/images/icon-minus.svg"
-                    alt="minus sign"
-                    class="price-btn__remove-img price-btn__img"
-                />
-                </button>
-            </div>
-            <button class="price-cart__btn btn--orange">
-                <img
-                src="product-page/images/icon-cart.svg"
-                alt="cart image"
-                class="price-cart__btn-img"
-                />
-                Add to cart
-            </button>
-            </div>
-        </section>
-    </main>
+        <button class="floating-cart-btn"><a href="cart.html"><i class="fa fa-shopping-cart"></i></a></button>
+        <span class="overlay-txt">Realitydiner powered by Nimantrit Foods</span>
     </div>
 
     
@@ -263,13 +92,36 @@
         const productDesc = document.getElementById("product-description")
         const productPrice = document.getElementById("product-price")
         const productQty = document.getElementById("product-quantity")
+        const cartBtns = document.querySelector("#product-info .add-to-cart-btns")
 
+        window.onscroll = () => {
+            let foodItems = document.getElementById("food-items")
+            let childNodes = foodItems.children
+            let height = 0
+            for (let i = 0; i < childNodes.length; i++) {
+                const elm = childNodes[i];
+                if(window.pageYOffset >= height && window.pageYOffset < (height + elm.clientHeight)){
+                    // foodItems.scrollTo({top:0,left:200})
+                    listcards[selectedIndex].setAttribute("class","list-card")
+                    listcards[i].setAttribute("class","list-card active")
+                    selectedIndex = i
+                }
+                height += elm.clientHeight
+            }
+        }
         window.onload = () => {
+            document.body.classList.add("loaded")
             foodContainer.style.marginTop = topContainer.clientHeight + "px"
+            let i = checkItemInCart(currentItem)
+            if(i !== false ){
+                productQty.innerHTML = cartItems[i].quantity
+                updateItemCount(cartItems[i],true)
+            } 
+            itemCount = i === false  ? 0 : cartItems[i].quantity 
         }
     </script>
     <script src="script.js" defer></script>
-    <script src="index.js" type="module"></script>
+    <script src="index.js" defer"></script>
     <script
       type="module"
       src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"

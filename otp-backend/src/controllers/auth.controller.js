@@ -1,4 +1,4 @@
-const User = require("../models/user.model");
+const User = require("src/models/user.model");
 
 const {
   PHONE_NOT_FOUND_ERR,
@@ -10,9 +10,9 @@ const {
 } = require("../errors");
 
 // const { checkPassword, hashPassword } = require("../utils/password.util");
-const { createJwtToken } = require("../utils/token.util");
+const { createJwtToken } = require("src/utils/token.util");
 
-const { generateOTP, fast2sms } = require("../utils/otp.util");
+const { generateOTP, fast2sms } = require("src/utils/otp.util");
 
 // --------------------- create new user ---------------------------------
 

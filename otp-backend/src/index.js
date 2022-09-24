@@ -4,7 +4,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 
-const { PORT, MONGODB_URI, NODE_ENV,ORIGIN } = require("./config");
+const { PORT, MONGODB_URI, NODE_ENV,ORIGIN } = require("src/config");
 const { API_ENDPOINT_NOT_FOUND_ERR, SERVER_ERR } = require("./errors");
 
 // routes
