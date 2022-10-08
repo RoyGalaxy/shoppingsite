@@ -13,13 +13,12 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="./food_items.js"></script>
     <script
       src="https://unpkg.com/focus-visible@5.0.2/dist/focus-visible.js"
       defer
     ></script>
-    <!-- <script src="//cdn.jsdelivr.net/npm/eruda"></script>
-    <script>eruda.init();</script> -->
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
 </head>
 <body class="loaded">
     <div id="loader-wrapper">
@@ -84,15 +83,49 @@
     
     <!-- <script src="product-page/script.js"></script> -->
     <script>
-        let itemCount = 0
-        let currentItem = Object.assign({quantity: itemCount},foodItems[0])
-        const foodContainer = document.getElementById("food-items")
-        const topContainer = document.querySelector(".top")
-        const productName = document.getElementById("product-name")
-        const productDesc = document.getElementById("product-description")
-        const productPrice = document.getElementById("product-price")
-        const productQty = document.getElementById("product-quantity")
-        const cartBtns = document.querySelector("#product-info .add-to-cart-btns")
+        var user;
+        var itemCount;
+        var currentItem;
+        var foodContainer;
+        var topContainer;
+        var productName;
+        var productDesc;
+        var productPrice;
+        var productQty;
+        var cartBtns;
+
+        let foodItems = []
+        async function getProducts(){
+            let res = await fetch("/api/products/")
+            res = res.json()
+            res.then(data => {
+                foodItems = data
+                vegData = [...new Map(foodItems.map(item=> [item['category'],item])).values()];
+                init()
+                selectTaste()
+                let i = checkItemInCart(currentItem)
+                if(i !== false ){
+                    productQty.innerHTML = cartItems[i].quantity
+                    updateItemCount(cartItems[i],true)
+                }
+                temCount = i === false  ? 0 : cartItems[i].quantity
+            })
+        }
+        function init(){
+            user = JSON.parse(localStorage.user)
+            itemCount = 0
+            currentItem = Object.assign({quantity: itemCount},foodItems[0])
+            foodContainer = document.getElementById("food-items")
+            topContainer = document.querySelector(".top")
+            productName = document.getElementById("product-name")
+            productDesc = document.getElementById("product-description")
+            productPrice = document.getElementById("product-price")
+            productQty = document.getElementById("product-quantity")
+            cartBtns = document.querySelector("#product-info .add-to-cart-btns")
+            
+            foodContainer.style.marginTop = topContainer.clientHeight + "px" 
+        }
+        
 
         window.onscroll = () => {
             let foodItems = document.getElementById("food-items")
@@ -111,13 +144,6 @@
         }
         window.onload = () => {
             document.body.classList.add("loaded")
-            foodContainer.style.marginTop = topContainer.clientHeight + "px"
-            let i = checkItemInCart(currentItem)
-            if(i !== false ){
-                productQty.innerHTML = cartItems[i].quantity
-                updateItemCount(cartItems[i],true)
-            } 
-            itemCount = i === false  ? 0 : cartItems[i].quantity 
         }
     </script>
     <script src="script.js" defer></script>

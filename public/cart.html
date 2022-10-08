@@ -48,7 +48,7 @@
         <main style="width:100vw;"">
             <div class="CartContainer" id="cartContainer">
 				<div class="Header">
-					<h3 class="Heading">Shopping Cart</h3>
+					<h3 class="Heading">Shopping</h3>
 					<h5 class="Action">Remove all</h5>
 				</div>
                 
@@ -61,7 +61,7 @@
 					</div>
 					<div class="total-amount">$230</div>
 				</div>
-				<button class="button">Checkout</button>
+				<button class="button"><a href="checkout.html">Checkout</a></button>
 			</div>
 		 </div>
         </main>
@@ -304,6 +304,8 @@
         let cartItems = localStorage.cartItems ? JSON.parse(localStorage.cartItems) : []
         const headerHeight = document.querySelector("header").clientHeight
         const cartContainer = document.getElementById("cartContainer")
+        const checkoutBtn = document.getElementById("checkoutBtn")
+        const stripeKey = "pk_test_51LlpoqSCw4adMApfje9B4e5PAwnbXFZv3RGaliDMikkNpwFc3u19BTvPKZAdut4OYv7nW0cnvU5JZHWk5zukheVu001DJES5za";;
         function displayCart(){
             if(cartItems.length < 1){
                 cartContainer.innerHTML = `
@@ -348,10 +350,15 @@
                         </div>
                         <div class="total-amount">$${totalAmount}</div>
                     </div>
-                    <button class="button">Checkout</button>
+                    <button class="button" id"checkoutBtn">Checkout</button>
                 </div>`
             }
             displayCart()
+
+
+            checkoutBtn.addEventListener("click",() => {
+                fetch("/")
+            })
         </script>
         <script src="./product-page/script.js" defer></script>
 </body>

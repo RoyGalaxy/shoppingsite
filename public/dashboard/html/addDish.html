@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+<html
+  lang="en"
+  class="light-style customizer-hide"
+  dir="ltr"
+  data-theme="theme-default"
+  data-assets-path="../assets/"
+  data-template="vertical-menu-template-free"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+
+    <title>Login - Nimantrit</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" href="../assets/vendor/fonts/boxicons.css"/>
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+    <!-- Page CSS -->
+    <!-- Page -->
+    <link rel="stylesheet" href="../assets/vendor/css/pages/page-auth.css" />
+    <!-- Helpers -->
+    <script src="../assets/vendor/js/helpers.js"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="../assets/js/config.js"></script>
+    <!-- <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script> -->
+  </head>
+
+  <body>
+    <!-- Content -->
+
+    <div class="container-xxl">
+      <div class="authentication-wrapper authentication-basic container-p-y">
+        <div class="authentication-inner">
+          <!-- Register -->
+          <div class="card">
+            <div class="card-body">
+              <!-- Logo -->
+              <div class="app-brand justify-content-center">
+                <a href="index.html" class="app-brand-link gap-2">
+                  <span class="app-brand-logo demo">
+                    <!-- Put logo here -->
+                  </span>
+                  <span class="app-brand-text demo text-body fw-bolder">Nimantrit Foods</span>
+                </a>
+              </div>
+              <!-- /Logo -->
+              <h4 class="mb-2 text-center">Add New Product</h4>
+
+              <form id="addDish" class="mb-3">
+                <div class="mb-3">
+                  <label for="name" class="form-label">Product Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    name="name"
+                    placeholder="Enter Product Name"
+                    autofocus
+                  />
+                </div>
+                
+                <div class="mb-3">
+                    <label for="description" class="form-label">Product Description</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="description"
+                        name="description"
+                        placeholder="Enter Product Description"
+                    />
+                </div>
+
+                <div class="mb-3">
+                    <label for="image" class="form-label">Product Image</label>
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="image"
+                      name="image"
+                      accept="images/*"
+                    />
+                </div>
+
+                <div class="mb-3">
+                    <label for="category" class="form-label">Product Category</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="category"
+                      name="category"
+                      placeholder="Enter Product Category"
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label">Product Price</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="price"
+                      name="price"
+                      placeholder="Enter Product Price"
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="model3d" class="form-label">Product 3d model</label>
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="model3d"
+                      name="model3d"
+                    />
+                </div>
+                <div class="mb-3">
+                  <button class="btn btn-primary d-grid w-100" type="submit">Add Dish</button>
+                </div>
+    </form>
+
+            </div>
+          </div>
+          <!-- /Register -->
+        </div>
+      </div>
+    </div>
+
+    <!-- / Content -->
+
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src="../assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="../assets/vendor/libs/popper/popper.js"></script>
+    <script src="../assets/vendor/js/bootstrap.js"></script>
+    <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+    <script src="../assets/vendor/js/menu.js"></script>
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+
+    <!-- Main JS -->
+    <script src="../assets/js/main.js"></script>
+
+    <!-- Page JS -->
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script>
+        const form = document.getElementById("addDish")
+  
+        form.onsubmit = async (e) => {
+            e.preventDefault()
+            const imageElm = document.getElementById("image")
+            const model3dElm = document.getElementById("model3d")
+            if(!imageElm.value || !model3dElm.value){
+              alert("Please fill all necessary fields before submitting")
+              return
+            }
+            const user = JSON.parse(localStorage.user)
+            const formData = new FormData(e.target)
+
+            const res = await fetch("/api/products", {
+                method: "post",
+                headers: {token: `Bearer ${user.accessToken}`},
+                body: formData,
+            }).catch((error) => ("Something went wrong!", error));
+            jsonRes = res.json()
+            jsonRes.then(data => console.log(data))
+        }
+      </script>
+  </body>
+</html>

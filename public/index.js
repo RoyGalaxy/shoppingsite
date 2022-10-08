@@ -17,10 +17,10 @@ function displayItems(){
                 }
             }
             return `<div class="item-card" id="${item.name.replace(/ /g,'')}" onclick="toggleProduct(this.id,event,this)">
-                <img src="${item.img}" />
+                <img src="${item.image}" />
                 <div class="item-info">
                     <span id="item-name" class="ellipsis">${item.name}</span>
-                    ${item["description - English"] ? `<span id='item-description' class="ellipsis">${item['description - English']}</span>` : ""}
+                    ${item["description - English"] ? `<span id='item-description' class="ellipsis">${item['description']}</span>` : ""}
                 </div>
                 <div class="item-info item-price-box">
                     <p id="item-price">$${item.price}</p>
@@ -46,11 +46,8 @@ function displayItems(){
 // <i class="fa fa-minus" onclick="decrementItem(undefined,${count},this)"></i>
 // </span>`
 
-const vegData= [...new Map(foodItems.map(item=> [item['category'],item])).values()];
+let vegData= []
 
-function setAsActive(){
-    alert()
-}
 let selectedIndex = 0
 var listcards = []
 
@@ -82,7 +79,5 @@ function selectTaste(){
     displayItems();
     listcards.map((listCard) => categoryList.appendChild(listCard))
 }
-selectTaste();
-
-
+getProducts()
 
