@@ -23,6 +23,7 @@ var upload = multer({
 
 //  CREATE 
 router.post("/",verifyTokenAndAdmin,upload.any("image"), async (req, res) => {
+    console.log(req.body)
     if (res.status(200)) {
         console.log("Your file has been uploaded successfully.");
         console.log(req.body);
@@ -37,7 +38,8 @@ router.post("/",verifyTokenAndAdmin,upload.any("image"), async (req, res) => {
 })
 
 // UPDATE
-router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
+router.put("/:id",verifyTokenAndAdmin,upload.any("image"), async (req, res) => {
+    console.log(req.body)
     try {
         const updatedProduct = await Product.findByIdAndUpdate(req.params.id,
             {

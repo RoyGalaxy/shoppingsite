@@ -6,12 +6,37 @@ const getProduct = async (id) => {
     return await product
 }
 
+const getAllProducts = async () => {
+    const res = await fetch(`/api/products/`)
+    const jsonRes = await res.json()
+    let products = await jsonRes
+
+    return await products
+}
+
 const getUser = async (id) => {
     const user = JSON.parse(localStorage.user)
     const res = await fetch(`/api/users/find/${id}`,
     {
         headers: {token: `Bearer ${user.accessToken}`},
     })
+    const jsonRes = await res.json()
+    let userRes = await jsonRes
+
+    return await userRes
+}
+
+const updateOrder = async(orderId,update) => {
+    const user = JSON.parse(localStorage.user)
+    const res = await fetch(`/api/orders/${orderId}`,
+        {
+            method: "put",
+            body: JSON.stringify(update),
+            headers: {
+                "content-type": "application/json",
+                token: `Bearer ${user.accessToken}`
+            },
+        })
     const jsonRes = await res.json()
     let userRes = await jsonRes
 

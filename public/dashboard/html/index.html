@@ -95,7 +95,7 @@
             <!-- Add New Product -->
             <li class="menu-item">
               <a href="addDish.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <i class="menu-icon tf-icons bx bxs-add-to-queue"></i>
                 <div data-i18n="Analytics">Add New Dish</div>
               </a>
             </li>
@@ -104,7 +104,7 @@
             <!-- Update Product -->
             <li class="menu-item">
               <a href="updateDish.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <i class="menu-icon tf-icons bx bx-refresh"></i>
                 <div data-i18n="Analytics">Update Dish</div>
               </a>
             </li>
@@ -113,7 +113,7 @@
             <!-- Delete Product -->
             <li class="menu-item">
               <a href="deleteDish.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <i class="menu-icon tf-icons bx bxs-minus-circle"></i>
                 <div data-i18n="Analytics">Delete A Dish</div>
               </a>
             </li>
@@ -124,7 +124,7 @@
             
             <li class="menu-item">
               <a href="colorScheme.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-crown"></i>
+                <i class="menu-icon tf-icons bx bxs-color-fill"></i>
                 <div data-i18n="Boxicons">Change color scheme</div>
               </a>
             </li>
@@ -133,14 +133,14 @@
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Account</span></li>            
             <li class="menu-item">
               <a href="/html/login.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-crown"></i>
+                <i class="menu-icon tf-icons bx bxs-user"></i>
                 <div data-i18n="Boxicons">Login</div>
               </a>
             </li>
 
             <li class="menu-item">
               <a href="login.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-crown"></i>
+                <i class="menu-icon tf-icons bx bx-user-x"></i>
                 <div data-i18n="Boxicons">Logout</div>
               </a>
             </li>
@@ -266,7 +266,7 @@
                     <div class="card-body">
                       <div class="d-flex justify-content-between align-items-center mb-3">
                         <div class="d-flex flex-column align-items-center gap-1">
-                          <h2 class="mb-2" id="openOrdersCount">8,258</h2>
+                          <h2 class="mb-2" id="openOrdersCount">0</h2>
                           <span>Total Orders</span>
                         </div>
                         <!-- <div id="orderStatisticsChart"></div> -->
@@ -365,20 +365,60 @@
           openOrdersCount.textContent = data.length || "No Orders"
           for (let i = 0; i < data.length; i++) {
             const order = data[i];
+            if(order.status?.currentStatus === "closed"){
+              continue
+            }
             getUser(order.userId).then(user => {
-              console.log(user)
+
               let btn = document.createElement("button")
               btn.type = "button"
               btn.className = "collapsible"
               btn.textContent = "New Order from " + user.username + " (click to view)"
+              btn.addEventListener("click", function(){
+                this.nextElementSibling.classList.toggle("active")
+              })
 
               const acceptBtn = document.createElement("button")
               acceptBtn.className = "btn btn-primary"
-              acceptBtn.textContent = "Accept Order"
+              acceptBtn.disabled = (order.status === "accepted")
+              acceptBtn.textContent = acceptBtn.disabled ? "Accepted" : "Accept Order"
+              if(order.status !== "accepted"){
+                acceptBtn.addEventListener("click", () => {
+                const update = {status: "accepted"}
+                updateOrder(order._id,update).then(data => {
+                  if(data.address){
+                    console.log(data)
+                    alert("Order has been Accepted")
+                    location.reload()
+                  }
+                  else{
+                    alert("Some error occured!!")
+                  }
+                })
+              })
+              }
               btn.appendChild(acceptBtn)
               
               const content = document.createElement("div")
               content.className = "content"
+
+              const addressComponent = document.createElement("div")
+              addressComponent.className = "wrapper"
+
+              const addressWrapper = document.createElement("div")
+              addressWrapper.className = "d-flex w-100 flex-wrap align-items-center justify-content-between gap-2"
+                  
+              const addressDetail = document.createElement("div")
+              addressDetail.className = "me-2"
+
+              const addressElm = document.createElement("h5")
+              addressElm.className = "mb-0"
+              addressElm.textContent = `Shipping address - ${order.address}`
+
+              addressDetail.appendChild(addressElm)
+              addressWrapper.append(addressDetail)
+              addressComponent.appendChild(addressWrapper)
+              content.append(addressComponent)
 
               for(let j = 0; j < order.products.length;j++){
                 getProduct(order.products[j].productId).then(product => {
@@ -389,7 +429,8 @@
                   const avatar = document.createElement("div")
                   avatar.className = "avatar flex-shrink-0 me-3"
 
-                  const avatarInitial = document.createElement("span")
+                  const avatarInitial = document.createElement("img")
+                  avatarInitial.src = `/${product.image}`
                   avatarInitial.className = "avatar-initial rounded bg-label-primary"
 
                   let icon = document.createElement("i")
@@ -411,7 +452,7 @@
 
                   const productCategory = document.createElement("small")
                   productCategory.className = "text-muted"
-                  productCategory.textContent = product.category
+                  productCategory.textContent = `Quantity - ${order.products[j].quantity}`
 
                   productDetail.appendChild(productName)
                   productDetail.appendChild(productCategory)
@@ -429,14 +470,11 @@
                   content.appendChild(wrapper)
                 })
               }
-              
               orderContainer.appendChild(btn)
               orderContainer.appendChild(content)
-
             })
           }
         })
-        setTimeout(configCollapsible,1000)
       })
       .catch(err => {
         console.log(error)

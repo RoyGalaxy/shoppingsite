@@ -15,7 +15,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Login - Nimantrit</title>
+    <title>Update Dish - Nimantrit</title>
 
     <meta name="description" content="" />
 
@@ -58,8 +58,7 @@
     <div class="container-xxl">
       <div class="authentication-wrapper authentication-basic container-p-y">
         <div class="authentication-inner">
-          <!-- Register -->
-          <div class="card">
+          <div class="card" id="productList">
             <div class="card-body">
               <!-- Logo -->
               <div class="app-brand justify-content-center">
@@ -71,9 +70,30 @@
                 </a>
               </div>
               <!-- /Logo -->
-              <h4 class="mb-2 text-center">Add New Product</h4>
+              <h6 class="mb-2 text-center">Select the Product to be updated</h6>
 
-              <form id="addDish" class="mb-3">
+              <div id="productsContainer">
+                
+              </div>
+            </div>
+          </div>
+          <!-- Update Dish Form -->
+          <div class="card d-none" id="updateForm">
+            <div class="card-body">
+              <!-- Logo -->
+              <div class="app-brand justify-content-center">
+                <a href="index.html" class="app-brand-link gap-2">
+                  <span class="app-brand-logo demo">
+                    <!-- Put logo here -->
+                  </span>
+                  <span class="app-brand-text demo text-body fw-bolder">Nimantrit Foods</span>
+                </a>
+              </div>
+              <!-- /Logo -->
+              <h4 class="mb-2 text-center">Update Product</h4>
+              <p class="mb-2 text-center">*Leave the fields for files unchanged until necessary</p>
+
+              <form id="updateDish" class="mb-3">
                 <div class="mb-3">
                   <label for="name" class="form-label">Product Name</label>
                   <input
@@ -138,13 +158,12 @@
                     />
                 </div>
                 <div class="mb-3">
-                  <button class="btn btn-primary d-grid w-100" type="submit">Add Dish</button>
+                  <button class="btn btn-primary d-grid w-100" type="submit">Update</button>
                 </div>
-    </form>
-
+              </form>
             </div>
           </div>
-          <!-- /Register -->
+          <!-- /Update Dish Form -->
         </div>
       </div>
     </div>
@@ -159,6 +178,7 @@
     <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
     <script src="../assets/vendor/js/menu.js"></script>
+    <script src="../assets/js/apiRequestHandler.js"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
@@ -171,26 +191,112 @@
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script>
-        const form = document.getElementById("addDish")
-  
-        form.onsubmit = async (e) => {
-            e.preventDefault()
-            const imageElm = document.getElementById("image")
-            const model3dElm = document.getElementById("model3d")
-            if(!imageElm.value || !model3dElm.value){
-              alert("Please fill all necessary fields before submitting")
-              return
-            }
+      var selectedProduct;
+      const form = document.getElementById("updateDish")
+      const nameElm = document.getElementById("name")
+      const descriptionElm = document.getElementById("description")
+      const categoryElm = document.getElementById("category")
+      const priceElm = document.getElementById("price")
+      const imageElm = document.getElementById("image")
+      const modelElm = document.getElementById("model3d")
 
-            const formData = new FormData(e.target)
+      function toggleProductForm(product){
+        selectedProduct = product
 
-            const res = await fetch("/api/products", {
-                method: "post",
-                body: formData,
-            }).catch((error) => ("Something went wrong!", error));
-            jsonRes = res.json()
-            jsonRes.then(data => console.log(data))
+        document.getElementById("updateForm").classList.toggle("d-none")
+        document.getElementById("productList").classList.toggle("d-none")
+
+        nameElm.value = product.name
+        descriptionElm.value = product.description
+        categoryElm.value = product.category
+        priceElm.value = product.price
+        imageElm.value = ""
+        modelElm.value = ""
+      }
+
+      getAllProducts()
+       .then(products => {
+          for(let i = 0; i< products.length;i++){
+            const productElm = document.createElement("div")
+            productElm.className = "content active"
+            productElm.addEventListener("click",() => {
+            toggleProductForm(products[i])
+          })
+
+          const wrapper = document.createElement("div")
+          wrapper.className = "wrapper"
+          
+          const avatar = document.createElement("div")
+          avatar.className = "avatar flex-shrink-0 me-3"
+
+          const avatarInitial = document.createElement("img")
+          avatarInitial.src = `/${products[i].image}`
+          avatarInitial.className = "avatar-initial rounded bg-label-primary"
+
+          let icon = document.createElement("i")
+          icon.className = "bx bx-mobile-alt"
+
+          avatar.appendChild(avatarInitial)
+          avatar.appendChild(icon)
+          wrapper.appendChild(avatar)
+
+          const bodyWrapper = document.createElement("div")
+          bodyWrapper.className = "d-flex w-100 flex-wrap align-items-center justify-content-between gap-2"
+          
+          const productDetail = document.createElement("div")
+          productDetail.className = "me-2"
+
+          const productName = document.createElement("h6")
+          productName.className = "mb-0"
+          productName.textContent = products[i].name
+
+          const productCategory = document.createElement("small")
+          productCategory.className = "text-muted"
+          productCategory.textContent = products[i].category
+
+          productDetail.appendChild(productName)
+          productDetail.appendChild(productCategory)
+          bodyWrapper.appendChild(productDetail)
+
+          const userProgress = document.createElement("div")
+          userProgress.className = "user-progress"
+
+          const userProgressChlld = document.createElement("small")
+
+          userProgress.appendChild(userProgressChlld)
+          bodyWrapper.appendChild(userProgress)
+
+          wrapper.appendChild(bodyWrapper)
+          productElm.appendChild(wrapper)
+
+          productsContainer.appendChild(productElm)
         }
-      </script>
+      })   
+      
+      form.onsubmit = async (e) => {
+        e.preventDefault()
+        
+        const formData = new FormData(form)
+        alert(formData.get("category"))
+        const user = JSON.parse(localStorage.user)
+
+        const res = await fetch(`/api/products/${selectedProduct._id}`,{
+          method: "put",
+          headers : {
+            token: `Bearer ${user.accessToken}`
+          },
+          body: formData
+        }).catch(err => console.log(err))
+        const jsonRes = res.json()
+        jsonRes.then(data => {
+          if(data.price){
+            alert("Product has been updated")
+            window.location = "/dashboard/html/index.html"
+          }else{
+            alert("Error Updating Product")
+          }
+        })
+      }
+    </script>
   </body>
 </html>
