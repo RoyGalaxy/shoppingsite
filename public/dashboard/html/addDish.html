@@ -190,7 +190,14 @@
                 body: formData,
             }).catch((error) => ("Something went wrong!", error));
             jsonRes = res.json()
-            jsonRes.then(data => console.log(data))
+            jsonRes.then(data => {
+              if(data.price){
+                alert("Product has been added")
+                window.location = "/dashboard/html/index.html"
+              }else{
+                alert("Error Adding Product")
+              }
+            })
         }
       </script>
   </body>
