@@ -36,9 +36,8 @@
             </header>
             <div id="preview-window" class="preview-window">
                 <model-viewer
-                    src="food_ar/assets/breakfast.glb"
-                    ios-src="food_ar/assets/breakfast.usdz"
                     poster="food_ar/assets/breakfast.jpeg"
+                    class="product-model3d"
                     alt="A 3D model of an astronaut"
                     shadow-intensity="1"
                     camera-controls
@@ -88,6 +87,7 @@
         var currentItem;
         var foodContainer;
         var topContainer;
+        var productModel3d;
         var productName;
         var productDesc;
         var productPrice;
@@ -103,12 +103,13 @@
                 vegData = [...new Map(foodItems.map(item=> [item['category'],item])).values()];
                 init()
                 selectTaste()
+                // document.getElementById("food-items").firstChild.firstChild.click()
                 let i = checkItemInCart(currentItem)
                 if(i !== false ){
                     productQty.innerHTML = cartItems[i].quantity
                     updateItemCount(cartItems[i],true)
                 }
-                temCount = i === false  ? 0 : cartItems[i].quantity
+                itemCount = i === false  ? 0 : cartItems[i].quantity
             })
         }
         function init(){
@@ -117,6 +118,7 @@
             currentItem = Object.assign({quantity: itemCount},foodItems[0])
             foodContainer = document.getElementById("food-items")
             topContainer = document.querySelector(".top")
+            productModel3d = document.querySelector(".product-model3d")            
             productName = document.getElementById("product-name")
             productDesc = document.getElementById("product-description")
             productPrice = document.getElementById("product-price")

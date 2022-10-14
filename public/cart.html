@@ -8,8 +8,8 @@
 	<link rel="stylesheet" href="product-page-style.css">
 	<link rel="stylesheet" type="text/css" href="cart-page.css">
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,900" rel="stylesheet">
-    <!-- <script src="//cdn.jsdelivr.net/npm/eruda"></script>
-    <script>eruda.init();</script> -->
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
 </head>
 <body>
 	<div style="min-height: 100vh; display: flex;flex-direction: column;">
@@ -318,10 +318,11 @@
             let totalAmount = 0;
             cartItems.forEach((item,index) => {
                 totalAmount += item.price * item.quantity
+                console.log(item)
                 cartTxt += `
                     <div class="Cart-Items pad">
                         <div class="image-box">
-                            <img src="${item.img}"/>
+                            <img src="${item.image}"/>
                         </div>
                         <div class="about">
                             <h1 class="title">${item.name}</h1>

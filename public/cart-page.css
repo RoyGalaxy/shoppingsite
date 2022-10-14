@@ -4,11 +4,11 @@ html{
 }
 :root{
 	--primary: hsl(0, 0%, 98%);
-	--primary-light:hsl(0, 0%, 90%);
-	--primary-text:hsl(240, 20%, 11%);
-	--primary-text-light: hsl(240, 20%, 8%);
-	--secondary: hsl(0, 75%, 50%);
-	--secondary-light: hsl(0, 75%, 70%);
+    --primary-light:hsl(0, 0%, 90%);
+    --primary-text:hsl(240, 20%, 11%);
+    --primary-text-light: hsl(240, 20%, 8%);
+    --secondary: hsl(6, 93%, 71%);
+    --secondary-light: hsl(6, 95%, 75%);
 }
 body{
 	margin: 0;

@@ -6,25 +6,25 @@ function toggleProduct(item,event,thisElm){
             return
         }
     }
-    foodItems.forEach(element => {
-        if(element.name.replace(/ /g,"") == item){
-            let i = checkItemInCart(element)
-            itemCount = ( i === false) ? 0 : cartItems[i].quantity
-            
+    const element = findProduct(item)
+    let i = checkItemInCart(element)
+    itemCount = ( i === false) ? 0 : cartItems[i].quantity
+    
 
-            productName.innerHTML = element.name
-            productPrice.innerHTML = "$"+element.price
-            productDesc.innerHTML = element["description - English"] ? element["description - English"] : ""
-            currentItem = element
-            currentItem.quantity = itemCount
-            console.log(cartBtns.children[0].className)
-            if(currentItem.quantity == 0 && !cartBtns.children[0].className.includes("remove") || currentItem.quantity > 0 && cartBtns.children[0].className.includes("remove")){
-                cartBtns.children[0].classList.toggle("remove")
-                cartBtns.children[1].classList.toggle("remove")
-            }
-            updateItemCount(currentItem)
-        }
-    });
+    productName.innerHTML = element.name
+    productPrice.innerHTML = "$"+element.price
+    productDesc.innerHTML = element.description ? element.description : ""
+    productModel3d.src = element.model3d
+    productModel3d["ios-src"] = element.model3d
+    console.log(productModel3d)
+    currentItem = element
+    currentItem.quantity = itemCount
+    if(currentItem.quantity == 0 && !cartBtns.children[0].className.includes("remove") || currentItem.quantity > 0 && cartBtns.children[0].className.includes("remove")){
+        cartBtns.children[0].classList.toggle("remove")
+        cartBtns.children[1].classList.toggle("remove")
+    }
+    updateItemCount(currentItem)
+
 }
 
 function addToCart(item){
@@ -56,7 +56,7 @@ function checkItemInCart(item){
     return false
 }
 
-function incrementItem(cartIndex,foodIndex,thisElm){
+function incrementItem(cartIndex,foodIndex){
     if(cartIndex !== undefined){
         cartItems[cartIndex].quantity += 1
         displayCart()
@@ -66,6 +66,7 @@ function incrementItem(cartIndex,foodIndex,thisElm){
         let qty = 0
         if(i === false){
             let item = foodItems[foodIndex]
+            
             item.quantity = 1
             addToCart(item)
             i = cartItems.length - 1 
@@ -91,7 +92,7 @@ function incrementItem(cartIndex,foodIndex,thisElm){
     }
     saveCart()
 }
-function decrementItem(cartIndex,foodIndex,thisElm){
+function decrementItem(cartIndex,foodIndex){
     if(cartIndex !== undefined){
         if(cartItems[cartIndex].quantity >= 1) cartItems[cartIndex].quantity -= 1
         if(cartItems[cartIndex].quantity == 0) removeItem(cartIndex)
@@ -140,7 +141,7 @@ function updateItemCount(item,toggle){
             cartBtns.children[1].classList.toggle("remove")
         }
     }
-    const listCard = document.getElementById(item.name.replace(/ /g,''))
+    const listCard = document.getElementById(item._id)
     listCard.children[2].children[1].children[1].innerHTML = item.quantity
     if(toggle){
         listCard.children[2].children[1].classList.toggle("remove")
@@ -158,4 +159,14 @@ function scrollToElm(elm){
     // alert(rect.top)
     window.scrollBy({left: 0, top: rect.top - parseInt(foodContainer.style.marginTop),behavior: "smooth"})
     // window.scrollBy()   
+}
+
+function findProduct(id){
+    let product
+    foodItems.forEach(element => {
+        if(element._id == id){
+            product = element
+        }
+    })
+    return product
 }
