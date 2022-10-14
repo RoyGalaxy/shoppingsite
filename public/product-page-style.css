@@ -2,13 +2,16 @@
     /*  Primary */
     --yellow: hsl(56, 100%, 50%);
     --pale-yellow: hsl(56, 80%, 50%);
-    --primary: hsl(240, 20%, 8%);
-    --primary-text: hsl(0, 0%, 80%);
+    --primary: hsl(0, 0%, 98%);
+    --primary-text:hsl(240, 20%, 11%);
+    --primary-text-light: hsl(240, 20%, 8%);
+
+
+    --primary-light:hsl(0, 0%, 90%);
+    --secondary: hsl(6, 93%, 71%);
+    --secondary-light: hsl(6, 95%, 75%);
   
     /* Neutral */
-  
-    --primary-text-light: hsl(0, 0%, 70%);
-    --primary-text: hsl(0, 0%, 80%);
     --grayish-blue: hsl(220, 14%, 75%);
     --light-grayish-blue: hsl(223, 64%, 98%);
     --white: hsl(0, 0%, 100%);

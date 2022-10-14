@@ -8,7 +8,7 @@ function displayItems(){
     let count = -1
     for(let i = 0;i < catagories.length;i++){
         const foodData = foodItems.filter((item)=>item.category==catagories[i]);
-        let itemCards = foodData.map((item) => {
+        let itemCards = foodData.map((item,index) => {
             count += 1
             for(let j = 0;j < cartItems.length;j++){
                 if(cartItems[j].name == item.name){
@@ -16,11 +16,76 @@ function displayItems(){
                     break;
                 }
             }
-            return `<div class="item-card" id="${item.name.replace(/ /g,'')}" onclick="toggleProduct(this.id,event,this)">
+            const itemCard = document.createElement("div")
+            itemCard.className = "item-card"
+            itemCard.id = item._id
+            itemCard.addEventListener("click", function(event){toggleProduct(this.id,event,this)})
+            
+            const itemImage = document.createElement("img")
+            itemImage.src = item.image
+            
+            const itemInfo = document.createElement("div")
+            itemInfo.className = "item-info"
+            
+            const itemName = document.createElement("span")
+            itemName.className = "ellipsis"
+            itemName.id = "item-name"
+            itemName.textContent = item.name
+            
+            const itemDesc = document.createElement("span")
+            itemDesc.id = "item-description"
+            itemDesc.className = "ellipsis"
+            itemDesc.textContent = item.description ? item.description : ""
+            
+            itemInfo.appendChild(itemName)
+            itemInfo.appendChild(itemDesc)
+
+            const itemPriceBox = document.createElement("div")
+            itemPriceBox.className = "item-info item-price-box"
+
+            const itemPrice = document.createElement("p")
+            itemPrice.id = "item-price"
+            itemPrice.textContent = "$"+item.price
+
+            const cartOptions = document.createElement("span")
+            cartOptions.className = `cart-options ${(item.quantity > 0 && count !==0)  ? "" : "remove"}`
+
+            const faPlus = document.createElement("i")
+            faPlus.className = "fa fa-plus"
+            faPlus.addEventListener("click", incrementItem.bind(this,undefined,count))
+
+            const productQuantity = document.createElement("span")
+            productQuantity.id = "product-quantit"
+            productQuantity.textContent = item.quantity ? item.quantity : "0"
+
+            const faMinus = document.createElement("i")
+            faMinus.className = "fa fa-minus"
+            faMinus.addEventListener("click", decrementItem.bind(this,undefined,count))
+
+            cartOptions.appendChild(faPlus)
+            cartOptions.appendChild(productQuantity)
+            cartOptions.appendChild(faMinus)
+
+            const addBtn = document.createElement("span")
+            addBtn.className = `add ${(item.quantity > 0 && count !==0) ? "remove" : ""}`
+            addBtn.addEventListener("click", incrementItem.bind(this,undefined,count))
+            addBtn.textContent = "Add +"
+
+            itemPriceBox.appendChild(itemPrice)
+            itemPriceBox.appendChild(cartOptions)
+            itemPriceBox.appendChild(addBtn)
+
+            itemCard.appendChild(itemImage)
+            itemCard.appendChild(itemInfo)
+            itemCard.appendChild(itemPriceBox)
+            
+            return itemCard
+
+            return `<div class="item-card" id="${item._id}" onclick="toggleProduct(this.id,event,this)">
                 <img src="${item.image}" />
                 <div class="item-info">
                     <span id="item-name" class="ellipsis">${item.name}</span>
-                    ${item["description - English"] ? `<span id='item-description' class="ellipsis">${item['description']}</span>` : ""}
+                    ${item.description ? `<span id='item-description' class="ellipsis">${item.description}</span>` : ""}
                 </div>
                 <div class="item-info item-price-box">
                     <p id="item-price">$${item.price}</p>
@@ -33,18 +98,18 @@ function displayItems(){
                 </div>
             </div>`
         })
-        const text = `<div id=${catagories[i].replace(/ /g,'')}" class="${catagories[i].replace(/ /g,'')}">
-            ${itemCards.map(item => item)}   
-        </div>`
-        document.getElementById("food-items").innerHTML += text.replace(/>,/g,">")
-    }//! One issue over here
-}
+        const itemsContainer = document.createElement("div")
+        itemsContainer.id = catagories[i].replace(/ /g,'')
+        itemsContainer.className = catagories[i].replace(/ /g,'')
+        itemCards.map((item,index) => {itemsContainer.appendChild(item)})
+        // const text = `<div id=${catagories[i].replace(/ /g,'')}" class="${catagories[i].replace(/ /g,'')}">
+        //     ${itemCards.map(item => item)}   
+        // </div>`
 
-// `<span class="cart-options">
-// <i class="fa fa-plus" onclick="incrementItem(undefined,${count},this)"></i>
-// <span id="product-quantity">${item.quantity || "0"}</span>
-// <i class="fa fa-minus" onclick="decrementItem(undefined,${count},this)"></i>
-// </span>`
+        // document.getElementById("food-items").innerHTML = text
+        document.getElementById("food-items").appendChild(itemsContainer)
+    }
+}
 
 let vegData= []
 
