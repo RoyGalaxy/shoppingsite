@@ -170,7 +170,7 @@
               user = data
               if(user.accessToken){
                   localStorage.setItem("user",JSON.stringify(user))
-                  window.location = "/index.html"
+                  window.location = "/dashboard/html/index.html"
               }
               else{
                   alert(data.message)
