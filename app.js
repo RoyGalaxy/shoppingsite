@@ -5,6 +5,7 @@ const dotenv = require("dotenv")
 const cors = require("cors")
 
 const app = express()
+app.use("/api/checkout/webhook",bodyParser.raw({type: '*/*'}));
 app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({extended: true}));
 const userRoute = require("./routes/user")

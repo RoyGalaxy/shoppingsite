@@ -52,8 +52,8 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="../assets/js/config.js"></script>
-    <!-- <script src="//cdn.jsdelivr.net/npm/eruda"></script>
-    <script>eruda.init();</script> -->
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
   </head>
 
   <body>
@@ -186,6 +186,57 @@
 
             <div class="container-xxl flex-grow-1 container-p-y">
               <div class="row">
+                <!-- Order Statistics -->
+                <div class="col-md-12 col-lg-12 col-xl-10 order-0 mb-4">
+                  <div class="card h-100">
+                    <div class="card-header d-flex align-items-center justify-content-between pb-0">
+                      <div class="card-title mb-0">
+                        <h5 class="m-0 me-2">Open Orders</h5>
+                      </div>
+                      <div class="dropdown">
+                        <button
+                          class="btn p-0"
+                          type="button"
+                          id="orederStatistics"
+                          data-bs-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        >
+                          <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
+                          <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex flex-column align-items-center gap-1">
+                          <h2 class="mb-2" id="openOrdersCount">0</h2>
+                          <span>Total Orders</span>
+                        </div>
+                        <!-- <div id="orderStatisticsChart"></div> -->
+                      </div>
+                      <div id="openOrderContainer">
+                        <!-- Open Order list here -->
+                      </div>
+                      <div id="openOrdersContainer">
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--/ Order Statistics -->
+
+                <!-- Expense Overview -->
+                
+                <!--/ Expense Overview -->
+
+                <!-- Transactions -->
+                
+                <!--/ Transactions -->
+              </div>
+              <div class="row">
                 <!-- Something Deleted from here -->
                 <div class="col-lg-12 col-md-12 order-1">
                   <div class="row">
@@ -239,57 +290,7 @@
                 <!--/ Total Revenue -->
                 
               </div>
-              <div class="row">
-                <!-- Order Statistics -->
-                <div class="col-md-12 col-lg-12 col-xl-10 order-0 mb-4">
-                  <div class="card h-100">
-                    <div class="card-header d-flex align-items-center justify-content-between pb-0">
-                      <div class="card-title mb-0">
-                        <h5 class="m-0 me-2">Open Orders</h5>
-                      </div>
-                      <div class="dropdown">
-                        <button
-                          class="btn p-0"
-                          type="button"
-                          id="orederStatistics"
-                          data-bs-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                        >
-                          <i class="bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
-                          <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card-body">
-                      <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="d-flex flex-column align-items-center gap-1">
-                          <h2 class="mb-2" id="openOrdersCount">0</h2>
-                          <span>Total Orders</span>
-                        </div>
-                        <!-- <div id="orderStatisticsChart"></div> -->
-                      </div>
-                      <div id="openOrderContainer">
-                        <!-- Open Order list here -->
-                      </div>
-                      <div id="openOrdersContainer">
-                        
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!--/ Order Statistics -->
-
-                <!-- Expense Overview -->
-                
-                <!--/ Expense Overview -->
-
-                <!-- Transactions -->
-                
-                <!--/ Transactions -->
-              </div>
+              
             </div>
             <!-- / Content -->
 
@@ -362,6 +363,7 @@
       })
       .then(res => {
         res.json().then(data => {
+          console.log(data)
           openOrdersCount.textContent = data.length || "No Orders"
           for (let i = 0; i < data.length; i++) {
             const order = data[i];
@@ -413,7 +415,7 @@
 
               const addressElm = document.createElement("h5")
               addressElm.className = "mb-0"
-              addressElm.textContent = `Shipping address - ${order.address}`
+              addressElm.innerHTML = `Shipping address - ${order.address.line1},<br>${order.address.line2},<br>${order.address.city}(${order.address.postal_code})`
 
               addressDetail.appendChild(addressElm)
               addressWrapper.append(addressDetail)

@@ -106,7 +106,7 @@
                 vegData = [...new Map(foodItems.map(item=> [item['category'],item])).values()];
                 init()
                 selectTaste()
-                // document.getElementById("food-items").firstChild.firstChild.click()
+                document.getElementById("food-items").firstChild.firstChild.click()
                 let i = checkItemInCart(currentItem)
                 if(i !== false ){
                     productQty.innerHTML = cartItems[i].quantity
