@@ -1,55 +1,54 @@
-// This is a public sample test API key.
-// Don’t submit any personally identifiable information in requests made with this key.
-// Sign in to see your own test API key embedded in code samples.
 const stripe = Stripe("pk_test_51LlpoqSCw4adMApfje9B4e5PAwnbXFZv3RGaliDMikkNpwFc3u19BTvPKZAdut4OYv7nW0cnvU5JZHWk5zukheVu001DJES5za");
 const addressForm = document.getElementById("addressForm")
-// The items the customer wants to buy
-// const items = [{ id: "xl-tshirt" }];
+
 
 let elements;
+const items = localStorage.cartItems ? JSON.parse(localStorage.cartItems) : []
+let shipping;
+let totalAmount;
 const user = JSON.parse(localStorage.user)
 
-// initialize();
-// checkStatus();
 
 addressForm.addEventListener("submit", (e) => {
   e.preventDefault()
 
-  const address = document.getElementById("address").value;
+  const addressLine1 = document.getElementById("addressLine1").value;
+  const addressLine2 = document.getElementById("addressLine2").value;
   const postal_code = document.getElementById("postalCode").value;
   const city = document.getElementById("city").value;
   const state = document.getElementById("state").value;
-
-  const shipping = {
-    name : user.username,
-    address : {
-      line1 : address,
-      postal_code,
-      city,
-      state
+  shipping = {
+    name: user.username,
+    address: {
+      line1: addressLine1,
+      line2: addressLine2,
+      postal_code: postal_code,
+      city: city,
+      state: state,
+      country: "US"
     }
   }
 
   addressForm.classList.toggle("hidden")
   document.querySelector("#payment-form").classList.toggle("hidden")
-  initialize(shipping)
+  initialize()
   checkStatus()
 })
-
 
 document
   .querySelector("#payment-form")
   .addEventListener("submit", handleSubmit);
 
+
 // Fetches a payment intent and captures the client secret
-async function initialize(shipping) {
-  const items = localStorage.cartItems ? JSON.parse(localStorage.cartItems) : []
+async function initialize() {
   const response = await fetch("/api/checkout/create-payment-intent", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({user,items,shipping}),
   });
   const { clientSecret,amount } = await response.json();
+  totalAmount = amount
 
   const appearance = {
     theme: 'stripe',
@@ -70,8 +69,7 @@ async function handleSubmit(e) {
   const { error } = await stripe.confirmPayment({
     elements,
     confirmParams: {
-      // Make sure to change this to your payment completion page
-      return_url: 'http://localhost:3000/checkout.html',
+      return_url: 'http://localhost:3000/success.html',
     },
   });
 
@@ -101,12 +99,11 @@ async function checkStatus() {
   }
 
   const { paymentIntent } = await stripe.retrievePaymentIntent(clientSecret);
+  localhost
 
   switch (paymentIntent.status) {
     case "succeeded":
-      showMessage("Payment succeeded!");
-      localStorage.cartItems = undefined;
-      window.location = "/index.html"
+      showMessage("Payment succeeded! Redirecting...");
       break;
     case "processing":
       showMessage("Your payment is processing.");

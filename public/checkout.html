@@ -60,13 +60,26 @@
 
               <form id="addressForm" class="mb-3">
                 <div class="mb-3">
-                  <label for="address" class="form-label">Address</label>
+                  <label for="addressLine1" class="form-label">Address Line 1</label>
                   <input
                     type="text"
                     class="form-control"
-                    id="address"
-                    name="address"
-                    placeholder="Address - Lane 1"
+                    id="addressLine1"
+                    name="addressLine1"
+                    placeholder="Address - Line 1"
+                    required
+                    value="Somewhere on Earth"
+                    autofocus
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="addressLine2" class="form-label">Address Line 2</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="addressLine2"
+                    name="addressLine2"
+                    placeholder="Address - Line 2"
                     required
                     value="Somewhere on Earth"
                     autofocus
@@ -92,7 +105,7 @@
                     id="city"
                     name="city"
                     value="Kota"
-                    placeholder="Postal Code"
+                    placeholder="City"
                     required
                   />
                 </div>
@@ -103,7 +116,7 @@
                     class="form-control"
                     id="state"
                     name="state"
-                    placeholder="Postal Code"
+                    placeholder="State"
                     value="Rajasthan"
                     required
                   />

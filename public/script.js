@@ -16,7 +16,6 @@ function toggleProduct(item,event,thisElm){
     productDesc.innerHTML = element.description ? element.description : ""
     productModel3d.src = element.model3d
     productModel3d["ios-src"] = element.model3d
-    console.log(productModel3d)
     currentItem = element
     currentItem.quantity = itemCount
     if(currentItem.quantity == 0 && !cartBtns.children[0].className.includes("remove") || currentItem.quantity > 0 && cartBtns.children[0].className.includes("remove")){
