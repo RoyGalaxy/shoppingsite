@@ -58,12 +58,11 @@
     <div class="container-xxl">
       <div class="authentication-wrapper authentication-basic container-p-y">
         <div class="authentication-inner">
-          <!-- Register -->
           <div class="card">
             <div class="card-body">
               <!-- Logo -->
               <div class="app-brand justify-content-center">
-                <a href="index.html" class="app-brand-link gap-2">
+                <a href="../index.html" class="app-brand-link gap-2">
                   <span class="app-brand-logo demo">
                     <!-- Put logo here -->
                   </span>
@@ -115,7 +114,7 @@
 
               <p class="text-center">
                 <span>New on our platform?</span>
-                <a href="auth-register-basic.html">
+                <a href="register.html">
                   <span>Create an account</span>
                 </a>
               </p>
@@ -168,9 +167,12 @@
           let user
           res.json().then(data => {
               user = data
-              if(user.accessToken){
+              if(user.accessToken && user.isAdmin){
                   localStorage.setItem("user",JSON.stringify(user))
-                  window.location = "/dashboard/html/index.html"
+                  window.location = "/dashboard/index.html"
+              }
+              else if(user.accessToken && !user.isAdmin){
+                alert("You are not allowed to do that")
               }
               else{
                   alert(data.message)

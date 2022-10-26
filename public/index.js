@@ -1,6 +1,6 @@
 'use strict'
 
-let cartItems = localStorage.cartItems ? JSON.parse(localStorage.cartItems) : []
+let cartItems;
 const catagories = []
 
 function displayItems(){

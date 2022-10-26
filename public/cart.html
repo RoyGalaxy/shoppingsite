@@ -302,12 +302,14 @@
     <script src="./js/cart-page.js"></script>
     <script src="./script.js"></script>
     <script>
-        let cartItems = localStorage.cartItems ? JSON.parse(localStorage.cartItems) : []
+        user = JSON.parse(localStorage.user)
+        let cartItems
         const headerHeight = document.querySelector("header").clientHeight
         const cartContainer = document.getElementById("cartContainer")
         const checkoutBtn = document.getElementById("checkoutBtn")
         const stripeKey = "pk_test_51LlpoqSCw4adMApfje9B4e5PAwnbXFZv3RGaliDMikkNpwFc3u19BTvPKZAdut4OYv7nW0cnvU5JZHWk5zukheVu001DJES5za";;
-        function displayCart(){
+        async function displayCart(){
+            cartItems = await getCart()
             if(cartItems.length < 1){
                 cartContainer.innerHTML = `
                 <div class="empty-cart" style="height: ${innerHeight - headerHeight}px;">

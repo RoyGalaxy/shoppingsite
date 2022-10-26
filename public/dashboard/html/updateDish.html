@@ -277,7 +277,6 @@
         e.preventDefault()
         
         const formData = new FormData(form)
-        alert(formData.get("category"))
         const user = JSON.parse(localStorage.user)
 
         const res = await fetch(`/api/products/${selectedProduct._id}`,{

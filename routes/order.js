@@ -3,9 +3,7 @@ const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = requir
 const Order = require("../models/Order")
 
 //  CREATE 
-
 router.post("/",verifyToken, async(req,res)=> {
-    console.log("request received")
     const newOrder = new Order(req.body)
 
     try{
@@ -20,7 +18,6 @@ router.post("/",verifyToken, async(req,res)=> {
 
 // UPDATE
 router.put("/:id",verifyTokenAndAdmin,async(req,res) => {
-    console.log(req.body)
     try{
         const updatedOrder = await Order.findByIdAndUpdate(req.params.id, 
             {
@@ -58,7 +55,6 @@ router.get("/find/:userId",verifyTokenAndAuthorization, async(req,res)=>{
 router.get("/", verifyTokenAndAdmin, async (req,res) => {
     try{
         const orders = await Order.find()
-        console.log(orders)
         res.status(200).json(orders)
     }catch(err){
         res.status(500).json(err)
