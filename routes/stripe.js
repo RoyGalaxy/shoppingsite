@@ -44,7 +44,7 @@ router.post("/create-payment-intent", async (req, res) => {
       name: user.username,
       metadata: {
         userId: user._id,
-        cart: JSON.stringify(items)
+        cart: JSON.stringify(items),
       }
     })
 

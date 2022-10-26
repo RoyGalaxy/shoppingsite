@@ -6,8 +6,9 @@ const cors = require("cors")
 
 const app = express()
 app.use("/api/checkout/webhook",bodyParser.raw({type: '*/*'}));
+app.use(express.urlencoded({ extended: true }))
 app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({extended: true}));
+
 const userRoute = require("./routes/user")
 const authRoute = require("./routes/auth")
 const productRoute = require("./routes/product")

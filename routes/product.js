@@ -39,7 +39,6 @@ router.post("/",verifyTokenAndAdmin,upload.any("image"), async (req, res) => {
 
 // UPDATE
 router.put("/:id",verifyTokenAndAdmin,upload.any("image"), async (req, res) => {
-    console.log(req.body)
     try {
         const updatedProduct = await Product.findByIdAndUpdate(req.params.id,
             {

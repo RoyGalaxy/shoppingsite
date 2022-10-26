@@ -47,12 +47,12 @@
                     auto-rotate ar>
                 </model-viewer>
                 <div id="product-info">
-                    <h2 id="product-name">Classic Slider Box</h2>
+                    <h2 id="product-name"></h2>
                     <div class="price">
-                        <span id="product-price">$180</span>
+                        <span id="product-price"></span>
                     </div>
                     <span id="product-description" class="ellipsis">
-                        OG (B) +  (B) + Laban Up chicken Plus Fries and 2 Dip Bowls
+                        
                     </span>
                     <div class="add-to-cart-btns">
                         <span class="cart-options remove">
@@ -101,12 +101,13 @@
         async function getProducts(){
             let res = await fetch("/api/products/")
             res = res.json()
-            res.then(data => {
+            res.then(async (data) => {
                 foodItems = data
                 vegData = [...new Map(foodItems.map(item=> [item['category'],item])).values()];
                 init()
+                cartItems = await getCart()
                 selectTaste()
-                document.getElementById("food-items").firstChild.firstChild.click()
+                toggleProduct(currentItem._id,undefined,undefined,false)
                 let i = checkItemInCart(currentItem)
                 if(i !== false ){
                     productQty.innerHTML = cartItems[i].quantity
@@ -115,7 +116,7 @@
                 itemCount = i === false  ? 0 : cartItems[i].quantity
             })
         }
-        function init(){
+        async function init(){
             user = JSON.parse(localStorage.user)
             itemCount = 0
             currentItem = Object.assign({quantity: itemCount},foodItems[0])
@@ -127,7 +128,6 @@
             productPrice = document.getElementById("product-price")
             productQty = document.getElementById("product-quantity")
             cartBtns = document.querySelector("#product-info .add-to-cart-btns")
-            
             foodContainer.style.marginTop = topContainer.clientHeight + "px" 
         }
         
@@ -139,7 +139,6 @@
             for (let i = 0; i < childNodes.length; i++) {
                 const elm = childNodes[i];
                 if(window.pageYOffset >= height && window.pageYOffset < (height + elm.clientHeight)){
-                    // foodItems.scrollTo({top:0,left:200})
                     listcards[selectedIndex].setAttribute("class","list-card")
                     listcards[i].setAttribute("class","list-card active")
                     selectedIndex = i
@@ -151,8 +150,8 @@
             document.body.classList.add("loaded")
         }
     </script>
-    <script src="script.js" defer></script>
-    <script src="index.js" defer"></script>
+    <script src="script.js"></script>
+    <script src="index.js" ></script>
     <script
       type="module"
       src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"

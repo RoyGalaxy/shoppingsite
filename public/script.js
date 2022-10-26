@@ -1,6 +1,6 @@
-// let cartItems = localStorage.cartItems ? JSON.parse(localStorage.cartItems) : []
+let cartId;
 
-function toggleProduct(item,event,thisElm){
+function toggleProduct(item,event,thisElm,toggle){
     if(event){
         if (thisElm.children[2].children[1] === event.target.parentNode || thisElm.children[2].children[2] == event.target){
             return
@@ -9,7 +9,6 @@ function toggleProduct(item,event,thisElm){
     const element = findProduct(item)
     let i = checkItemInCart(element)
     itemCount = ( i === false) ? 0 : cartItems[i].quantity
-    
 
     productName.innerHTML = element.name
     productPrice.innerHTML = "$"+element.price
@@ -18,11 +17,11 @@ function toggleProduct(item,event,thisElm){
     productModel3d["ios-src"] = element.model3d
     currentItem = element
     currentItem.quantity = itemCount
-    if(currentItem.quantity == 0 && !cartBtns.children[0].className.includes("remove") || currentItem.quantity > 0 && cartBtns.children[0].className.includes("remove")){
+    updateItemCount(currentItem)
+    if(toggle !== false && (currentItem.quantity == 0 && !cartBtns.children[0].className.includes("remove") || currentItem.quantity > 0 && cartBtns.children[0].className.includes("remove"))){
         cartBtns.children[0].classList.toggle("remove")
         cartBtns.children[1].classList.toggle("remove")
     }
-    updateItemCount(currentItem)
 
 }
 
@@ -89,6 +88,7 @@ function incrementItem(cartIndex,foodIndex){
         }
         else updateItemCount(currentItem)
     }
+    console.log(cartItems)
     saveCart()
 }
 function decrementItem(cartIndex,foodIndex){
@@ -148,9 +148,84 @@ function updateItemCount(item,toggle){
     }
 }
 
-function saveCart(){
+async function createCart(){
+    let headersList = {
+        "Accept": "*/*",
+        "token": `Bearer ${user.accessToken}`,
+        "Content-Type": "application/json"
+    }
+    
+    let bodyContent = JSON.stringify({
+        "userId": user._id,
+        "products": []
+    });
+    
+    const res = await fetch("/api/carts/", { 
+        method: "POST",
+        body: bodyContent,
+        headers: headersList
+    });
+    const jsonRes = await res.json()
+    let cart = await jsonRes
+    cartId = cart._id
+    const itemCart = await formatCart(headersList,cart)
+    return itemCart
+}
+
+async function getCart(){
+    let headersList = {
+        "token": `Bearer ${user.accessToken}`,
+    }
+    let res = await fetch(`/api/carts/find/${user._id}`, { 
+        method: "GET",
+        headers: headersList
+    });
+    let jsonRes = await res.json()
+    let cart = await jsonRes
+    if(cart?._id){
+        cartId = cart._id
+        const itemCart = await formatCart(headersList,cart)
+        return itemCart
+    }else{
+        const itemCart = await createCart()
+        return itemCart
+    }
+    
+}
+
+async function formatCart(headersList,cart){
+    const itemCart = []
+    for(let i = 0; i < cart?.products?.length;i++){
+        let productRes = await fetch(`/api/products/find/${cart.products[i].productId}`, { 
+            method: "GET",
+            headers: headersList
+        })
+        let jsonProduct = await productRes.json()
+        let product = await jsonProduct
+        let cartItem = Object.assign(cart.products[i],product)
+        itemCart.push(cartItem)
+    }
+    return itemCart
+}
+
+async function saveCart(){
+    let headersList = {
+        "Accept": "*/*",
+        "token": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMzcwNThmZGM0ZjI0MWM2OTU0NDkyNSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY2NTI0OTc3OCwiZXhwIjoxNjY3ODQxNzc4fQ.fF6Y96N64h-O6a8o-K6Vk5fQIsGy1e-Tu_Zf5TiaP6M",
+        "Content-Type": "application/json"
+       }
+    let bodyContent = JSON.stringify({
+        "products": (cartItems.length > 0)? [...cartItems.map(item => {return {productId: item._id,quantity: item.quantity}})] : []
+    });
+    let res = await fetch(`/api/carts/${cartId}`, { 
+        method: "PUT",
+        headers: headersList,
+        body: bodyContent        
+    });
     localStorage.cartItems = JSON.stringify(cartItems)
     cartItems = localStorage.cartItems ? JSON.parse(localStorage.cartItems) : []
+    
+    
 }
 
 function scrollToElm(elm){
