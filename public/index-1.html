@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Pepper</title>
+    <link rel="stylesheet" href="assets/vendor/fonts/boxicons.css" />
+    <!-- Fonts -->
+	<!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,900" rel="stylesheet"> -->
+    <!-- Local css -->
+	<link rel="stylesheet" href="css/color-scheme.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/index.css">
+    <!-- Model viewer -->
+    <script src="https://unpkg.com/focus-visible@5.0.2/dist/focus-visible.js" defer></script>
+    <!-- Console -->
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
+</head>
+<body>
+    <div class="container">
+        <header class="flex">
+            <div class="left"><i class='bx bx-chevron-left'></i></div>
+            <div class="right">
+                <div class="search-box shadow">
+                    <i class='bx bx-search-alt-2'></i>
+                    <input type="text" class="search" id="search" placeholder="Search..." autocomplete="off">
+                </div>
+                <i class='bx bx-share-alt share-btn shadow'></i>
+            </div>
+        </header>
+        <div class="box shadow">
+            <div class="restraunt-info flex">
+                <h2 class="restraunt-name" id="restraunt_name">Black Pepper</h2>
+                <div class="rating flex">4.5 <i class='bx bxs-star'></i></div>
+            </div>
+            <div class="offers flex hide">
+                <div class="offer flex">
+                    <i class='bx bxs-offer'></i>
+                    <div class="box offer-box">
+                        <span class="offer-title">50% OFF up to $100</span>
+                        <span class="offer-description">use code WELCOME50</span>
+                    </div>
+                </div>
+                <div class="offer flex">
+                    <i class='bx bxs-offer'></i>
+                    <div class="box offer-box">
+                        <span class="offer-title">50% OFF up to $100</span>
+                        <span class="offer-description">use code WELCOME50</span>
+                    </div>
+                </div>
+                <div class="offer flex">
+                    <i class='bx bxs-offer'></i>
+                    <div class="box offer-box">
+                        <span class="offer-title">50% OFF up to $100</span>
+                        <span class="offer-description">use code WELCOME50</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box category-slider">
+            <span class="active">Burgers</span>
+            <span>Drinks</span>
+        </div>
+        <div class="dishes box" id="dishesContainer">
+
+        </div>
+        <div class="box product hide" id="productOverlay">
+            <div class="top-container flex">
+                <i class='bx bx-x' id="closeProductOverlay"></i>
+            </div>
+            <div class="product-container">
+                <model-viewer
+                    src="food_ar/assets/breakfast.glb"
+                    ios-src="food_ar/assets/breakfast.usdz"
+                    poster="food_ar/assets/breakfast.jpeg"
+                    alt="A 3D model of an astronaut"
+                    shadow-intensity="1"
+                    camera-controls
+                    auto-rotate ar>
+                </model-viewer>
+                <div class="product-info">
+                    <div class="top-row flex">
+                        <h4 class="product-name">Gold Burger</h4>
+                        <span class="product-price">$120</span>
+                    </div>
+                    <p class="product-description">Just a random but long description to make it to two lines</p>
+                </div>
+                <div class="footer">
+                    <div class="cart-options">
+                        <i class='bx bx-minus minus'></i>
+                        <span class="count">1</span>
+                        <i class='bx bx-plus plus'></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="floating-btn cart-btn" id="cartBtn" href="cart.html">Proceed to Cart</a>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script src="js/index.js"></script>
+    <!-- Loads <model-viewer> for modern browsers: -->
+    <script
+        type="module"
+        src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
+      ></script>
+</body>
+</html>
