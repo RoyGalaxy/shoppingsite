@@ -1,0 +1,131 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: var(--primary-text);
+    font-family: 'Poppins';
+    border: none;
+    outline: none;
+    user-select: none;
+    text-decoration: none;
+}
+.container{
+    background-color: var(--primary-light);
+    padding: 4rem 0.5rem 4.5rem;
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+}
+.bx{
+    font-size: 28px;
+}
+.shadow{
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+.flex{
+    display: flex;
+    justify-content: space-between;
+}
+.hide{
+    display:none !important;
+}
+.veg_non-veg{
+    display: inline-block;
+    width: 20px;
+}
+/* Header */
+header{
+    z-index: 2;
+    position: fixed;
+    top: 0; left: 0;
+    align-items: center;
+    background-color: var(--primary-light);
+    width: 100%;
+    height: 3.5rem;
+}
+header .left{
+    display: flex;
+}
+.bx-chevron-left{
+    display: inline-block;
+    height: 2rem;
+    width: 2rem;
+    text-align: center;
+    color: var(--primary-text-light);
+    font-size: 2rem;
+    line-height: 2rem;
+    border-radius: 50%;
+}
+.title{
+    display: inline-block;
+    height: 2rem;
+    line-height: 2rem;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* Main Content */
+.box{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    background-color: var(--primary);
+    border-radius: 8px;
+    padding: 12px 8px;
+    margin-bottom: 1.5rem;
+}
+.box-title{
+    display: block;
+    height: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    letter-spacing: 1px;
+    margin-left: 0.5rem;
+}
+.cart-options{
+    display: flex;
+    width: 90%;
+    max-width: 90px;
+    height: auto;
+    align-items: center;
+    justify-content: space-between;
+    margin: 5px auto;
+    padding: 2px 4px;
+    font-weight: bold;
+    font-size: 14px;
+    border: 2px solid var(--secondary);
+    border-radius: 8px;
+    background-color: var(--secondary-light);
+}
+.cart-options .minus,.cart-options .plus{
+    font-size: 16px;
+    color: var(--secondary);
+}
+
+
+/* Footer */
+.footer{
+    display: flex;
+    width: 100%;
+    height: 3.75rem;
+    position: fixed;
+    bottom: 0; left: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.7);
+}
+.floating-btn{
+    display: flex;
+    width: 95vw;
+    height: 3rem;
+    font-size: 18px;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background-color: var(--secondary);
+    color: var(--primary);
+}
