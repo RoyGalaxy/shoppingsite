@@ -2,6 +2,7 @@ const backBtns = document.querySelectorAll(".back-btn")
 const user = JSON.parse(localStorage.user)
 let dishes = []
 let cart = {}
+const deliveryCharge = 2
 
 
 async function fetchProducts() {
@@ -14,7 +15,6 @@ async function fetchProducts() {
         console.log(err)
     }
 }
-fetchProducts()
 
 function findProductById(id) {
     for (let i = 0; i < dishes.length; i++) {

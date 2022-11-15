@@ -1,6 +1,7 @@
 const productOverlay = document.getElementById("productOverlay")
 const closeProductOverlayBtn = document.getElementById("closeProductOverlay")
 const dishesContainer = document.getElementById("dishesContainer")
+const searchBar = document.getElementById("search")
 const catagorySlider = document.getElementById("catagorySlider")
 const modelViewer = document.querySelector("model-viewer")
 const productName = document.querySelector(".product-name")
@@ -128,6 +129,7 @@ function displayCatagorySlider() {
     }
 }
 
+// Utility Functions
 function findInCatagory(catagory){
     let newDishes = dishes.filter((item,index) => {
         return item.category.toLowerCase() == catagory
@@ -187,6 +189,7 @@ function scrollToElm(elm) {
     console.log(elm.offsetTop - 120)
     window.scrollTo({left: 0, top: elm.offsetTop - 120, behavior: "smooth"})
 }
+
 // Event Handlers
 closeProductOverlayBtn.addEventListener("click", () => {
     productOverlay.classList.toggle("hide")
@@ -196,6 +199,22 @@ function toggleCartBtn() {
         cartBtn.classList.toggle("hide")
     }
 }
+searchBar.addEventListener("keyup", function() {
+    let matchingDishes = [...new Set(dishes.filter(item => item.name.includes(this.value.trim())))];
+    dishesContainer.innerHTML = ""
+    for (let i = 0; i < matchingDishes.length; i++) {
+        if (!matchingDishes[i].quantity) matchingDishes[i].quantity = 0
+        // Check for the each product to be already in cart or not
+        let dish = findItemInCart(matchingDishes[i]._id)
+        if (dish) {
+            matchingDishes[i].quantity = dish.quantity
+        }
+        let product = constructProduct(matchingDishes[i], i)
+        dishesContainer.appendChild(product)
+    }
+})
+
+// Initiator
 fetchCart().then(() => {
     toggleCartBtn()
     // Display products from Datatbase
