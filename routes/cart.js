@@ -1,14 +1,15 @@
 const router = require("express").Router()
 const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("./verifyToken")
 const Cart = require("../models/Cart")
+const { update } = require("../models/Cart")
 
-//  CREATE 
+//  CREATE
 
 router.post("/",verifyToken,async(req,res)=> {
+    console.log(req.body)
     const newCart = new Cart(req.body)
     try{
         const savedCart = await newCart.save()
-        console.log(savedCart)
         res.status(200).json(savedCart)
     }catch(err){
         res.status(500).json(err)
@@ -17,9 +18,8 @@ router.post("/",verifyToken,async(req,res)=> {
 
 // UPDATE
 router.put("/:id",verifyTokenAndAuthorization,async(req,res) => {
-    console.log(req.body)
     try{
-        const updatedCart = await Cart.findByIdAndUpdate(req.params.id, 
+        const updatedCart = await Cart.findByIdAndUpdate(req.params.id,
             {
                 $set: req.body
             },

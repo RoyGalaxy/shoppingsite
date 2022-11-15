@@ -15,8 +15,10 @@
     <!-- Model viewer -->
     <script src="https://unpkg.com/focus-visible@5.0.2/dist/focus-visible.js" defer></script>
     <!-- Console -->
-    <!-- <script src="//cdn.jsdelivr.net/npm/eruda"></script>
-    <script>eruda.init();</script> -->
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
+
+    <script src="js/script.js"></script>
 </head>
 <body>
     <div class="container">
@@ -59,9 +61,7 @@
                 </div>
             </div>
         </div>
-        <div class="box category-slider">
-            <span class="active">Burgers</span>
-            <span>Drinks</span>
+        <div class="box category-slider shadow" id="catagorySlider">
         </div>
         <div class="dishes box" id="dishesContainer">
 
@@ -99,7 +99,6 @@
         <a class="floating-btn cart-btn" id="cartBtn" href="cart.html">Proceed to Cart</a>
     </div>
 
-    <script src="js/script.js"></script>
     <script src="js/index.js"></script>
     <!-- Loads <model-viewer> for modern browsers: -->
     <script
