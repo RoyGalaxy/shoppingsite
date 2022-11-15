@@ -7,7 +7,7 @@
   data-theme="theme-default"
   data-assets-path="../assets/"
   data-template="vertical-menu-template-free"
-> 
+>
   <head>
     <meta charset="utf-8" />
     <meta
@@ -80,21 +80,21 @@
 
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
-            
+
             <li class="menu-item active">
               <a href="index.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
               </a>
             </li>
-            
+
             <li class="menu-header small text-uppercase">
               <span class="menu-header-text">Dishes</span>
             </li>
 
             <!-- Add New Product -->
             <li class="menu-item">
-              <a href="addDish.html" class="menu-link">
+              <a href="html/addDish.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-add-to-queue"></i>
                 <div data-i18n="Analytics">Add New Dish</div>
               </a>
@@ -103,7 +103,7 @@
 
             <!-- Update Product -->
             <li class="menu-item">
-              <a href="updateDish.html" class="menu-link">
+              <a href="html/updateDish.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-refresh"></i>
                 <div data-i18n="Analytics">Update Dish</div>
               </a>
@@ -112,25 +112,25 @@
 
             <!-- Delete Product -->
             <li class="menu-item">
-              <a href="deleteDish.html" class="menu-link">
+              <a href="html/deleteDish.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-minus-circle"></i>
                 <div data-i18n="Analytics">Delete A Dish</div>
               </a>
             </li>
             <!-- /Delete Product -->
-            
+
             <!-- Components -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">User Interface</span></li>
-            
+
             <li class="menu-item">
-              <a href="colorScheme.html" class="menu-link">
+              <a href="html/colorScheme.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-color-fill"></i>
                 <div data-i18n="Boxicons">Change color scheme</div>
               </a>
             </li>
 
             <!-- Login -->
-            <li class="menu-header small text-uppercase"><span class="menu-header-text">Account</span></li>            
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Account</span></li>
             <li class="menu-item">
               <a href="./html/login.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-user"></i>
@@ -144,7 +144,7 @@
                 <div data-i18n="Boxicons">Logout</div>
               </a>
             </li>
-            
+
           </ul>
         </aside>
         <!-- / Menu -->
@@ -165,21 +165,21 @@
 
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
               <!-- Search -->
-              
+
               <!-- /Search -->
 
               <ul class="navbar-nav flex-row align-items-center ms-auto">
                 <!-- Place this tag where you want the button to render. -->
-                
+
                 <!-- User -->
-                
+
                 <!--/ User -->
               </ul>
             </div>
           </nav>
 
           <!-- / Navbar -->
-          
+
           <div class="content-wrapper">
             <!-- Content -->
 
@@ -220,7 +220,7 @@
                         <!-- Open Order list here -->
                       </div>
                       <div id="openOrdersContainer">
-                        
+
                       </div>
                     </div>
                   </div>
@@ -228,11 +228,11 @@
                 <!--/ Order Statistics -->
 
                 <!-- Expense Overview -->
-                
+
                 <!--/ Expense Overview -->
 
                 <!-- Transactions -->
-                
+
                 <!--/ Transactions -->
               <div class="row">
                 <!-- Something Deleted from here -->
@@ -286,14 +286,14 @@
                   </div>
                 </div>
                 <!--/ Total Revenue -->
-                
+
               </div>
-              
+
             </div>
             <!-- / Content -->
 
             <!-- Footer -->
-            
+
             <!-- / Footer -->
 
             <div class="content-backdrop fade"></div>
@@ -333,12 +333,12 @@
     <script>
       const user = JSON.parse(localStorage.getItem("user"))
       if(!user.username) {window.location = "./html/login.html"}
-      
+
       if(user.isAdmin !== true) {alert("You are not allowed to access this page"); window.location = "./html/login.html"}
       const openOrdersCount = document.getElementById("openOrdersCount")
 
       function configCollapsible(){
-        
+
         var coll = document.getElementsByClassName("collapsible");
         var i;
 
@@ -354,7 +354,7 @@
           });
         }
       }
-      
+
       const orderContainer = document.getElementById("openOrdersContainer");
       fetch("/api/orders/", {
           method: 'GET',
@@ -400,7 +400,7 @@
               })
               }
               btn.appendChild(acceptBtn)
-              
+
               const content = document.createElement("div")
               content.className = "content"
 
@@ -409,7 +409,7 @@
 
               const addressWrapper = document.createElement("div")
               addressWrapper.className = "d-flex w-100 flex-wrap align-items-center justify-content-between gap-2"
-                  
+
               const addressDetail = document.createElement("div")
               addressDetail.className = "me-2"
 
@@ -428,7 +428,7 @@
 
                   const wrapper = document.createElement("div")
                   wrapper.className = "wrapper"
-                  
+
                   const avatar = document.createElement("div")
                   avatar.className = "avatar flex-shrink-0 me-3"
 
@@ -445,7 +445,7 @@
 
                   const bodyWrapper = document.createElement("div")
                   bodyWrapper.className = "d-flex w-100 flex-wrap align-items-center justify-content-between gap-2"
-                  
+
                   const productDetail = document.createElement("div")
                   productDetail.className = "me-2"
 

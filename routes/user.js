@@ -3,12 +3,13 @@ const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = requir
 const cryptoJs = require("crypto-js")
 const User = require("../models/User")
 
+// CREATE USER
 router.put("/:id",verifyTokenAndAuthorization,async(req,res) => {
     if(req.body.password){
         req.body.password = cryptoJs.AES.encrypt(req.body.password,process.env.PASS_SEC).toString()
     }
     try{
-        const updatedUser = await User.findByIdAndUpdate(req.params.id, 
+        const updatedUser = await User.findByIdAndUpdate(req.params.id,
             {
                 $set: req.body
             },
@@ -60,7 +61,7 @@ router.get("/stats/",verifyTokenAndAdmin, async (req,res)=> {
     try{
         const data = await User.aggregate([
             {$match: {createdAt : {$gte: lastYear}}},
-            { 
+            {
                 $project: {
                     month : {$month: "$createdAt"}
                 }

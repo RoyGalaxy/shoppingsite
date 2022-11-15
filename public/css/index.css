@@ -151,8 +151,11 @@ header .right{
     justify-content: center;
 }
 .category-slider{
+    z-index: 2;
     flex-direction: row;
     width: 100vw;
+    position: sticky;
+    top: 3.5rem;
     margin-left: -0.5rem;
     border-radius: none;
 }
