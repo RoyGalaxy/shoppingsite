@@ -1,8 +1,9 @@
 const cartParent = document.querySelector(".orders")
+const summaryElm = document.getElementById("billSummary")
 
 function constructOrder(dish, index) {
     const product = findProductById(dish.productId)
-    cart.products[index] = Object.assign(cart.products[index],product)
+    cart.products[index] = Object.assign(cart.products[index], product)
     const order = document.createElement("div")
     order.className = "order"
 
@@ -23,7 +24,7 @@ function constructOrder(dish, index) {
     name.textContent = cart.products[index].name
     const price = document.createElement("p")
     price.className = "price"
-    price.textContent = "$"+ cart.products[index].price
+    price.textContent = "$" + cart.products[index].price
 
     center.append(name)
     center.append(price)
@@ -36,12 +37,12 @@ function constructOrder(dish, index) {
 
     const minus = document.createElement("i")
     minus.className = "bx bx-minus minus"
-    minus.addEventListener("click",(e)=>{
+    minus.addEventListener("click", (e) => {
         decrementItem(index)
-        if(cart.products[index].quantity === 0){
-            cart.products.splice(index,1)
-        }else{
-            updateItemCount(cart.products[index],index)
+        if (cart.products[index].quantity === 0) {
+            cart.products.splice(index, 1)
+        } else {
+            updateItemCount(cart.products[index], index)
         }
     })
 
@@ -51,9 +52,9 @@ function constructOrder(dish, index) {
 
     const plus = document.createElement("i")
     plus.className = "bx bx-plus plus"
-    plus.addEventListener("click",(e)=>{
+    plus.addEventListener("click", (e) => {
         incrementItem(index)
-        updateItemCount(cart.products[index],index)
+        updateItemCount(cart.products[index], index)
     })
 
     cartOption.appendChild(minus)
@@ -62,7 +63,7 @@ function constructOrder(dish, index) {
 
     const total = document.createElement("p")
     total.className = "price"
-    total.textContent = "$"+(cart.products[index].price * cart.products[index].quantity)
+    total.textContent = "$" + (cart.products[index].price * cart.products[index].quantity)
 
     right.appendChild(cartOption)
     right.appendChild(total)
@@ -84,6 +85,7 @@ function decrementItem(index) {
     if (cart.products[index].quantity == 0) {
         cart.products.splice(index, 1)
         displayCart()
+        displayBillSummary()
     }
 
     saveCart(true)
@@ -93,6 +95,15 @@ function updateItemCount(dish, index) {
     const elm = cartParent.children[index + 1].children[2].children[0].children[1]
     elm.textContent = dish.quantity
     elm.parentElement.nextSibling.textContent = "$" + (dish.price * dish.quantity)
+    displayBillSummary()
+}
+
+function calculateCartTotal(){
+    let total = 0;
+    for(let i = 0;i < cart.products.length; i++){
+        total += cart.products[i].price * cart.products[i].quantity
+    }
+    return total
 }
 
 function displayCart() {
@@ -107,7 +118,68 @@ function displayCart() {
         cartParent.appendChild(order)
     }
 }
+
+function displayBillSummary() {
+    summaryElm.innerHTML = ""
+    const titleElm = document.createElement("div")
+    titleElm.className = "box-title"
+
+    const titleText = document.createElement("h4")
+    titleText.textContent = "Bill Summary"
+    titleElm.appendChild(titleText)
+
+    const totalElm = document.createElement("div")
+    totalElm.className = "item-total"
+
+    const totalText = document.createElement("span")
+    totalText.textContent = "Item total"
+    totalElm.appendChild(totalText)
+
+    const totalAmount = document.createElement("span")
+    const cartTotal = calculateCartTotal()
+    totalAmount.textContent = "$"+cartTotal
+    totalElm.appendChild(totalAmount)
+
+    const extraChargesElm = document.createElement("div")
+    extraChargesElm.className = "extra-charges"
+
+    const extraChargesText = document.createElement("span")
+    extraChargesText.textContent = "Delivery Charges"
+    extraChargesElm.appendChild(extraChargesText)
+
+    const extraChargeTotal = document.createElement("span")
+    extraChargeTotal.textContent = "$" + deliveryCharge
+    extraChargesElm.appendChild(extraChargeTotal)
+
+    const grandTotalElm = document.createElement("div")
+    grandTotalElm.className = "grand-total"
+
+    const grandTotalText = document.createElement("span")
+    grandTotalText.textContent = "Grand Total"
+    grandTotalElm.appendChild(grandTotalText)
+
+    const grandTotalAmount = document.createElement("span")
+    grandTotalAmount.textContent = "$" + (deliveryCharge + cartTotal)
+    grandTotalElm.appendChild(grandTotalAmount)
+
+    summaryElm.appendChild(titleElm)
+    summaryElm.appendChild(totalElm)
+    summaryElm.appendChild(extraChargesElm)
+    summaryElm.appendChild(grandTotalElm)
+}
+
+/*
+<div class="box-title"><h4>Bill Summary</h4></div>
+<div class="item-total"><span>Item total</span><span>₹500</span></div>
+<div class="extra-charges"><span>delivery-charges</span><span>₹19</span></div>
+<div class="grand-total"><span>Grand Total</span><span>₹574</span></div>
+*/
+
+// Initiator
 fetchCart().then(() => {
-    fetchProducts().then(() => displayCart())
+    fetchProducts().then(() => {
+        displayCart()
+        displayBillSummary()
+    })
 })
 

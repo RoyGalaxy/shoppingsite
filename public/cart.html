@@ -14,8 +14,8 @@
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/cart.css">
     <!--! Console -->
-    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
-    <script>eruda.init();</script>
+    <!--<script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>-->
 </head>
 <body>
 	<div class="container">
@@ -26,12 +26,12 @@
         <div class="box shadow orders">
             <div class="box-title"><h4>Your Order</h4></div>
         </div>
-        <div class="box bill-summary shadow">
-            <div class="box-title"><h4>Bill Summary</h4></div>
+        <div class="box bill-summary shadow" id="billSummary">
+            <!-- <div class="box-title"><h4>Bill Summary</h4></div>
             <div class="item-total"><span>Item total</span><span>₹500</span></div>
             <div class="extra-charges"><span>delivery-charges</span><span>₹19</span></div>
             <div class="extra-charges"><span>taxes</span><span>₹55</span></div>
-            <div class="grand-total"><span>Grand Total</span><span>₹574</span></div>
+            <div class="grand-total"><span>Grand Total</span><span>₹574</span></div> -->
         </div>
         <div class="footer">
             <a href="./checkout.html" class="floating-btn">Proceed to Payment</a>
@@ -41,64 +41,5 @@
 
     <script src="js/script.js"></script>
     <script src="js/cart.js"></script>
-    <!-- <script src="./js/cart-page.js"></script> -->
-    <!-- <script src="./script.js"></script> -->
-    <!-- <script>
-        user = JSON.parse(localStorage.user)
-        let cartItems
-        const headerHeight = document.querySelector("header").clientHeight
-        const cartContainer = document.getElementById("cartContainer")
-        const checkoutBtn = document.getElementById("checkoutBtn")
-        const stripeKey = "pk_test_51LlpoqSCw4adMApfje9B4e5PAwnbXFZv3RGaliDMikkNpwFc3u19BTvPKZAdut4OYv7nW0cnvU5JZHWk5zukheVu001DJES5za";;
-        async function displayCart(){
-            cartItems = await getCart()
-            if(cartItems.length < 1){
-                cartContainer.innerHTML = `
-                <div class="empty-cart" style="height: ${innerHeight - headerHeight}px;">
-                    <h1>No Items in the cart</h1>
-                </div>`
-                return
-            }
-            let cartTxt = ""
-            let totalAmount = 0;
-            cartItems.forEach((item,index) => {
-                totalAmount += item.price * item.quantity
-                cartTxt += `
-                    <div class="Cart-Items pad">
-                        <div class="image-box">
-                            <img src="${item.image}"/>
-                        </div>
-                        <div class="about">
-                            <h1 class="title">${item.name}</h1>
-                        </div>
-                        <div class="counter" >
-                            <div class="btn" onclick="incrementItem(${index})">+</div>
-                            <div class="count">${item.quantity}</div>
-                            <div class="btn" onclick="decrementItem(${index})">-</div>
-                        </div>
-                        <div class="prices">
-                            <div class="amount">$${item.price}</div>
-                        </div>
-                    </div>`
-                })
-                cartContainer.innerHTML = `
-                <div class="Header">
-                    <h3 class="Heading">Your Cart</h3>
-                </div>
-                ${cartTxt}
-                <hr>
-                <div class="checkout">
-                    <div class="total">
-                        <div>
-                            <div class="Subtotal">Sub-Total</div>
-                            <div class="items">${cartItems.length} items</div>
-                        </div>
-                        <div class="total-amount">$${totalAmount}</div>
-                    </div>
-                    <button class="button" id"checkoutBtn"><a href="checkout.html">Checkout</a></button>
-                </div>`
-            }
-            displayCart()
-    </script> -->
 </body>
 </html>

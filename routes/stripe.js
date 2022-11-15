@@ -3,6 +3,7 @@ const router = express.Router()
 const dotenv = require("dotenv")
 const Order = require("../models/Order")
 const Cart = require("../models/Cart")
+const deliveryCharge = 2
 dotenv.config()
 const stripe = require("stripe")(process.env.STRIPE_KEY)
 
@@ -51,7 +52,7 @@ router.post("/create-payment-intent", async (req, res) => {
 	const options = {
 		description: 'Food Delivery Service',
 		shipping,
-		amount: amount * 100,
+		amount: (amount * 100)+(deliveryCharge * 100),
 		currency: 'usd',
 		customer: customer.id,
 		automatic_payment_methods: { enabled: true },
