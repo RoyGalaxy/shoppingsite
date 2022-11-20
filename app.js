@@ -34,8 +34,6 @@ app.use("/api/carts",cartRoute)
 app.use("/api/orders",orderRoute)
 app.use("/api/checkout",stripeRoute)
 
-app.get("/checkout")
-
 app.listen(process.env.PORT || 3000,() => {
     console.log("server started at port:",process.env.PORT || 3000)
 })

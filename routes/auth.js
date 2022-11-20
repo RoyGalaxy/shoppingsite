@@ -1,34 +1,61 @@
 const router = require("express").Router()
 const User = require("../models/User")
-const cryptoJs = require("crypto-js")
+// const cryptoJs = require("crypto-js")
+const {
+    generateOTP,
+    sendSMS,
+} = require("../utils/otp")
 const jwt = require("jsonwebtoken")
+
 
 // REGISTER
 router.post("/register",async (req,res) => {
-    const newUser = new User({
-        username: req.body.username,
-        email: req.body.email,
-        password: cryptoJs.AES.encrypt(req.body.password,process.env.PASS_SEC).toString(),
-    })
-    
-    try{
-        const savedUser = await newUser.save()
-        res.status(201).json(savedUser)
-    }catch(error){
-        res.status(500).json(error)
+    const {phone,isAdmin} = req.body
+    // check duplicate phone Number
+    let user = await User.findOne({ phone });
+    if (!user?.phone) {
+        try{
+            const newUser = new User({
+                phone: phone,
+                isAdmin: isAdmin
+            })
+
+            user = await newUser.save()
+            res.status(200).json({
+                type: "success",
+                message: "User created and OTP sent to mobile number",
+                data: {
+                    userId: user._id,
+                },
+            });
+        }catch(error){
+            res.status(500).json(error)
+        }
+    }
+    const otp = generateOTP(4)
+    // save otp to user collection
+    user.phoneOtp = otp;
+    console.log(otp)
+    await user.save();
+    const message = `Your One Time Password (OTP) is ${otp}`
+    // send to mobile
+    const response = await sendSMS(phone,message)
+    // console.log(response)
+    if(res.headersSent !== true) {
+        res.status(200).json({message: "OTP sent to your registered number"}).end()
     }
 })
 
 // LOGIN
 router.post("/login",async(req,res) => {
+    const {phone, phoneOtp} = req.body
     try{
-        const user = await User.findOne({username: req.body.username})
-        // !user && res.status(401).json({message:"wrong credentials!!!"})
-        !user && res.status(401).json({message:"user not found"})
-        const hashedPassword = cryptoJs.AES.decrypt(user.password,process.env.PASS_SEC)
-        const originalPassword = hashedPassword.toString(cryptoJs.enc.Utf8)
+        const user = await User.findOne({phone})
+        !user && res.status(401).json({message:"user not found"}).end()
+
         if(res.headersSent !== true) {
-            originalPassword !== req.body.password && res.status(401).json({message:"wrong password!!"})
+            console.log(user.phoneOtp == phoneOtp)
+            user.phoneOtp !== phoneOtp && res.status(401).json({message:"Invalid OTP!!"}).end()
         }
         const accessToken = jwt.sign(
             {
@@ -38,12 +65,10 @@ router.post("/login",async(req,res) => {
             process.env.JWT_SEC,
             {expiresIn:"30d"}
         )
-        const {password, ...others} = user._doc;
 
         if(res.headersSent !== true) {
-            res.status(200).json({...others, accessToken})
+            res.status(200).json({_id: user._id,phone, accessToken})
         }
-
     }catch(err){
         if(res.headersSent !== true) {
             res.status(500).json(err)

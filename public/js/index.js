@@ -118,9 +118,10 @@ function displayCatagorySlider() {
             currentCatagory = elm
         }
         elm.addEventListener("click", function () {
-            if (this.className.includes("active")) return
-            this.classList.add("active")
-            currentCatagory.classList.remove("active")
+            if (!this.className.includes("active")) {
+                this.classList.add("active")
+                currentCatagory.classList.remove("active")
+            }
             currentCatagory = this
             const dish = findInCatagory(this.id)[0]
             scrollToElm(document.getElementById(dish._id))
@@ -130,9 +131,9 @@ function displayCatagorySlider() {
 }
 
 // Utility Functions
-function findInCatagory(catagory){
-    let newDishes = dishes.filter((item,index) => {
-        return item.category.toLowerCase() == catagory
+function findInCatagory(catagory) {
+    let newDishes = dishes.filter((item, index) => {
+        return item.catagory.toLowerCase() == catagory.toLowerCase()
     });
     return newDishes
 }
@@ -187,7 +188,7 @@ function decrementItem(id) {
 function scrollToElm(elm) {
     // window.scrollBy({ left: 0, top: elm.top - parseInt(dishesContainer.style.marginTop), behavior: "smooth" })
     console.log(elm.offsetTop - 120)
-    window.scrollTo({left: 0, top: elm.offsetTop - 120, behavior: "smooth"})
+    window.scrollTo({ left: 0, top: elm.offsetTop - 120, behavior: "smooth" })
 }
 
 // Event Handlers
@@ -199,8 +200,8 @@ function toggleCartBtn() {
         cartBtn.classList.toggle("hide")
     }
 }
-searchBar.addEventListener("keyup", function() {
-    let matchingDishes = [...new Set(dishes.filter(item => item.name.includes(this.value.trim())))];
+searchBar.addEventListener("keyup", function () {
+    let matchingDishes = [...new Set(dishes.filter(item => item.name.toLowerCase().includes(this.value.toLowerCase().trim())))];
     dishesContainer.innerHTML = ""
     for (let i = 0; i < matchingDishes.length; i++) {
         if (!matchingDishes[i].quantity) matchingDishes[i].quantity = 0
@@ -215,22 +216,29 @@ searchBar.addEventListener("keyup", function() {
 })
 
 // Initiator
-fetchCart().then(() => {
-    toggleCartBtn()
-    // Display products from Datatbase
-    fetchProducts().then(() => {
-        // Filter out Distinct catagories out of dish
-        catagories = [...new Set(dishes.map(item => item.category.trim().toLowerCase()))];
-        displayCatagorySlider()
-        for (let i = 0; i < dishes.length; i++) {
-            if (!dishes[i].quantity) dishes[i].quantity = 0
-            // Check for the each product to be already in cart or not
-            let dish = findItemInCart(dishes[i]._id)
-            if (dish) {
-                dishes[i].quantity = dish.quantity
-            }
-            let product = constructProduct(dishes[i], i)
-            dishesContainer.appendChild(product)
-        }
-    })
-})
+window.onload = () => {
+    if (!checkLogin()) {
+        window.location = "/login.html"
+    } else {
+        fetchCart().then(() => {
+            toggleCartBtn()
+            // Display products from Datatbase
+            fetchProducts().then(() => {
+                // Filter out Distinct catagories out of dish
+                sortProducts()
+                catagories = [...new Set(dishes.map(item => item.catagory.trim().toLowerCase()))];
+                displayCatagorySlider()
+                for (let i = 0; i < dishes.length; i++) {
+                    if (!dishes[i].quantity) dishes[i].quantity = 0
+                    // Check for the each product to be already in cart or not
+                    let dish = findItemInCart(dishes[i]._id)
+                    if (dish) {
+                        dishes[i].quantity = dish.quantity
+                    }
+                    let product = constructProduct(dishes[i], i)
+                    dishesContainer.appendChild(product)
+                }
+            })
+        })
+    }
+}

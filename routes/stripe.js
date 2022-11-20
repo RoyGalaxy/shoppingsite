@@ -43,7 +43,7 @@ router.post("/create-payment-intent", async (req, res) => {
 	const amount = calculateAmount(items)
 
 	const customer = await stripe.customers.create({
-		name: user.username,
+		name: user.phone,
 		metadata: {
 			userId: user._id,
 		}

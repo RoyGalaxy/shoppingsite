@@ -25,7 +25,7 @@ function getLocation() {
 
 function showPosition(position){
 	shipping = {
-		name: user.username,
+		name: user.phone,
 		address: {
 			line1: `Longitude: ${position.coords.longitude}`,
 			line2: `Latitude: ${position.coords.latitude}`,
@@ -161,14 +161,14 @@ addressForm.addEventListener("submit", (e) => {
 	const city = document.getElementById("city").value;
 	const state = document.getElementById("state").value;
 	shipping = {
-		name: user.username,
+		name: user.phone,
 		address: {
 			line1: addressLine1,
 			line2: addressLine2,
 			postal_code: postal_code,
 			city: city,
 			state: state,
-			country: "US"
+			country: "AE"
 		}
 	}
 
