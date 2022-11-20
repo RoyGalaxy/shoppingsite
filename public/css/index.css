@@ -146,6 +146,7 @@ header .right{
     transform: translateY(-50%);
 }
 .cart-options.add{
+    background-color: var(--secondary-light);
     color: var(--secondary);
     align-items: center;
     justify-content: center;

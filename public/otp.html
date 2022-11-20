@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>Send OTP</title>
+
+    <link rel="stylesheet" href="assets/vendor/fonts/boxicons.css" />
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+
+    <link rel="stylesheet" href="css/color-scheme.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/otp.css">
+
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
+</head>
+
+<body>
+    <div class="container">
+        <header class="flex shadow">
+            <div class="left">
+                <i class='bx bx-chevron-left back-btn'></i>
+                <span class="title" id="restraunt-name">Black Pepper</span>
+            </div>
+            <div class="right"></div>
+        </header>
+        <div class="box shadow">
+            <h4 class="title">Enter OTP to Continue</h4>
+            <form action="" class="mt-5">
+                <label for="addressLine2" class="form-label">Mobile Number</label>
+                <input type="number" class="mobile-number" id="mobileNumber"
+                    placeholder="Enter Without Country Code (+971)" autocomplete="off" />
+                <div class="otp-input hide" id="otpInput">
+                    <input class="otp" type="text" oninput='digitValidate(this)' onkeydown='tabChange(1)'
+                        onkeyup="updateOtp()" maxlength=1>
+                    <input class="otp" type="text" oninput='digitValidate(this)' onkeydown='tabChange(2)'
+                        onkeyup="updateOtp()" maxlength=1>
+                    <input class="otp" type="text" oninput='digitValidate(this)' onkeydown='tabChange(3)'
+                        onkeyup="updateOtp()" maxlength=1>
+                    <input class="otp" type="text" oninput='digitValidate(this)' onkeydown='tabChange(4)'
+                        onkeyup="updateOtp()" maxlength=1>
+                </div>
+            </form>
+            <button class='btn floating-btn custom-btn' id="btn">Send OTP</button>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script src="js/otp.js"></script>
+    <script>
+        // Event Listeners
+        btn.addEventListener("click", async function () {
+            const phone = mobileInput.value
+            if (this.className.includes("otp-submit")) {
+                const newUser = await loginUser(phone, otp)
+                if (newUser?.phone) window.location = "/checkout.html"
+                return
+            }
+            // Process the number and send otp
+            if (validatePhoneNumber(phone)) {
+                // Send a request to backend
+                console.log(phone)
+                await registerUser(phone)
+                console.log(phone)
+                // Show otp inputs
+                otpInput.classList.remove("hide")
+                mobileInput.classList.add("hide")
+                document.querySelector("label").classList.add("hide")
+                this.classList.add("otp-submit")
+                this.textContent = "Verify OTP"
+            }else{
+                console.log("Invallid Number")
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,5 +1,5 @@
 const backBtns = document.querySelectorAll(".back-btn")
-const user = JSON.parse(localStorage.user)
+let user = localStorage.user ? JSON.parse(localStorage.user) : {}
 let dishes = []
 let cart = {}
 const deliveryCharge = 2
@@ -27,11 +27,12 @@ function findProductById(id) {
 async function fetchCart() {
     // cart = JSON.parse(localStorage.cart)
     //! FETCH FROM THE SERVER INSTEAD
-    if (user) {
+    if (user.accessToken) {
         let headersList = {
             "Accept": "*/*",
             "token": `Bearer ${user.accessToken}`,
         }
+        console.log(headersList)
         try {
             const res = await fetch(`/api/carts/find/${user._id}`,
                 {
@@ -70,7 +71,7 @@ async function createCart(){
     return data
 }
 
-function saveCart(fromCartPage) {
+async function saveCart(fromCartPage) {
     if (!fromCartPage) {
         cart.products = dishes.filter(dish => dish.quantity >= 1)
     }
@@ -84,11 +85,12 @@ function saveCart(fromCartPage) {
     let bodyContent = JSON.stringify({
         "products": cart.products.map(item => { return { "productId": item._id, "quantity": item.quantity } })
     });
-    fetch(`/api/carts/${cart._id}`, {
+    await fetch(`/api/carts/${cart._id}`, {
         method: 'PUT',
         headers: headersList,
         body: bodyContent
     })
+    console.log("Hello")
 }
 
 function findItemInCart(id) {
@@ -97,6 +99,56 @@ function findItemInCart(id) {
             return cart.products[i]
         }
     }
+}
+
+function sortProducts(){
+    dishes.sort((a, b) => {
+        let fa = a.catagory.toLowerCase(),
+            fb = b.catagory.toLowerCase();
+
+        if (fa < fb) {
+            return -1;
+        }
+        if (fa > fb) {
+            return 1;
+        }
+        return 0;
+    });
+}
+
+function checkLogin(){
+    if(user?.phone){
+        return true
+    }
+    return false
+}
+
+async function registerUser(phone){
+    const res = await fetch("/api/auth/register",{
+        method: "POST",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({phone})
+    })
+    const jsonRes = await res.json()
+    console.log("Response received")
+    const data = await jsonRes
+    return data
+}
+
+async function loginUser(phone,otp){
+    const res = await fetch("/api/auth/login",{
+        method: "POST",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({phone,phoneOtp: otp})
+    })
+    const jsonRes = await res.json()
+    const newUser = await jsonRes
+    if(newUser?.phone) localStorage.user = JSON.stringify(newUser)
+    return newUser
 }
 
 // Event Handlers
