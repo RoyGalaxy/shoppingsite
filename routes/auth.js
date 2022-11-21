@@ -35,7 +35,7 @@ router.post("/register",async (req,res) => {
     const otp = generateOTP(4)
     // save otp to user collection
     user.phoneOtp = otp;
-    console.log(otp)
+    // console.log(phone,otp)
     await user.save();
     const message = `Your One Time Password (OTP) is ${otp}`
     // send to mobile
