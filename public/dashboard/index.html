@@ -331,8 +331,8 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="assets/js/apiRequestHandler.js"></script>
     <script>
-      const user = JSON.parse(localStorage.getItem("user"))
-      if(!user.username) {window.location = "./html/login.html"}
+      const user = localStorage.user ? JSON.parse(localStorage.getItem("user")) : {}
+      if(!user?.accessToken) {window.location = "./html/login.html"}
 
       if(user.isAdmin !== true) {alert("You are not allowed to access this page"); window.location = "./html/login.html"}
       const openOrdersCount = document.getElementById("openOrdersCount")
@@ -360,7 +360,7 @@
           method: 'GET',
           headers: {
               'Content-Type': 'application/json',
-              "token": `Bearer ${JSON.parse(localStorage.user).accessToken}`
+              "token": `Bearer ${user.accessToken}`
           }
       })
       .then(res => {

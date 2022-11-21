@@ -35,7 +35,7 @@
             <form action="" class="mt-5">
                 <label for="addressLine2" class="form-label">Mobile Number</label>
                 <input type="number" class="mobile-number" id="mobileNumber"
-                    placeholder="Enter Without Country Code (+971)" autocomplete="off" />
+                    placeholder="Enter number with Country Code (Ex:- +971)" autocomplete="off" />
                 <div class="otp-input hide" id="otpInput">
                     <input class="otp" type="text" oninput='digitValidate(this)' onkeydown='tabChange(1)'
                         onkeyup="updateOtp()" maxlength=1>
@@ -57,6 +57,7 @@
         localStorage.clear()
         btn.addEventListener("click", async function () {
             const phone = mobileInput.value
+            console.log(phone)
             console.log(phone)
             if (this.className.includes("otp-submit")) {
                 const newUser = await loginUser(phone, otp)

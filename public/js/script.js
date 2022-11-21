@@ -124,6 +124,8 @@ function checkLogin(){
 }
 
 async function registerUser(phone){
+    //! Just adding Temporarily
+    phone = "91"+phone
     const res = await fetch("/api/auth/register",{
         method: "POST",
         headers: {
@@ -138,6 +140,8 @@ async function registerUser(phone){
 }
 
 async function loginUser(phone,otp){
+    //! Just adding Temporarily
+    phone = "91"+phone
     const res = await fetch("/api/auth/login",{
         method: "POST",
         headers: {
