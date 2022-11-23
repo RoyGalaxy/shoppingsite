@@ -21,12 +21,9 @@ var upload = multer({
     storage: StorageImage
 })
 
-//  CREATE 
+//  CREATE
 router.post("/",verifyTokenAndAdmin,upload.any("image"), async (req, res) => {
-    console.log(req.body)
     if (res.status(200)) {
-        console.log("Your file has been uploaded successfully.");
-        console.log(req.body);
         const newProduct = new Product(req.body)
         try{
             const savedProduct = await newProduct.save()
@@ -54,7 +51,7 @@ router.put("/:id",verifyTokenAndAdmin,upload.any("image"), async (req, res) => {
 
 // DELETE
 router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
-    
+
     try {
         await Product.findByIdAndDelete(req.params.id)
         res.status(200).json("Product has been deleted")
