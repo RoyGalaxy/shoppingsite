@@ -32,7 +32,8 @@ router.post("/register",async (req,res) => {
             res.status(500).json(error)
         }
     }
-    const otp = generateOTP(4)
+    // const otp = generateOTP(4)
+    const otp = "1234"
     // save otp to user collection
     user.phoneOtp = otp;
     await user.save();
