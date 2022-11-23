@@ -35,11 +35,10 @@ router.post("/register",async (req,res) => {
     const otp = generateOTP(4)
     // save otp to user collection
     user.phoneOtp = otp;
-    console.log(phone,otp)
     await user.save();
-    // const message = `Your One Time Password (OTP) is ${otp}`
+    const message = `Your One Time Password (OTP) is ${otp}`
     // send to mobile
-    // const response = await sendSMS(phone,message)
+    const response = await sendSMS(phone,message)
     // console.log(response)
     if(res.headersSent !== true) {
         res.status(200).json({message: "OTP sent to your registered number"}).end()
@@ -54,7 +53,6 @@ router.post("/login",async(req,res) => {
         !user && res.status(401).json({message:"user not found"}).end()
 
         if(res.headersSent !== true) {
-            console.log(user.phoneOtp == phoneOtp)
             user.phoneOtp !== phoneOtp && res.status(401).json({message:"Invalid OTP!!"}).end()
         }
         const accessToken = jwt.sign(
