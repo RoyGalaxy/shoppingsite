@@ -27,7 +27,8 @@ let updateOtp = () => {
 
 function validatePhoneNumber(input_str) {
     // var re = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
-    const re = /^(?:\971|00971|0)(?:2|3|4|6|7|9|50|51|52|55|56)[0-9]{7}$/
+    // const re = /^(?:\971|00971|0)(?:2|3|4|6|7|9|50|51|52|55|56)[0-9]{7}$/
 
-    return re.test(input_str);
+    // return re.test(input_str);
+    return true
   }
