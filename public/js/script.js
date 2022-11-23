@@ -85,12 +85,14 @@ async function saveCart(fromCartPage) {
     let bodyContent = JSON.stringify({
         "products": cart.products.map(item => { return { "productId": item._id, "quantity": item.quantity } })
     });
-    await fetch(`/api/carts/${cart._id}`, {
+    const res = await fetch(`/api/carts/${user._id}`, {
         method: 'PUT',
         headers: headersList,
         body: bodyContent
     })
-    console.log("Hello")
+    const jsonRes = await res.json()
+    const data = await jsonRes
+    console.log(data)
 }
 
 function findItemInCart(id) {
@@ -125,7 +127,6 @@ function checkLogin(){
 
 async function registerUser(phone){
     //! Just adding Temporarily
-    phone = "91"+phone
     const res = await fetch("/api/auth/register",{
         method: "POST",
         headers: {
@@ -141,7 +142,6 @@ async function registerUser(phone){
 
 async function loginUser(phone,otp){
     //! Just adding Temporarily
-    phone = "91"+phone
     const res = await fetch("/api/auth/login",{
         method: "POST",
         headers: {

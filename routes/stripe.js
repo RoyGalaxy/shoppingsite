@@ -18,13 +18,14 @@ function calculateAmount(items) {
 // Create Order
 async function createOrder(cust, data) {
 	try {
-		const { products } = await Cart.findOne({ userId: cust.metadata.userId })
+		console.log(cust.metadata)
+		const cart = await Cart.findOne({ userId: cust.metadata.userId })
 
 		const options = {
 			userId: cust.metadata.userId,
 			customerId: data.customer,
 			paymentIntentId: data.payment_intent,
-			products: products,
+			products: cart.products,
 			amount: data.amount / 100,
 			address: data.shipping.address,
 			payment_status: data.status
@@ -33,6 +34,8 @@ async function createOrder(cust, data) {
 		const newOrder = new Order(options)
 		const savedOrder = await newOrder.save()
 		console.log("order: ", savedOrder)
+		// Delete the pre-existing cart
+		await Cart.findByIdAndDelete(cart._id)
 	} catch (err) {
 		console.log(err)
 	}
@@ -40,6 +43,7 @@ async function createOrder(cust, data) {
 
 router.post("/create-payment-intent", async (req, res) => {
 	const { user, items, shipping } = req.body;
+	console.log(user)
 	const amount = calculateAmount(items)
 
 	const customer = await stripe.customers.create({

@@ -89,8 +89,17 @@
             </li>
 
             <li class="menu-header small text-uppercase">
-              <span class="menu-header-text">Dishes</span>
+              <span class="menu-header-text">Menu</span>
             </li>
+
+            <!-- Update Product -->
+            <li class="menu-item">
+              <a href="html/viewMenu.html" class="menu-link">
+                <i class='menu-icon tf-icons bx bxs-food-menu'></i>
+                <div data-i18n="Analytics"> View Menu</div>
+              </a>
+            </li>
+            <!-- /Update Product -->
 
             <!-- Add New Product -->
             <li class="menu-item">
@@ -100,24 +109,6 @@
               </a>
             </li>
             <!-- /Add New Product -->
-
-            <!-- Update Product -->
-            <li class="menu-item">
-              <a href="html/updateDish.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-refresh"></i>
-                <div data-i18n="Analytics">Update Dish</div>
-              </a>
-            </li>
-            <!-- /Update Product -->
-
-            <!-- Delete Product -->
-            <li class="menu-item">
-              <a href="html/deleteDish.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bxs-minus-circle"></i>
-                <div data-i18n="Analytics">Delete A Dish</div>
-              </a>
-            </li>
-            <!-- /Delete Product -->
 
             <!-- Components -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">User Interface</span></li>
@@ -256,24 +247,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-lg-5 col-md-5 col-6 mb-4">
-                      <div class="card">
-                        <div class="card-body">
-                          <div class="card-title d-flex align-items-start justify-content-between">
-                            <div class="avatar flex-shrink-0">
-                              <img
-                                src="assets/img/icons/unicons/wallet-info.png"
-                                alt="Credit Card"
-                                class="rounded"
-                              />
-                            </div>
-                          </div>
-                          <span>Sales today</span>
-                          <h3 class="card-title text-nowrap mb-1">$4,679</h3>
-                          <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.42%</small>
-                        </div>
-                      </div>
-                    </div>
+
                   </div>
                 </div>
                 <!-- Total Revenue -->
@@ -376,7 +350,7 @@
               let btn = document.createElement("button")
               btn.type = "button"
               btn.className = "collapsible"
-              btn.textContent = "New Order from " + user.username + " (click to view)"
+              btn.textContent = "New Order from " + "+"+user.phone + " (click to view)"
               btn.addEventListener("click", function(){
                 this.nextElementSibling.classList.toggle("active")
               })
@@ -415,7 +389,7 @@
 
               const addressElm = document.createElement("h5")
               addressElm.className = "mb-0"
-              addressElm.innerHTML = `<b>Shipping address</b> - ${order.address.line1},<br>${order.address.line2},<br>${order.address.city}(${order.address.postal_code})`
+              addressElm.innerHTML = `<b>Shipping address</b> - ${order.address.line1 || ""},<br>${order.address.line2 || ""},<br>${order.address.city || ""}${order.address.postal_code ? `(${order.address.postal_code})` : ""}`
               addressElm.style.fontSize = "14px"
 
               addressDetail.appendChild(addressElm)
@@ -433,7 +407,7 @@
                   avatar.className = "avatar flex-shrink-0 me-3"
 
                   const avatarInitial = document.createElement("img")
-                  avatarInitial.src = `/${product.image}`
+                  avatarInitial.src = `${product.image}`
                   avatarInitial.className = "avatar-initial rounded bg-label-primary"
 
                   let icon = document.createElement("i")
