@@ -8,9 +8,13 @@ const {
 const jwt = require("jsonwebtoken")
 
 
+function formatPhone(phone){
+    return phone.replaceAll(" ","").replaceAll("+","")
+}
+
 // REGISTER
 router.post("/register",async (req,res) => {
-    const {phone,isAdmin} = req.body
+    let {phone,isAdmin} = req.body
     // check duplicate phone Number
     let user = await User.findOne({ phone });
     if (!user?.phone) {
@@ -32,15 +36,15 @@ router.post("/register",async (req,res) => {
             res.status(500).json(error)
         }
     }
-    // const otp = generateOTP(4)
-    const otp = "1234"
+    const otp = generateOTP(4)
+    // const otp = "1234"
     // save otp to user collection
     user.phoneOtp = otp;
     await user.save();
     const message = `Your One Time Password (OTP) is ${otp}`
     // send to mobile
-    const response = await sendSMS(phone,message)
-    // console.log(response)
+    // const response = await sendSMS(formatPhone(phone),message)
+    console.log(message)
     if(res.headersSent !== true) {
         res.status(200).json({message: "OTP sent to your registered number"}).end()
     }
@@ -48,7 +52,7 @@ router.post("/register",async (req,res) => {
 
 // LOGIN
 router.post("/login",async(req,res) => {
-    const {phone, phoneOtp} = req.body
+    let {phone, phoneOtp} = req.body
     try{
         const user = await User.findOne({phone})
         !user && res.status(401).json({message:"user not found"}).end()

@@ -6,6 +6,10 @@ const { update } = require("../models/Cart")
 //  CREATE
 
 router.post("/", verifyToken, async (req, res) => {
+    if(req.body.products._id){
+        req.body.productId = req.body._id
+    }
+    console.log(req.body)
     const newCart = new Cart(req.body)
     try {
         const savedCart = await newCart.save()
@@ -35,7 +39,7 @@ router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
 // DELETE
 router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
     try {
-        await Cart.findByIdAndDelete(req.params.id)
+        await Cart.findOneAndDelete({ userId: req.params.id })
         res.status(200).json("Cart has been deleted")
     } catch (err) {
         res.status(500).json(err)

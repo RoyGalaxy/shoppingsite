@@ -25,10 +25,12 @@
   ).then(res => {
     let jsonRes = res.json()
     jsonRes.then(data => {
+      data.sort((a, b) => (a._id > b._id) ? 1 : -1)
       const date = new Date()
       const currentMonth = date.getMonth()
       let thisMonthRevenue;
       let revenue = data.map(item => {if(item._id === currentMonth + 1) thisMonthRevenue = item.total;return item.total})
+      console.log(data,revenue)
       const months = ["Jan","Feb","Mar","Apr","May","June","July","Aug","Sep","Oct","Nov","Dec"]
       let categories = data.map(item => months[item._id - 1])
       const totalRevenueChartEl = document.querySelector('#totalRevenueChart');
@@ -41,10 +43,6 @@
               name: '2022',
               data: [...revenue]
             },
-            // {
-            //   name: '2021',
-            //   data: [50,100,200,80,120,150]
-            // }
           ],
           chart: {
             height: 300,
