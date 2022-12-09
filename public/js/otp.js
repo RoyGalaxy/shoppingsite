@@ -20,7 +20,7 @@ let tabChange = function (val) {
 
 let updateOtp = () => {
     otp = ""
-    for(let i = 0;i < ele.length;i++){
+    for (let i = 0; i < ele.length; i++) {
         otp += ele[i].value
     }
 }
@@ -31,4 +31,28 @@ function validatePhoneNumber(input_str) {
 
     // return re.test(input_str);
     return true
-  }
+}
+
+// Event Listeners
+btn.addEventListener("click", async function () {
+    const phone = mobileInput.value
+    if (this.className.includes("otp-submit")) {
+        const newUser = await loginUser(phone, otp)
+        if (newUser?.accessToken) window.location = "/checkout.html"
+        return
+    }
+    // Process the number and send otp
+    if (validatePhoneNumber(phone)) {
+        // Send a request to backend
+        console.log(phone)
+        await registerUser(phone)
+        // Show otp inputs
+        otpInput.classList.remove("hide")
+        document.querySelector(".iti").classList.add("hide")
+        document.querySelector("label").classList.add("hide")
+        this.classList.add("otp-submit")
+        this.textContent = "Verify OTP"
+    } else {
+        console.log("Invallid Number")
+    }
+})

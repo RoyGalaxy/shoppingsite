@@ -1,9 +1,14 @@
 const backBtns = document.querySelectorAll(".back-btn")
+let loader;
 let user = localStorage.user ? JSON.parse(localStorage.user) : {}
 let dishes = []
-let cart = {}
+let cart = localStorage.cart ? { products: JSON.parse(localStorage.cart) } : {}
 const deliveryCharge = 2
 
+function hideLoader(){
+    loader = document.querySelector(".loader")
+    loader.classList.add("hide")
+}
 
 async function fetchProducts() {
     try {
@@ -25,14 +30,11 @@ function findProductById(id) {
 }
 
 async function fetchCart() {
-    // cart = JSON.parse(localStorage.cart)
-    //! FETCH FROM THE SERVER INSTEAD
     if (user.accessToken) {
         let headersList = {
             "Accept": "*/*",
             "token": `Bearer ${user.accessToken}`,
         }
-        console.log(headersList)
         try {
             const res = await fetch(`/api/carts/find/${user._id}`,
                 {
@@ -44,13 +46,18 @@ async function fetchCart() {
             const data = await jsonRes
             // cart = (data != undefined) ? data : {products: []}
             cart = data || await createCart()
-        }catch(e){
+        } catch (e) {
             console.log(e)
         }
+    } else {
+        cart.products = localStorage.cart ? JSON.parse(localStorage.cart) : []
+        return
     }
 }
 
-async function createCart(){
+async function createCart() {
+    if (!user?.accessToken) return
+    let products = cart.products?.map(item => { return { "productId": item._id, "quantity": item.quantity } })
     let headersList = {
         "Accept": "*/*",
         "token": `Bearer ${user.accessToken}`,
@@ -58,25 +65,41 @@ async function createCart(){
     }
     let body = {
         userId: user._id,
-        products: []
+        products: products || []
     }
-    const res = await fetch("/api/carts/",{
+    const res = await fetch("/api/carts/", {
         method: "POST",
         headers: headersList,
         body: JSON.stringify(body)
     })
     const jsonRes = await res.json()
     const data = await jsonRes
-    console.log(data)
     return data
+}
+
+async function deleteCart() {
+    if (user.accessToken) {
+        let headersList = {
+            "Accept": "*/*",
+            "token": `Bearer ${user.accessToken}`
+        }
+        await fetch(`/api/carts/${user._id}`, {
+            method: "DELETE",
+            headers: headersList
+        });
+    }
 }
 
 async function saveCart(fromCartPage) {
     if (!fromCartPage) {
         cart.products = dishes.filter(dish => dish.quantity >= 1)
     }
-    localStorage.cart = JSON.stringify(cart)
-    //Also saving to the database
+    if (!user?.accessToken) {
+        let products = cart.products.map(item => { return { "productId": item._id, "quantity": item.quantity } })
+        localStorage.cart = JSON.stringify(products)
+        return
+    }
+    localStorage.cart = JSON.stringify(cart.products)
     let headersList = {
         "Accept": "*/*",
         "token": `Bearer ${user.accessToken}`,
@@ -85,6 +108,7 @@ async function saveCart(fromCartPage) {
     let bodyContent = JSON.stringify({
         "products": cart.products.map(item => { return { "productId": item._id, "quantity": item.quantity } })
     });
+    console.log(bodyContent)
     const res = await fetch(`/api/carts/${user._id}`, {
         method: 'PUT',
         headers: headersList,
@@ -92,18 +116,17 @@ async function saveCart(fromCartPage) {
     })
     const jsonRes = await res.json()
     const data = await jsonRes
-    console.log(data)
 }
 
 function findItemInCart(id) {
-    for (let i = 0; i < cart.products.length; i++) {
-        if (cart.products[i].productId === id) {
+    for (let i = 0; i < cart.products?.length; i++) {
+        if (cart.products[i]?.productId === id) {
             return cart.products[i]
         }
     }
 }
 
-function sortProducts(){
+function sortProducts() {
     dishes.sort((a, b) => {
         let fa = a.catagory.toLowerCase(),
             fb = b.catagory.toLowerCase();
@@ -118,40 +141,44 @@ function sortProducts(){
     });
 }
 
-function checkLogin(){
-    if(user?.phone){
+function checkLogin() {
+    if (user?.phone) {
         return true
     }
     return false
 }
 
-async function registerUser(phone){
+async function registerUser(phone) {
     //! Just adding Temporarily
-    const res = await fetch("/api/auth/register",{
+    const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: {
             "Content-type": "application/json"
         },
-        body: JSON.stringify({phone})
+        body: JSON.stringify({ phone })
     })
     const jsonRes = await res.json()
-    console.log("Response received")
     const data = await jsonRes
     return data
 }
 
-async function loginUser(phone,otp){
-    //! Just adding Temporarily
-    const res = await fetch("/api/auth/login",{
+async function loginUser(phone, otp) {
+    const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: {
             "Content-type": "application/json"
         },
-        body: JSON.stringify({phone,phoneOtp: otp})
+        body: JSON.stringify({ phone, phoneOtp: otp })
     })
     const jsonRes = await res.json()
     const newUser = await jsonRes
-    if(newUser?.phone) localStorage.user = JSON.stringify(newUser)
+    if (newUser?.accessToken) {
+        localStorage.user = JSON.stringify(newUser)
+        user = newUser
+        await deleteCart()
+        let newCart = await fetchCart()
+        cart = newCart
+    }
     return newUser
 }
 

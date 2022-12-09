@@ -756,7 +756,7 @@ html:not(.layout-menu-collapsed) .bg-menu-theme .menu-inner .menu-item .menu-lin
 }
 .bg-menu-theme .menu-inner > .menu-item.active > .menu-link {
   color: var(--primary);
-  background-color: var(--secondary-light) !important;
+  background-color: var(--secondary) !important;
 }
 .bg-menu-theme .menu-inner > .menu-item.active:before {
   background: var(--secondary);

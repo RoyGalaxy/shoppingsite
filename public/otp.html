@@ -9,19 +9,29 @@
     <title>Send OTP</title>
 
     <link rel="stylesheet" href="assets/vendor/fonts/boxicons.css" />
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"> -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <link rel="stylesheet" href="css/color-scheme.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/otp.css">
+    <link rel="stylesheet" href="css/build/intlTelInput.css">
 
     <script src="//cdn.jsdelivr.net/npm/eruda"></script>
     <script>eruda.init();</script>
 </head>
 
 <body>
+    <div class="loader">
+        <span>L</span>
+        <span>O</span>
+        <span>A</span>
+        <span>D</span>
+        <span>I</span>
+        <span>N</span>
+        <span>G</span>
+        <span>.</span>
+        <span>.</span>
+    </div>
     <div class="container">
         <header class="flex shadow">
             <div class="left">
@@ -34,8 +44,8 @@
             <h4 class="title">Enter OTP to Continue</h4>
             <form action="" class="mt-5">
                 <label for="addressLine2" class="form-label">Mobile Number</label>
-                <input type="number" class="mobile-number" id="mobileNumber"
-                    placeholder="Enter Without Country Code (+971)" autocomplete="off" />
+                <input type="tel" class="mobile-number" id="mobileNumber"
+                    placeholder="Phone" autocomplete="off" value="+971 "/>
                 <div class="otp-input hide" id="otpInput">
                     <input class="otp" type="text" oninput='digitValidate(this)' onkeydown='tabChange(1)'
                         onkeyup="updateOtp()" maxlength=1>
@@ -53,31 +63,23 @@
 
     <script src="js/script.js"></script>
     <script src="js/otp.js"></script>
+    <script src="js/build/intlTelInput.js"></script>
     <script>
-        // Event Listeners
-        btn.addEventListener("click", async function () {
-            const phone = mobileInput.value
-            if (this.className.includes("otp-submit")) {
-                const newUser = await loginUser(phone, otp)
-                if (newUser?.phone) window.location = "/checkout.html"
-                return
-            }
-            // Process the number and send otp
-            if (validatePhoneNumber(phone)) {
-                // Send a request to backend
-                console.log(phone)
-                await registerUser(phone)
-                console.log(phone)
-                // Show otp inputs
-                otpInput.classList.remove("hide")
-                mobileInput.classList.add("hide")
-                document.querySelector("label").classList.add("hide")
-                this.classList.add("otp-submit")
-                this.textContent = "Verify OTP"
-            }else{
-                console.log("Invallid Number")
-            }
-        })
+        // Vanilla Javascript
+        var input = document.querySelector("#mobileNumber");
+        window.intlTelInput(input, ({
+            initialCountry: "ae",
+        }));
+
+        $(document).ready(function () {
+            $('.iti__flag-container').click(function () {
+                var countryCode = $('.iti__selected-flag').attr('title');
+                var countryCode = countryCode.replace(/[^0-9]/g, '')
+                $('#mobileNumber').val("");
+                $('#mobileNumber').val("+" + countryCode + " " + $('#mobileNumber').val());
+            });
+            setTimeout(hideLoader,500)
+        });
     </script>
 </body>
 

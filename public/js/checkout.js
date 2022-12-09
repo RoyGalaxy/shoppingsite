@@ -142,38 +142,41 @@ function setLoading(isLoading) {
 }
 
 // Event Handlers
-locationBtn.onclick = getLocation
-fetchCart().then(() => {
-	fetchProducts().then(() => {
-		for(let i = 0; i < cart.products.length; i++){
-			cart.products[i] = Object.assign(cart.products[i],findProductById(cart.products[i].productId))
-		}
+window.onload = () => {
+	locationBtn.onclick = getLocation
+	fetchCart().then(() => {
+		fetchProducts().then(() => {
+			for(let i = 0; i < cart.products.length; i++){
+				cart.products[i] = Object.assign(cart.products[i],findProductById(cart.products[i].productId))
+			}
+		})
 	})
-})
-document.querySelector("#payment-form").addEventListener("submit", handleSubmit);
+	document.querySelector("#payment-form").addEventListener("submit", handleSubmit);
 
-addressForm.addEventListener("submit", (e) => {
-	e.preventDefault()
+	addressForm.addEventListener("submit", (e) => {
+		e.preventDefault()
 
-	const addressLine1 = document.getElementById("addressLine1").value;
-	const addressLine2 = document.getElementById("addressLine2").value;
-	const postal_code = document.getElementById("postalCode").value;
-	const city = document.getElementById("city").value;
-	const state = document.getElementById("state").value;
-	shipping = {
-		name: user.phone,
-		address: {
-			line1: addressLine1,
-			line2: addressLine2,
-			postal_code: postal_code,
-			city: city,
-			state: state,
-			country: "AE"
+		const addressLine1 = document.getElementById("addressLine1").value;
+		const addressLine2 = document.getElementById("addressLine2").value;
+		const postal_code = document.getElementById("postalCode").value;
+		const city = document.getElementById("city").value;
+		const state = document.getElementById("state").value;
+		shipping = {
+			name: user.phone,
+			address: {
+				line1: addressLine1,
+				line2: addressLine2,
+				postal_code: postal_code,
+				city: city,
+				state: state,
+				country: "AE"
+			}
 		}
-	}
 
-	addressCon.classList.toggle("hide")
-	paymentForm.classList.toggle("hide")
-	initialize()
-	checkStatus()
-})
+		addressCon.classList.toggle("hide")
+		paymentForm.classList.toggle("hide")
+		initialize()
+		checkStatus()
+	})
+	setTimeout(hideLoader,500)
+}

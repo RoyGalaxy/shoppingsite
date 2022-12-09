@@ -8,6 +8,7 @@ dotenv.config()
 const stripe = require("stripe")(process.env.STRIPE_KEY)
 
 function calculateAmount(items) {
+	console.log(items)
 	let amount = 0
 	items.forEach(item => {
 		amount += item.price * item.quantity
@@ -18,7 +19,6 @@ function calculateAmount(items) {
 // Create Order
 async function createOrder(cust, data) {
 	try {
-		console.log(cust.metadata)
 		const cart = await Cart.findOne({ userId: cust.metadata.userId })
 
 		const options = {
@@ -43,8 +43,9 @@ async function createOrder(cust, data) {
 
 router.post("/create-payment-intent", async (req, res) => {
 	const { user, items, shipping } = req.body;
-	console.log(user)
-	const amount = calculateAmount(items)
+	// console.log(user)
+	const amount = calculateAmount(items) || 0
+	console.log(items)
 
 	const customer = await stripe.customers.create({
 		name: user.phone,

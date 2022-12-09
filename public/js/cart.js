@@ -176,10 +176,14 @@ function displayBillSummary() {
 */
 
 // Initiator
-fetchCart().then(() => {
-    fetchProducts().then(() => {
-        displayCart()
-        displayBillSummary()
+window.onload = () => {
+    loader = document.querySelector(".loader")
+    fetchCart().then(() => {
+        fetchProducts().then(() => {
+            displayCart()
+            displayBillSummary()
+        })
     })
-})
+    setTimeout(hideLoader,500)
+}
 
