@@ -237,5 +237,5 @@ window.onload = () => {
             }
         })
     })
-    // setTimeout(hideLoader,500)
+    setTimeout(hideLoader,500)
 }
