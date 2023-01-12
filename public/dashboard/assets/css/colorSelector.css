@@ -1,0 +1,24 @@
+.color-box{
+    margin-bottom: 1.5rem;
+}
+.btn.save-changes{
+    background-color: var(--secondary) !important;
+    color: var(--primary) !important;
+    font-weight: bold;
+}
+.color-indicator{
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    background-color: red;
+    box-shadow: 0 0 12px rgba(0,0,0,0.2);
+    border-radius: 8px;
+    cursor: pointer;
+}
+.color-catagory{
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+    margin: 0 1rem;
+    font-size: 26px;
+}

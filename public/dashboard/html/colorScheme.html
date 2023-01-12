@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
     <link rel="stylesheet" href="../assets/vendor/css/colorjoe.css" class="template-customizer-theme-css" />
     <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link rel="stylesheet" href="../assets/css/colorSelector.css" />
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
     <link rel="stylesheet" href="../assets/vendor/libs/apex-charts/apex-charts.css" />
@@ -147,20 +148,26 @@
                                         <div class="card-title mb-0">
                                             <h5 class="m-0 me-2">Choose Colors for your website</h5>
                                         </div>
+                                        <button class="btn save-changes">Save Changes</button>
                                     </div>
                                     <div class="card-body colorjoe-parent">
-                                        <div class="colorjoe"></div>
                                         <br>
-                                        <div class="d-flex justify-content-center flex-column bg-black mb-3">
-                                            <div class="p-2 d-flex align-items-center justify-content-between mb-3 color-scheme">
-                                                <span>h</span>
-                                                <input type="color" name="" id="">
-                                                <span></span>
+                                        <div class="d-flex justify-content-center flex-column mb-3">
+                                            <div class="d-flex align-item-start color-box">
+                                                <span class="color-indicator  ci-primary" onclick="showColorPicker('primary')"></span>
+                                                <h2 class="color-catagory">Primary Color</h2>
                                             </div>
-                                            <div class="p-2 color-scheme">
-                                                <span>h</span>
-                                                <input type="color" name="" id="">
+                                            <div class="colorjoe cj-primary"></div>
+                                            <div class="d-flex align-item-start color-box">
+                                                <span class="color-indicator ci-secondary" onclick="showColorPicker('secondary')"></span>
+                                                <h2 class="color-catagory">Secondary Color</h2>
                                             </div>
+                                            <div class="colorjoe cj-secondary"></div>
+                                            <div class="d-flex align-item-start color-box">
+                                                <span class="color-indicator ci-text" onclick="showColorPicker('text')"></span>
+                                                <h2 class="color-catagory">Text Color</h2>
+                                            </div>
+                                            <div class="colorjoe cj-text"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -191,14 +198,15 @@
     <script src="../assets/js/apiRequestHandler.js"></script>
     <script>
         class ColorPicker {
-            constructor(root){
+            constructor(root,indicator,selectedColor){
                 this.root = root;
                 this.colorjoe = colorjoe.rgb(this.root.querySelector(".colorjoe"))
-                this.selectedColor = null
-                this.savedColors =
+                this.isVisible = false;
+                this.indicator = this.root.querySelector(`.color-indicator.${indicator}`)
+                this.selectedColor = this.setSelectedColor(selectedColor || "#ffffff")
+                console.log(`.color-indicator.${indicator}`)
 
-                this.colorjoe.show()
-                this.setSelectedColor("#ffffff")
+                this.colorjoe.hide() // Hidden is the default behavior
 
                 this.colorjoe.on("change", (color) => {
                     this.setSelectedColor(color.hex())
@@ -207,14 +215,24 @@
             }
             setSelectedColor(color, skipCjUpdate = false){
                 this.selectedColor = color
-                // Also update to html element
-            }
-            getSavedColors() {
-                return ["#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff"]
+                this.indicator.style.background = color
             }
         }
 
-        const cp = new ColorPicker(document.querySelector(".colorjoe-parent"))
+        const primaryCP = new ColorPicker(document.querySelector(".colorjoe-parent"),"ci-primary")
+        const secondaryCP = new ColorPicker(document.querySelector(".colorjoe-parent"),"ci-secondary","#fa7e70")
+        const textCP = new ColorPicker(document.querySelector(".colorjoe-parent"),"ci-text","#000000")
+
+        function showColorPicker(color){
+            let cp = (color === "primary") ? primaryCP : (color === "secondary") ? secondaryCP : textCP
+            if(cp.isVisible === true){
+                cp.colorjoe.hide()
+                cp.isVisible = false
+            }else{
+                cp.colorjoe.show()
+                cp.isVisible = true
+            }
+        }
     </script>
 </body>
 
