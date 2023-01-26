@@ -37,7 +37,6 @@ router.post("/register",async (req,res) => {
         }
     }
     const otp = generateOTP(4)
-    // const otp = "1234"
     // save otp to user collection
     user.phoneOtp = otp;
     await user.save();
@@ -52,6 +51,7 @@ router.post("/register",async (req,res) => {
 
 // LOGIN
 router.post("/login",async(req,res) => {
+    console.log("request received",req.body)
     let {phone, phoneOtp} = req.body
     try{
         const user = await User.findOne({phone})
