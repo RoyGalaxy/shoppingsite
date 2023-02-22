@@ -1,3 +1,4 @@
+const currencySymbol = "AED"
 const backBtns = document.querySelectorAll(".back-btn")
 let loader;
 let user = localStorage.user ? JSON.parse(localStorage.user) : {}

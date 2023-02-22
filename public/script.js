@@ -11,7 +11,7 @@ function toggleProduct(item,event,thisElm,toggle){
     itemCount = ( i === false) ? 0 : cartItems[i].quantity
 
     productName.innerHTML = element.name
-    productPrice.innerHTML = "$"+element.price
+    productPrice.innerHTML = currencySymbol+" "+element.price
     productDesc.innerHTML = element.description ? element.description : ""
     productModel3d.src = element.model3d
     productModel3d["ios-src"] = element.model3d

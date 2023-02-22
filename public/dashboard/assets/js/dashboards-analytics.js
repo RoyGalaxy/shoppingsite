@@ -3,6 +3,7 @@
  */
 
 'use strict';
+const currencySymbol = "AED"
 
 (function () {
   let cardColor, headingColor, axisColor, shadeColor, borderColor;
@@ -35,7 +36,7 @@
       let categories = data.map(item => months[item._id - 1])
       const totalRevenueChartEl = document.querySelector('#totalRevenueChart');
       const salesThisMonthElm = document.getElementById("salesThisMonth")
-      salesThisMonthElm.innerText = `$${thisMonthRevenue || "0"}`
+      salesThisMonthElm.innerText = `${currencySymbol} ${thisMonthRevenue || "0"}`
 
       let totalRevenueChartOptions = {
           series: [

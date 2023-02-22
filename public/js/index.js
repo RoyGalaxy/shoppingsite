@@ -35,7 +35,7 @@ function constructProduct(dish, index) {
 
     const price = document.createElement("span")
     price.className = "dish-price"
-    price.textContent = "$" + dish.price
+    price.textContent = currencySymbol+" " + dish.price
 
     const desc = document.createElement("span")
     desc.className = "dish-description"

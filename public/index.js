@@ -45,7 +45,7 @@ function displayItems(){
 
             const itemPrice = document.createElement("p")
             itemPrice.id = "item-price"
-            itemPrice.textContent = "$"+item.price
+            itemPrice.textContent = currencySymbol+" "+item.price
 
             const cartOptions = document.createElement("span")
             cartOptions.className = `cart-options ${(item.quantity > 0 && count !==0)  ? "" : "remove"}`

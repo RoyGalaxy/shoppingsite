@@ -24,7 +24,7 @@ function constructOrder(dish, index) {
     name.textContent = cart.products[index].name
     const price = document.createElement("p")
     price.className = "price"
-    price.textContent = "$" + cart.products[index].price
+    price.textContent = currencySymbol+" " + cart.products[index].price
 
     center.append(name)
     center.append(price)
@@ -63,7 +63,7 @@ function constructOrder(dish, index) {
 
     const total = document.createElement("p")
     total.className = "price"
-    total.textContent = "$" + (cart.products[index].price * cart.products[index].quantity)
+    total.textContent = currencySymbol+" " + (cart.products[index].price * cart.products[index].quantity)
 
     right.appendChild(cartOption)
     right.appendChild(total)
@@ -94,7 +94,7 @@ function decrementItem(index) {
 function updateItemCount(dish, index) {
     const elm = cartParent.children[index + 1].children[2].children[0].children[1]
     elm.textContent = dish.quantity
-    elm.parentElement.nextSibling.textContent = "$" + (dish.price * dish.quantity)
+    elm.parentElement.nextSibling.textContent = currencySymbol+" " + (dish.price * dish.quantity)
     displayBillSummary()
 }
 
@@ -137,7 +137,7 @@ function displayBillSummary() {
 
     const totalAmount = document.createElement("span")
     const cartTotal = calculateCartTotal()
-    totalAmount.textContent = "$"+cartTotal
+    totalAmount.textContent = currencySymbol+" "+cartTotal
     totalElm.appendChild(totalAmount)
 
     const extraChargesElm = document.createElement("div")
@@ -148,7 +148,7 @@ function displayBillSummary() {
     extraChargesElm.appendChild(extraChargesText)
 
     const extraChargeTotal = document.createElement("span")
-    extraChargeTotal.textContent = "$" + deliveryCharge
+    extraChargeTotal.textContent = currencySymbol+" " + deliveryCharge
     extraChargesElm.appendChild(extraChargeTotal)
 
     const grandTotalElm = document.createElement("div")
@@ -159,7 +159,7 @@ function displayBillSummary() {
     grandTotalElm.appendChild(grandTotalText)
 
     const grandTotalAmount = document.createElement("span")
-    grandTotalAmount.textContent = "$" + (deliveryCharge + cartTotal)
+    grandTotalAmount.textContent = currencySymbol+" " + (deliveryCharge + cartTotal)
     grandTotalElm.appendChild(grandTotalAmount)
 
     summaryElm.appendChild(titleElm)
