@@ -75,7 +75,7 @@ function constructOrder(dish, index) {
     return order
 }
 
-function incrementItem(index) {
+function Item(index) {
     cart.products[index].quantity += 1
     saveCart(true)
 }

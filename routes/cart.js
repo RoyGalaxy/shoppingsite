@@ -6,6 +6,7 @@ const { update } = require("../models/Cart")
 //  CREATE
 
 router.post("/", verifyToken, async (req, res) => {
+    console.log("create cart request received",req.body)
     if(req.body.products._id){
         req.body.productId = req.body._id
     }
@@ -21,6 +22,7 @@ router.post("/", verifyToken, async (req, res) => {
 
 // UPDATE USER CART
 router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
+    console.log("update cart request received",req.body)
     try {
         const cart = await Cart.findOne({ userId: req.params.id })
         const updatedCart = await Cart.findByIdAndUpdate(cart._id,
@@ -38,6 +40,7 @@ router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
 
 // DELETE
 router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
+    console.log("delete request received",req.body)
     try {
         await Cart.findOneAndDelete({ userId: req.params.id })
         res.status(200).json("Cart has been deleted")
@@ -48,6 +51,7 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
 
 // GET User Cart
 router.get("/find/:id", verifyTokenAndAuthorization, async (req, res) => {
+    console.log("get request received",req.body)
     try {
         const cart = await Cart.findOne({ userId: req.params.id })
         res.status(200).json(cart)

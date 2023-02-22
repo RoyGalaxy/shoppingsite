@@ -1,4 +1,4 @@
-const stripe = Stripe("pk_test_51LlpoqSCw4adMApfje9B4e5PAwnbXFZv3RGaliDMikkNpwFc3u19BTvPKZAdut4OYv7nW0cnvU5JZHWk5zukheVu001DJES5za");
+const stripe = Stripe("pk_live_51LG2DtKccRmUps4vbmUPVp9av7pfFBangpPGCLLAxtSNPp5vu6U8mbmXn67ZJJqbVYKK1BR2sDcc5nYAtAfgwuDa00vuuCwpzl");
 const addressCon = document.getElementById("address")
 const addressForm = document.getElementById("addressForm")
 const paymentForm = document.querySelector("#payment-form")

@@ -29,25 +29,29 @@ function findProductById(id) {
     }
 }
 
-async function fetchCart() {
+async function fetchCart(fromLoginPage) {
     if (user.accessToken) {
         let headersList = {
             "Accept": "*/*",
             "token": `Bearer ${user.accessToken}`,
         }
-        try {
-            const res = await fetch(`/api/carts/find/${user._id}`,
-                {
-                    method: "GET",
-                    headers: headersList
-                }
-            )
-            const jsonRes = await res.json()
-            const data = await jsonRes
-            // cart = (data != undefined) ? data : {products: []}
-            cart = data || await createCart()
-        } catch (e) {
-            console.log(e)
+        if(fromLoginPage){
+            cart = await createCart()
+        }else{
+            try {
+                const res = await fetch(`/api/carts/find/${user._id}`,
+                    {
+                        method: "GET",
+                        headers: headersList
+                    }
+                )
+                const jsonRes = await res.json()
+                const data = await jsonRes
+                // cart = (data != undefined) ? data : {products: []}
+                cart = data || await createCart()
+            } catch (e) {
+                console.log(e)
+            }
         }
     } else {
         cart.products = localStorage.cart ? JSON.parse(localStorage.cart) : []
@@ -57,7 +61,7 @@ async function fetchCart() {
 
 async function createCart() {
     if (!user?.accessToken) return
-    let products = cart.products?.map(item => { return { "productId": item._id, "quantity": item.quantity } })
+    let products = cart.products?.map(item => { return { "productId": item._id || item.productId, "quantity": item.quantity } })
     let headersList = {
         "Accept": "*/*",
         "token": `Bearer ${user.accessToken}`,
@@ -176,7 +180,7 @@ async function loginUser(phone, otp) {
         localStorage.user = JSON.stringify(newUser)
         user = newUser
         await deleteCart()
-        let newCart = await fetchCart()
+        let newCart = await fetchCart(true)
         cart = newCart
     }
     return newUser
