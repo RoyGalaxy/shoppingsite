@@ -58,7 +58,7 @@ router.post("/create-payment-intent", async (req, res) => {
 		description: 'Food Delivery Service',
 		shipping,
 		amount: (amount * 100)+(deliveryCharge * 100),
-		currency: 'usd',
+		currency: 'aed',
 		customer: customer.id,
 		automatic_payment_methods: { enabled: true },
 	}
