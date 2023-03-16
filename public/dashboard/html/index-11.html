@@ -361,7 +361,6 @@
       })
       .then(res => {
         res.json().then(data => {
-          console.log(data)
           openOrdersCount.textContent = data.length || "No Orders"
           for (let i = 0; i < data.length; i++) {
             const order = data[i];
@@ -387,7 +386,6 @@
                 const update = {status: "accepted"}
                 updateOrder(order._id,update).then(data => {
                   if(data.address){
-                    console.log(data)
                     alert("Order has been Accepted")
                     location.reload()
                   }

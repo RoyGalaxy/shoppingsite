@@ -8,7 +8,6 @@ dotenv.config()
 const stripe = require("stripe")(process.env.STRIPE_KEY)
 
 function calculateAmount(items) {
-	console.log(items)
 	let amount = 0
 	items.forEach(item => {
 		amount += item.price * item.quantity
@@ -33,7 +32,6 @@ async function createOrder(cust, data) {
 
 		const newOrder = new Order(options)
 		const savedOrder = await newOrder.save()
-		console.log("order: ", savedOrder)
 		// Delete the pre-existing cart
 		await Cart.findByIdAndDelete(cart._id)
 	} catch (err) {
@@ -43,9 +41,7 @@ async function createOrder(cust, data) {
 
 router.post("/create-payment-intent", async (req, res) => {
 	const { user, items, shipping } = req.body;
-	// console.log(user)
 	const amount = calculateAmount(items) || 0
-	console.log(items)
 
 	const customer = await stripe.customers.create({
 		name: user.phone,
@@ -60,7 +56,7 @@ router.post("/create-payment-intent", async (req, res) => {
 		amount: (amount * 100)+(deliveryCharge * 100),
 		currency: 'aed',
 		customer: customer.id,
-		automatic_payment_methods: { enabled: true },
+		payment_method_types: ["card"]
 	}
 
 	const paymentIntent = await stripe.paymentIntents.create(options);

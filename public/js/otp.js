@@ -44,7 +44,6 @@ btn.addEventListener("click", async function () {
     // Process the number and send otp
     if (validatePhoneNumber(phone)) {
         // Send a request to backend
-        console.log(phone)
         await registerUser(phone)
         // Show otp inputs
         otpInput.classList.remove("hide")

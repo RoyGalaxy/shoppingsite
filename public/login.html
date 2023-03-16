@@ -56,8 +56,6 @@
     <script>
         btn.addEventListener("click", async function () {
             const phone = mobileInput.value
-            console.log(phone)
-            console.log(phone)
             if (this.className.includes("otp-submit")) {
                 const newUser = await loginUser(phone, otp)
                 if (newUser?.phone) window.location = "/index-1.html"
@@ -66,9 +64,7 @@
             // Process the number and send otp
             if (validatePhoneNumber(phone)) {
                 // Send a request to backend
-                console.log(phone)
                 await registerUser(phone)
-                console.log(phone)
                 // Show otp inputs
                 otpInput.classList.remove("hide")
                 mobileInput.classList.add("hide")

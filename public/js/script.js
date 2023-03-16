@@ -113,7 +113,6 @@ async function saveCart(fromCartPage) {
     let bodyContent = JSON.stringify({
         "products": cart.products.map(item => { return { "productId": item._id, "quantity": item.quantity } })
     });
-    console.log(bodyContent)
     const res = await fetch(`/api/carts/${user._id}`, {
         method: 'PUT',
         headers: headersList,

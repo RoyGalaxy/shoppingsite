@@ -204,13 +204,11 @@
                 this.isVisible = false;
                 this.indicator = this.root.querySelector(`.color-indicator.${indicator}`)
                 this.selectedColor = this.setSelectedColor(selectedColor || "#ffffff")
-                console.log(`.color-indicator.${indicator}`)
 
                 this.colorjoe.hide() // Hidden is the default behavior
 
                 this.colorjoe.on("change", (color) => {
                     this.setSelectedColor(color.hex())
-                    console.log(this.selectedColor)
                 })
             }
             setSelectedColor(color, skipCjUpdate = false){

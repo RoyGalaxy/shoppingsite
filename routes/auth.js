@@ -42,8 +42,7 @@ router.post("/register",async (req,res) => {
     await user.save();
     const message = `Your One Time Password (OTP) is ${otp}`
     // send to mobile
-    const response = await sendSMS(formatPhone(phone),message)
-    console.log(message)
+    // const response = await sendSMS(formatPhone(phone),message)
     if(res.headersSent !== true) {
         res.status(200).json({message: "OTP sent to your registered number"}).end()
     }
@@ -51,7 +50,6 @@ router.post("/register",async (req,res) => {
 
 // LOGIN
 router.post("/login",async(req,res) => {
-    console.log("request received",req.body)
     let {phone, phoneOtp} = req.body
     try{
         const user = await User.findOne({phone})

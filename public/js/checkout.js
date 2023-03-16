@@ -32,7 +32,6 @@ function showPosition(position){
 			country: "AE"
 		}
 	}
-	console.log(shipping)
 	addressCon.classList.toggle("hide")
 	paymentForm.classList.toggle("hide")
 	initialize()

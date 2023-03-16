@@ -88,7 +88,6 @@ function incrementItem(cartIndex,foodIndex){
         }
         else updateItemCount(currentItem)
     }
-    console.log(cartItems)
     saveCart()
 }
 function decrementItem(cartIndex,foodIndex){

@@ -313,7 +313,6 @@
           const openOrders = data.filter((item) => (item.status && item.status !== "delivered"));
 
           openOrdersCount.textContent = openOrders.length || "No Orders Currently"
-          console.log(openOrders.length)
           for (let i = 0; i < openOrders.length; i++) {
             const order = openOrders[i];
             getUser(order.userId).then(cust => {

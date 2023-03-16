@@ -187,7 +187,6 @@ function decrementItem(id) {
 
 function scrollToElm(elm) {
     // window.scrollBy({ left: 0, top: elm.top - parseInt(dishesContainer.style.marginTop), behavior: "smooth" })
-    console.log(elm.offsetTop - 120)
     window.scrollTo({ left: 0, top: elm.offsetTop - 120, behavior: "smooth" })
 }
 

@@ -165,8 +165,6 @@
             email: document.getElementById("email").value,
             password: document.getElementById("password").value
           }
-          console.log(data)
-
 
           const res = await fetch(e.target.action, {
             method: 'POST',
@@ -183,7 +181,6 @@
               window.location = "/dashboard/html/login.html"
             }
             else{
-              console.log(data)
               alert(data.message)
             }
           })
