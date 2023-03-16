@@ -3,7 +3,7 @@ const router = express.Router()
 const dotenv = require("dotenv")
 const Order = require("../models/Order")
 const Cart = require("../models/Cart")
-const deliveryCharge = 2
+const deliveryCharge = 1
 dotenv.config()
 const stripe = require("stripe")(process.env.STRIPE_KEY)
 

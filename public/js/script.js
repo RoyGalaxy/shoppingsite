@@ -4,7 +4,7 @@ let loader;
 let user = localStorage.user ? JSON.parse(localStorage.user) : {}
 let dishes = []
 let cart = localStorage.cart ? { products: JSON.parse(localStorage.cart) } : {}
-const deliveryCharge = 2
+const deliveryCharge = 1
 
 function hideLoader(){
     loader = document.querySelector(".loader")
