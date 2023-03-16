@@ -58,7 +58,7 @@ async function initialize() {
 	paymentElement.mount("#payment-element");
 
 	const btn = document.getElementById("button-text")
-	btn.innerHTML = `Pay $${amount + deliveryCharge}`
+	btn.innerHTML = `Pay ${currencySymbol} ${amount + deliveryCharge}`
 }
 
 async function handleSubmit(e) {
