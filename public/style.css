@@ -546,6 +546,10 @@ input:focus{
     font-size: 14px;
 }
 
+
+
+/** Media Queries **/
+
 @media screen and (max-width : 600px){
     .preview-window{
         flex-direction: column;
@@ -571,7 +575,8 @@ input:focus{
 
 
 
-/* Preloader design */
+/** Preloader design **/
+
 #loader-wrapper .loader-section {
     position: fixed;
     top: 0;

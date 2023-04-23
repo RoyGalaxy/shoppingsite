@@ -215,8 +215,9 @@ searchBar.addEventListener("keyup", function () {
 })
 
 // Initiator
-window.onload = () => {
+const initiator = async () => {
     fetchCart().then(() => {
+        console.log(cart.products)
         toggleCartBtn()
         // Display products from Datatbase
         fetchProducts().then(() => {
@@ -236,5 +237,6 @@ window.onload = () => {
             }
         })
     })
-    setTimeout(hideLoader,500)
 }
+
+// display

@@ -41,6 +41,7 @@ router.post("/register",async (req,res) => {
     user.phoneOtp = otp;
     await user.save();
     const message = `Your One Time Password (OTP) is ${otp}`
+    console.log(message)
     // send to mobile
     // const response = await sendSMS(formatPhone(phone),message)
     if(res.headersSent !== true) {

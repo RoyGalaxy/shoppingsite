@@ -9,6 +9,7 @@
     outline: none;
     user-select: none;
     text-decoration: none;
+    /* border: 1px solid red; */
 }
 /* Loader */
 .loader{
@@ -133,16 +134,24 @@ header{
 }
 header .left{
     display: flex;
+    padding-left: 8px;
 }
-.bx-chevron-left{
+.bx-list-ul,.bxl-microsoft,.bx-chevron-left{
     display: inline-block;
     height: 2rem;
     width: 2rem;
     text-align: center;
-    color: var(--primary-text-light);
+    color: var(--primary-text);
+    background-color: var(--primary);
     font-size: 2rem;
+    font-weight: 100;
     line-height: 2rem;
     border-radius: 50%;
+}
+.bx-list-ul,.bxl-microsoft{
+    font-size: 1.5rem;
+    color: var(--secondary);
+    margin-right: 5px;
 }
 .title{
     display: inline-block;

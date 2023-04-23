@@ -211,7 +211,7 @@ header .right{
     overflow-y:scroll;
     background-color: var(--primary);
 }
-model-viewer{
+#list-view-menu model-viewer{
     width: 100%;
     height: 100vw;
     max-height: 400px;
@@ -249,4 +249,155 @@ model-viewer{
 }
 .footer .cart-options i{
     font-size: 1.5rem;
+}
+
+
+
+/** Tles View Menu **/
+.tiles-container{
+    width: 100vw;
+    margin-left: -0.5rem;
+}
+.tile-catagories,.product-tiles{
+    width: 100vw;
+    display: grid;
+    grid-gap: 1px;
+    grid-template-columns: 1fr 1fr;
+}
+.tile-catagories .tile:first-child, .product-tiles .tile:first-child{
+    grid-column: 1 / 3;
+    height: 50vh;
+}
+.tile{
+    position: relative;
+    height: 25vh;
+    background-image: url("/image/9fb35e58-20e5-4b8c-8b79-9a3992b2a98cCamel Truffle Burger.jpg");
+    background-size: cover;
+    background-position: center;
+}
+.product-tile{
+    padding: 10px 10px 20px;
+}
+.tile-heading{
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #fff;
+}
+.product-tile-info{
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%;
+    padding: 0 0 10px;
+}
+.product-title{
+    position: relative;
+    top: 0; left: 0;
+    transform: translate(0);
+    font-size: 22px;
+    padding: 0 10px;
+    text-transform: capitalize;
+}
+.product-price{
+    color: #fff;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 0 10px ;
+}
+.product-tile-options{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+}
+.product-tile-options .cart-options{
+    transform: none;
+    margin: 0;
+}
+.bx-area{
+    color: #fff;
+}
+.popup-3d-model-container{
+    z-index: 10;
+    display: grid;
+    place-items: center;
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0,0,0,0.15);
+    backdrop-filter: blur(5px);
+}
+.popup-3d-model-container model-viewer{
+    height: 100vh;
+    width: 100vw;
+    /* background-color: transparent; */
+}
+.bx-x{
+    z-index: 11;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    line-height: 25px;
+    height: 25px;
+    width: 25px;
+}
+.bx-cube{
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+}
+.bx-x,.bx-cube{
+    display: inline-block;
+    border-radius: 50%;
+    background-color: var(--secondary-light);
+    color: var(--secondary);
+    font-size: 20px;
+    cursor: pointer;
+    text-align: center;
+}
+.product-information-page{
+    z-index: 10;
+    background-color: #fff;
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0; left: 0;
+    flex-direction: column;
+}
+.product-information-page > div{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 50vh;
+    padding: 15px 10px;
+    border: 1px solid #fff;
+}
+.product-information-page .primary-information{
+    justify-content: flex-end;
+    background-image: url("/image/9fb35e58-20e5-4b8c-8b79-9a3992b2a98cCamel Truffle Burger.jpg");
+    background-size: cover;
+    background-position: center;
+}
+.primary-information .product-name,.primary-information .product-price{
+    font-size: 24px;
+    color: var(--primary);
+    font-weight: 400;
+    padding: 0;
+}
+.product-information-page .other-information{
+    justify-content: space-between;
+    background-color: var(--primary);
+}
+.other-information .product-description{
+    color: var(--primary-text);
+    font-size: 15px;
+}
+.bx-info-circle{
+    font-size: 18px;
+    font-weight: lighter;
 }
