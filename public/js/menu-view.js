@@ -180,7 +180,7 @@ const app = {
         this.switchScreens(app.currentScreenId,app.previousScreenId)
     },
     showModelViewer(modelUrl){
-        this.modelViewer.src = modelUrl
+        this.modelViewer.setAttribute("src",modelUrl)
         this.modelViewerContainer.classList.remove("hide")
     },
     hideModelViewer(){
@@ -217,7 +217,7 @@ const app = {
             catagorySlider.innerHTML = ""
             dishesContainer.innerHTML = ""
             app.loaderScreen.classList.remove("hide")
-            initiator().then(() => {app.hideLoader()})
+            initiator()
         }
         if(newScreenId === "tile-view-menu" && oldScreenId === "list-view-menu"){
             app.loaderScreen.classList.remove("hide")

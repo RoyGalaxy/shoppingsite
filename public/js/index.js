@@ -215,7 +215,7 @@ searchBar.addEventListener("keyup", function () {
 })
 
 // Initiator
-const initiator = async () => {
+const initiator = () => {
     fetchCart().then(() => {
         console.log(cart.products)
         toggleCartBtn()
@@ -236,6 +236,7 @@ const initiator = async () => {
                 dishesContainer.appendChild(product)
             }
         })
+        app.hideLoader()
     })
 }
 

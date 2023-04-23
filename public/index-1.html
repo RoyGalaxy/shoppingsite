@@ -90,11 +90,12 @@
             </div>
             <div class="product-container">
                 <model-viewer
-                    src="food_ar/assets/breakfast.glb"
+                    src="/food_ar/assets/breakfast.glb"
                     ios-src="food_ar/assets/breakfast.usdz"
                     poster="food_ar/assets/breakfast.jpeg"
                     alt="A 3D model of an astronaut"
                     shadow-intensity="1"
+                    bound="tight"
                     camera-controls
                     auto-rotate ar>
                 </model-viewer>
@@ -189,9 +190,12 @@
                 <i class='bx bx-x' onclick="app.hideModelViewer()"></i>
                 <model-viewer
                     poster="food_ar/assets/breakfast.jpeg"
+                    src="food_ar/assets/breakfast.glb"
+                    ios-src="food_ar/assets/breakfast.usdz"
                     alt="A 3D model of an astronaut"
                     shadow-intensity="1"
                     camera-controls
+                    bound="tight"
                     auto-rotate ar>
                 </model-viewer>
             </div>
