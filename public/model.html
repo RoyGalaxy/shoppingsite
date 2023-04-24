@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js"></script>
     <title>Document</title>
     <style>
         model-viewer {
@@ -18,15 +19,10 @@
 </head>
 
 <body>
-    <model-viewer src="/food_ar/assets/breakfast.glb" ios-src="food_ar/assets/breakfast.usdz"
-        poster="food_ar/assets/breakfast.jpeg" alt="A 3D model of an astronaut" shadow-intensity="1" bound="tight"
-        camera-controls auto-rotate ar>
+    <model-viewer
+        alt="Neil Armstrong's Spacesuit from the Smithsonian Digitization Programs Office and National Air and Space Museum"
+        src="food_ar/assets/burger.glb" ar poster="foodar" shadow-intensity="1" camera-controls touch-action="pan-y">
     </model-viewer>
-
-    <script
-        type="module"
-        src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
-      ></script>
 </body>
 
 </html>
