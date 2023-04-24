@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/index.css">
     <!-- Model viewer -->
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js"></script>
+    <!-- <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js"></script> -->
     <!-- Console -->
     <script src="//cdn.jsdelivr.net/npm/eruda"></script>
     <script>eruda.init();</script>
@@ -186,11 +186,11 @@
                     </div>
                 </div>
             </div>
-            <div class="popup-3d-model-container hide" id="model-viewer-container">
+            <div class="popup-3d-model-container" id="model-viewer-container">
                 <i class='bx bx-x' onclick="app.hideModelViewer()"></i>
                 <model-viewer
                     poster="food_ar/assets/breakfast.jpeg"
-                    src="food_ar/assets/breakfast.glb"
+                    src="/food_ar/assets/breakfast.glb"
                     ios-src="food_ar/assets/breakfast.usdz"
                     alt="A 3D model of an astronaut"
                     shadow-intensity="1"
