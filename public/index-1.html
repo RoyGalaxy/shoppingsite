@@ -186,7 +186,7 @@
                     </div>
                 </div>
             </div>
-            <div class="popup-3d-model-container" id="model-viewer-container">
+            <div class="popup-3d-model-container hide" id="model-viewer-container">
                 <i class='bx bx-x' onclick="app.hideModelViewer()"></i>
                 <model-viewer
                     poster="food_ar/assets/breakfast.jpeg"
@@ -206,6 +206,24 @@
     <!--todo Tiles view Menu ends here -->
     
     <!--todo Slide view Menu starts here -->
+
+    <div class="container share-page" id="sharePage">
+        <span><i class='bx bx-x' onclick="app.hideScreen('sharePage')"></i></span>
+        <div class="sharing-url-container">
+            <div class="whatsapp sharing-url">
+                <i class='bx bxl-whatsapp'></i>
+                <span>WhatsApp</span>
+            </div>
+            <div class="sms sharing-url">
+                <i class='bx bxs-chat'></i>
+                <span>send an SMS</span>
+            </div>
+            <div class="clipboard sharing-url">
+                <i class='bx bx-clipboard'></i>
+                <span>copy to clipboard</span>
+            </div>
+        </div>
+    </div>
 
     <div class="container" id="slide-view-menu">
         <header class="flex">

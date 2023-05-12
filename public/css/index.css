@@ -266,11 +266,11 @@ header .right{
 }
 .tile-catagories .tile:first-child, .product-tiles .tile:first-child{
     grid-column: 1 / 3;
-    height: 50vh;
+    height: 100vw;
 }
 .tile{
     position: relative;
-    height: 25vh;
+    height: 50vw;
     background-image: url("/image/9fb35e58-20e5-4b8c-8b79-9a3992b2a98cCamel Truffle Burger.jpg");
     background-size: cover;
     background-position: center;
@@ -320,7 +320,7 @@ header .right{
 .bx-area{
     color: #fff;
 }
-.popup-3d-model-container{
+.popup-3d-model-container,.share-page{
     z-index: 10;
     display: grid;
     place-items: center;
@@ -335,6 +335,45 @@ header .right{
     height: 100vh;
     width: 100vw;
     /* background-color: transparent; */
+}
+.sharing-url-container{
+    display: flex;
+    flex-direction: column;
+}
+.sharing-url{
+    display: flex;
+    align-items: center;
+    padding: 0 5px;
+    height: 40px;
+    width: 70vw;
+    max-width: 200px;
+    margin: 2.5px 0;
+}
+.sharing-url i{
+    display: inline-block;
+    font-size: 20px;
+    color: var(--primary);
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    line-height: 40px;
+    text-align: center;
+    background-color: var(--secondary);
+}
+.sharing-url span{
+    height: 40px;
+    width: calc(100% - 55px);
+    border-radius: 20px;
+    line-height: 40px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: var(--primary);
+    font-weight: 500;
+    margin-left: 5px;
+    text-align: center;
+    font-size: 14px;
+    background-color: var(--secondary);
 }
 .bx-x{
     z-index: 11;
