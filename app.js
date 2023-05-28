@@ -9,13 +9,13 @@ app.use("/api/checkout/webhook",bodyParser.raw({type: '*/*'}));
 app.use(express.urlencoded({ extended: true }))
 app.use(bodyParser.json());
 
-const userRoute = require("../routes/user")
-const authRoute = require("../routes/auth")
-const productRoute = require("../routes/product")
-const cartRoute = require("../routes/cart")
-const orderRoute = require("../routes/order")
-const stripeRoute = require("../routes/stripe")
-const colorSchemeRoute = require("../routes/colorScheme")
+const userRoute = require("./routes/user")
+const authRoute = require("./routes/auth")
+const productRoute = require("./routes/product")
+const cartRoute = require("./routes/cart")
+const orderRoute = require("./routes/order")
+const stripeRoute = require("./routes/stripe")
+const colorSchemeRoute = require("./routes/colorScheme")
 
 
 dotenv.config();
@@ -25,8 +25,9 @@ mongoose
     .then(() => console.log("Connected to database"))
     .catch(err => console.log(err))
 
+console.log(userRoute)
 app.use(cors())
-app.use(express.static("../public"))
+app.use(express.static("./public"))
 app.use(express.json())
 app.use("/api/users",userRoute)
 app.use("/api/auth",authRoute)

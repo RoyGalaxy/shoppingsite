@@ -16,8 +16,8 @@
     <link rel="stylesheet" href="css/otp.css">
     <link rel="stylesheet" href="css/build/intlTelInput.css">
 
-    <!-- <script src="//cdn.jsdelivr.net/npm/eruda"></script>
-    <script>eruda.init();</script> -->
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
 </head>
 
 <body>
@@ -41,23 +41,20 @@
             <div class="right"></div>
         </header>
         <div class="box shadow">
-            <h4 class="title">Enter OTP to Continue</h4>
-            <form action="" class="mt-5">
+            <h4 class="title">Enter OTP To Continue</h4>
+            <form class="otp-form" action="" class="mt-5">
                 <label for="addressLine2" class="form-label">Mobile Number</label>
                 <input type="tel" class="mobile-number" id="mobileNumber"
                     placeholder="Phone" autocomplete="off" value="+971 "/>
                 <div class="otp-input hide" id="otpInput">
-                    <input class="otp" type="text" oninput='digitValidate(this)' onkeydown='tabChange(1)'
-                        onkeyup="updateOtp()" maxlength=1>
-                    <input class="otp" type="text" oninput='digitValidate(this)' onkeydown='tabChange(2)'
-                        onkeyup="updateOtp()" maxlength=1>
-                    <input class="otp" type="text" oninput='digitValidate(this)' onkeydown='tabChange(3)'
-                        onkeyup="updateOtp()" maxlength=1>
-                    <input class="otp" type="text" oninput='digitValidate(this)' onkeydown='tabChange(4)'
-                        onkeyup="updateOtp()" maxlength=1>
+                    <input type="number" maxlength="1" pattern="[0-9]{1}">
+                    <input type="number" maxlength="1" pattern="[0-9]{1}" disabled>
+                    <input type="number" maxlength="1" pattern="[0-9]{1}" disabled>
+                    <input type="number" maxlength="1" pattern="[0-9]{1}" disabled>
                 </div>
             </form>
-            <button class='btn floating-btn custom-btn' id="btn">Send OTP</button>
+            <button class="resend-button hide">Resend OTP</button>
+            <button class='btn floating-btn custom-btn active' id="btn">Send OTP</button>
         </div>
     </div>
 

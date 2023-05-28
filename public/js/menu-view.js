@@ -227,6 +227,13 @@ const app = {
                 app.switchScreens(app.currentScreenId,app.catagoryTileParentElm.id)
             }
         }
+    },
+    copyToClipboard(){
+        navigator.clipboard.writeText("https://realitydiner.blackpepper.ae")
+        alert("Copied the text")
+    },
+    shareToWhatsApp(){
+        window.open("whatsapp://send?text=https://realitydiner.blackpepper.ae","_self")
     }
 }
 

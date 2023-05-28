@@ -42,3 +42,22 @@ const updateOrder = async(orderId,update) => {
 
     return await userRes
 }
+
+const setColorScheme = async () => {
+    const data = {primary: "hsl(1,1%,100%)"}
+    const user = JSON.parse(localStorage.user)
+    const res = await fetch(`/api/colors/set`,
+        {
+            method: "post",
+            body: JSON.stringify(data),
+            headers: {
+                "content-type": "application/json",
+                token: `Bearer ${user.accessToken}`
+            },
+        })
+    const jsonRes = await res.json()
+    let colorRes = await jsonRes
+
+    return await colorRes
+
+}

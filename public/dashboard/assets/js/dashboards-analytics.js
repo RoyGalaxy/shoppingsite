@@ -3,7 +3,7 @@
  */
 
 'use strict';
-const currencySymbol = "AED"
+const currencySymbol = "AED";
 
 (function () {
   let cardColor, headingColor, axisColor, shadeColor, borderColor;
@@ -20,8 +20,7 @@ const currencySymbol = "AED"
     "/api/orders/income",
     {
       method: "GET",
-      headers: {token: `Bearer ${user.accessToken}`},
-      user,
+      headers: {token: `Bearer ${user.accessToken}`}
     }
   ).then(res => {
     let jsonRes = res.json()
@@ -31,12 +30,11 @@ const currencySymbol = "AED"
       const currentMonth = date.getMonth()
       let thisMonthRevenue;
       let revenue = data.map(item => {if(item._id === currentMonth + 1) thisMonthRevenue = item.total;return item.total})
-      console.log(data,revenue)
       const months = ["Jan","Feb","Mar","Apr","May","June","July","Aug","Sep","Oct","Nov","Dec"]
       let categories = data.map(item => months[item._id - 1])
       const totalRevenueChartEl = document.querySelector('#totalRevenueChart');
-      const salesThisMonthElm = document.getElementById("salesThisMonth")
-      salesThisMonthElm.innerText = `${currencySymbol} ${thisMonthRevenue || "0"}`
+      const salesThisMonthElm = document.querySelector("#total")
+      salesThisMonthElm.textContent = `${currencySymbol} ${thisMonthRevenue || "0"}`
 
       let totalRevenueChartOptions = {
           series: [
@@ -295,6 +293,19 @@ const currencySymbol = "AED"
     })
   }).catch(err => console.log(err))
 
+  fetch(
+    "/api/orders/income/today",
+    {
+      method:"GET",
+      headers: {token: `Bearer ${user.accessToken}`}
+    }
+  ).then(res => {
+    let jsonRes = res.json()
+    jsonRes.then(data => {
+      const todayIncomElm = document.getElementById("todayIncome")
+      todayIncomElm.textContent = `${currencySymbol} ${data[0].total || 0} `
+    })
+  }).catch(err => console.log(err))
   // Growth Chart - Radial Bar Chart
   // --------------------------------------------------------------------
   // const growthChartEl = document.querySelector('#growthChart'),

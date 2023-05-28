@@ -62,7 +62,7 @@ router.get("/", verifyTokenAndAdmin, async (req,res) => {
 })
 
 // GET MONTHLY INCOME
-router.get("/income", verifyTokenAndAdmin, async(req,res) => {
+router.get("/income",verifyTokenAndAdmin, async(req,res) => {
     const date = new Date()
     const lastMonth = new Date(date.setMonth(date.getMonth() - 1))
     const previousYear = new Date(new Date().setFullYear(lastMonth.getFullYear() - 1))
@@ -80,6 +80,37 @@ router.get("/income", verifyTokenAndAdmin, async(req,res) => {
                 $group:{
                     _id: "$month",
                     total: {$sum: "$sales"}
+                }
+            }
+        ])
+        res.status(200).json(income)
+    }catch(err){
+        res.status(500).json(err)
+    }
+})
+
+// GET TODAY's INCOME
+router.get("/income/today",verifyTokenAndAdmin, async (req,res) => {
+    console.log("request received")
+    const desiredDate = new Date()
+    desiredDate.setUTCHours(0,0,0,0);
+    const endOfDay = new Date()
+    endOfDay.setUTCHours(23,59,59,999)
+    
+    try{
+        const income = await Order.aggregate([
+            {
+                $match: {
+                    createdAt : {
+                        $gte: desiredDate,
+                        $lt: endOfDay
+                    }
+                }
+            },
+            {
+                $group:{
+                    _id: null,
+                    total: {$sum: "$amount"}
                 }
             }
         ])

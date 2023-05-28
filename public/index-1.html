@@ -47,7 +47,7 @@
                     <i class='bx bx-search-alt-2'></i>
                     <input type="text" class="search" id="search" placeholder="Search..." autocomplete="off">
                 </div>
-                <i class='bx bx-share-alt share-btn shadow'></i>
+                <i class='bx bx-share-alt share-btn shadow' onclick="app.showScreen('sharePage')"></i>
             </div>
         </header>
         <div class="box shadow">
@@ -134,7 +134,7 @@
                     <i class='bx bx-search-alt-2'></i>
                     <input type="text" class="search" id="search" placeholder="Search..." autocomplete="off">
                 </div>
-                <i class='bx bx-share-alt share-btn shadow'></i>
+                <i class='bx bx-share-alt share-btn shadow' onclick="app.showScreen('sharePage')"></i>
             </div>
         </header>
         <div class="box shadow">
@@ -207,18 +207,18 @@
     
     <!--todo Slide view Menu starts here -->
 
-    <div class="container share-page" id="sharePage">
+    <div class="container share-page hide" id="sharePage">
         <span><i class='bx bx-x' onclick="app.hideScreen('sharePage')"></i></span>
         <div class="sharing-url-container">
-            <div class="whatsapp sharing-url">
+            <div class="whatsapp sharing-url" onclick="app.shareToWhatsApp()">
                 <i class='bx bxl-whatsapp'></i>
                 <span>WhatsApp</span>
             </div>
-            <div class="sms sharing-url">
+            <!-- <div class="sms sharing-url">
                 <i class='bx bxs-chat'></i>
                 <span>send an SMS</span>
-            </div>
-            <div class="clipboard sharing-url">
+            </div> -->
+            <div class="clipboard sharing-url" onclick="app.copyToClipboard()">
                 <i class='bx bx-clipboard'></i>
                 <span>copy to clipboard</span>
             </div>

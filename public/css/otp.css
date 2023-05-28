@@ -2,10 +2,10 @@
     width: 80%;
     margin-left: calc(10% - 0.5rem);
 }
-.custom-btn{
+/* .custom-btn{
   width: 70%;
   margin: 3rem auto 1rem;
-}
+} */
 .otp-input{
     display: flex;
     justify-content: center;
@@ -14,14 +14,14 @@
     text-align: center;
     margin-bottom: 1rem;
 }
-.otp{
+/* .otp{
   display:inline-block;
   width:50px;
   height:50px;
   margin: 1rem 5px;
   text-align:center;
   border: 1px solid var(--border-light);
-}
+} */
 label {
     display: block;
     width: 95%;
@@ -30,7 +30,66 @@ label {
     color: var(--primary-text-light);
     text-transform: uppercase;
 }
-
+.otp-form{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+}
+.otp-input{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.otp-input input{
+    border: none;
+    max-width: 20%;
+    height: 60px;
+    text-align: center;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    font-size: 25px;
+}
+.otp-input input::-webkit-inner-spin-button,
+.otp-input input::-webkit-outer-spin-button{
+    display: none;
+}
+.otp-input input:focus{
+    outline: 1.5px solid #00b991;
+    outline-offset: 2px;
+}
+.custom-btn{
+    width: 92%;
+    margin: 25px auto 0;
+    color: var(--primary-light);
+    font-size: 16px;
+    padding: 10px 0;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    pointer-events: none;
+    cursor: pointer;
+    background-color: var(--secondary-light);
+    transition: all 0.2s ease;
+}
+.custom-btn.active{
+    background-color: var(--secondary);
+    pointer-events: auto;
+    color: var(--primary-light);
+}
+.resend-button{
+    height: 25px;
+    padding: 0 10px;
+    margin: 20px auto 0;
+    line-height: 25px;
+    color: var(--blue);
+    cursor: pointer;
+    background-color: transparent;
+}
 input.mobile-number{
     display: block;
     width: 100%;
