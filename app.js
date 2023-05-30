@@ -25,7 +25,7 @@ mongoose
     .then(() => console.log("Connected to database"))
     .catch(err => console.log(err))
 
-console.log(userRoute)
+
 app.use(cors())
 app.use(express.static("./public"))
 app.use(express.json())

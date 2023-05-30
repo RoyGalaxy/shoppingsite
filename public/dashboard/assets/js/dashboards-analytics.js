@@ -303,7 +303,8 @@ const currencySymbol = "AED";
     let jsonRes = res.json()
     jsonRes.then(data => {
       const todayIncomElm = document.getElementById("todayIncome")
-      todayIncomElm.textContent = `${currencySymbol} ${data[0].total || 0} `
+      console.log(data)
+      todayIncomElm.textContent = `${currencySymbol} ${data[0]?.total || 0}`
     })
   }).catch(err => console.log(err))
   // Growth Chart - Radial Bar Chart

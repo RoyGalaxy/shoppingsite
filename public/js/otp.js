@@ -68,7 +68,7 @@ btn.addEventListener("click", async function () {
     const phone = mobileInput.value
     if (this.className.includes("otp-submit")) {
         const newUser = await loginUser(phone, otp)
-        if (newUser?.accessToken) window.location = "/checkout.html"
+        if (newUser?.accessToken) window.location = redirectPath
         else alert(newUser.message)
         return
     }
