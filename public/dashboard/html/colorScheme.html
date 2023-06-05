@@ -148,7 +148,7 @@
                                         <div class="card-title mb-0">
                                             <h5 class="m-0 me-2">Choose Colors for your website</h5>
                                         </div>
-                                        <button class="btn save-changes">Save Changes</button>
+                                        <button class="btn save-changes" onclick="setColorScheme().then(res => {alert('changes saved')}).catch(err => {console.log(err);alert('some error occured')})">Save Changes</button>
                                     </div>
                                     <div class="card-body colorjoe-parent">
                                         <br>

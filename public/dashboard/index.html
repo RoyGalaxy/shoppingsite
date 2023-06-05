@@ -50,8 +50,8 @@
   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
   <script src="./assets/js/config.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/eruda"></script>
-  <script>eruda.init();</script>
+  <!-- <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+  <script>eruda.init();</script> -->
 </head>
 
   <body>
@@ -299,11 +299,10 @@
     <!-- / Layout wrapper -->
 
     <script>
-      console.log("hello")
+
       const user = JSON.parse(localStorage.user || "{}") 
       if(!user.accessToken || !user.isAdmin){
         alert("You are not allowed to access this Page")
-        console.log("hello")
         window.location = "/dashboard/html/login.html"
       }
     </script>
