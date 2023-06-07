@@ -1,3 +1,4 @@
 node_modules
 public/images-1
 otp-backend
+.env
