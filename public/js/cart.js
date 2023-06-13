@@ -176,14 +176,14 @@ function displayBillSummary() {
 */
 
 // Initiator
-window.onload = () => {
+document.body.onload = async () => {
     loader = document.querySelector(".loader")
-    fetchCart().then(() => {
-        fetchProducts().then(() => {
-            displayCart()
-            displayBillSummary()
-        })
-    })
+    await fetchCart()
+    await fetchProducts()
+
+    displayCart()
+    displayBillSummary()
+    
     setTimeout(hideLoader,500)
 }
 
