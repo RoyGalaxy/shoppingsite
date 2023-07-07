@@ -50,14 +50,18 @@ const app = {
         this.catagoriseProducts()
     },
     async updateCartFromLocalStorage(){
-        if(localStorage.cart === undefined){
+        if(!localStorage.cart){
             return
         }
-        for (let i = 0; i < JSON.parse(localStorage.cart).length; i++) {
+        let cart = JSON.parse(localStorage.cart)
+        for (let i = 0; i < cart.length; i++) {
+            console.log(cart[i].productId)
             for (let j = 0; j < app.products.length; j++) {
-                if(JSON.parse(localStorage.cart)[i].productId === app.products[j]._id){
-                    app.products[j].quantity = JSON.parse(localStorage.cart)[i].quantity;
+                
+                if(cart[i]._id === app.products[j]._id || cart[i].productId === app.products[j]._id){
+                    app.products[j].quantity = cart[i].quantity;
                     app.cart.push(app.products[j])
+                    console.log("ran till here")
                     console.log(app.products[j])
                     break;
                 }
