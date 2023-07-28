@@ -90,6 +90,14 @@ function decrementItem(index) {
 
     saveCart(true)
 }
+function incrementItem(index) {
+    cart.products[index].quantity += 1
+    
+    displayCart()
+    displayBillSummary()
+
+    saveCart(true)
+}
 
 function updateItemCount(dish, index) {
     const elm = cartParent.children[index + 1].children[2].children[0].children[1]
@@ -112,6 +120,7 @@ function displayCart() {
     }
     if (cart.products.length == 0) {
         alert("Cart Empty")
+        history.back()
     }
     for (let i = 0; i < cart.products.length; i++) {
         let order = constructOrder(cart.products[i], i)

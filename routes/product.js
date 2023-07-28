@@ -23,6 +23,7 @@ var upload = multer({
 
 //  CREATE
 router.post("/",verifyTokenAndAdmin,upload.any("image"), async (req, res) => {
+    console.log(req.body)
     if (res.status(200)) {
         const newProduct = new Product(req.body)
         try{

@@ -48,8 +48,8 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="../assets/js/config.js"></script>
-    <!-- <script src="//cdn.jsdelivr.net/npm/eruda"></script>
-    <script>eruda.init();</script> -->
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
   </head>
 
   <body>
@@ -82,6 +82,7 @@
                     id="name"
                     name="name"
                     placeholder="Enter Product Name"
+                    value="Salad 1"
                     autofocus
                   />
                 </div>
@@ -93,19 +94,20 @@
                         class="form-control"
                         id="description"
                         name="description"
+                        value="Test Product"
                         placeholder="Enter Product Description"
                     />
                 </div>
 
                 <div class="mb-3">
-                    <label for="image" class="form-label">Product Image</label>
+                    <!-- <label for="image" class="form-label">Product Image</label>
                     <input
                       type="file"
                       class="form-control"
                       id="image"
                       name="image"
                       accept="images/*"
-                    />
+                    /> -->
                 </div>
 
                 <div class="mb-3">
@@ -115,6 +117,7 @@
                       class="form-control"
                       id="category"
                       name="category"
+                      value="Salad"
                       placeholder="Enter Product Category"
                     />
                 </div>
@@ -125,17 +128,18 @@
                       class="form-control"
                       id="price"
                       name="price"
+                      value="20"
                       placeholder="Enter Product Price"
                     />
                 </div>
                 <div class="mb-3">
-                    <label for="model3d" class="form-label">Product 3d model</label>
+                    <!-- <label for="model3d" class="form-label">Product 3d model</label>
                     <input
                       type="file"
                       class="form-control"
                       id="model3d"
                       name="model3d"
-                    />
+                    /> -->
                 </div>
                 <div class="mb-3">
                   <button class="btn btn-primary d-grid w-100" type="submit">Add Dish</button>
@@ -177,17 +181,18 @@
             e.preventDefault()
             const imageElm = document.getElementById("image")
             const model3dElm = document.getElementById("model3d")
-            if(!imageElm.value || !model3dElm.value){
-              alert("Please fill all necessary fields before submitting")
-              return
-            }
+            // if(!imageElm.value || !model3dElm.value){
+            //   alert("Please fill all necessary fields before submitting")
+            //   return
+            // }
             const user = JSON.parse(localStorage.user)
             const formData = new FormData(e.target)
-
+            console.log(formData.get("price"))
             const res = await fetch("/api/products", {
-                method: "post",
+                method: "POST",
                 headers: {token: `Bearer ${user.accessToken}`},
                 body: formData,
+                'Content-Type': "multipart/form-data"
             }).catch((error) => ("Something went wrong!", error));
             jsonRes = res.json()
             jsonRes.then(data => {

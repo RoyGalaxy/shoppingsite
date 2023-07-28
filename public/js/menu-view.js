@@ -55,14 +55,11 @@ const app = {
         }
         let cart = JSON.parse(localStorage.cart)
         for (let i = 0; i < cart.length; i++) {
-            console.log(cart[i].productId)
             for (let j = 0; j < app.products.length; j++) {
                 
                 if(cart[i]._id === app.products[j]._id || cart[i].productId === app.products[j]._id){
                     app.products[j].quantity = cart[i].quantity;
                     app.cart.push(app.products[j])
-                    console.log("ran till here")
-                    console.log(app.products[j])
                     break;
                 }
             } 
@@ -150,13 +147,11 @@ const app = {
         let bodyContent = JSON.stringify({
             "products": app.cart.map(item => { return { "productId": item._id, "quantity": item.quantity } })
         });
-        const res = await fetch(`/api/carts/${user._id}`, {
+        await fetch(`/api/carts/${user._id}`, {
             method: 'PUT',
             headers: headersList,
             body: bodyContent
         })
-        const jsonRes = await res.json()
-        const data = await jsonRes
     },
     findInCart(productIndex) {
         for (let i = 0; i < this.cart.length; i++) {
