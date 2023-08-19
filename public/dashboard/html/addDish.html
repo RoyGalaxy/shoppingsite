@@ -100,25 +100,25 @@
                 </div>
 
                 <div class="mb-3">
-                    <!-- <label for="image" class="form-label">Product Image</label>
+                    <label for="image" class="form-label">Product Image</label>
                     <input
                       type="file"
                       class="form-control"
                       id="image"
                       name="image"
                       accept="images/*"
-                    /> -->
+                    />
                 </div>
 
                 <div class="mb-3">
-                    <label for="category" class="form-label">Product Category</label>
+                    <label for="catagory" class="form-label">Product Catagory</label>
                     <input
                       type="text"
                       class="form-control"
-                      id="category"
-                      name="category"
+                      id="catagory"
+                      name="catagory"
                       value="Salad"
-                      placeholder="Enter Product Category"
+                      placeholder="Enter Product Catagory"
                     />
                 </div>
                 <div class="mb-3">
@@ -133,13 +133,13 @@
                     />
                 </div>
                 <div class="mb-3">
-                    <!-- <label for="model3d" class="form-label">Product 3d model</label>
+                    <label for="model3d" class="form-label">Product 3d model</label>
                     <input
                       type="file"
                       class="form-control"
                       id="model3d"
                       name="model3d"
-                    /> -->
+                    />
                 </div>
                 <div class="mb-3">
                   <button class="btn btn-primary d-grid w-100" type="submit">Add Dish</button>
@@ -181,10 +181,10 @@
             e.preventDefault()
             const imageElm = document.getElementById("image")
             const model3dElm = document.getElementById("model3d")
-            // if(!imageElm.value || !model3dElm.value){
-            //   alert("Please fill all necessary fields before submitting")
-            //   return
-            // }
+            if(!imageElm.value || !model3dElm.value){
+              alert("Please fill all necessary fields before submitting")
+              return
+            }
             const user = JSON.parse(localStorage.user)
             const formData = new FormData(e.target)
             console.log(formData.get("price"))
@@ -198,7 +198,7 @@
             jsonRes.then(data => {
               if(data.price){
                 alert("Product has been added")
-                window.location = "/dashboard/html/index.html"
+                window.location = "/dashboard/index.html"
               }else{
                 alert("Error Adding Product")
               }

@@ -38,7 +38,7 @@ function constructProduct(dish, index) {
     price.textContent = currencySymbol+" " + dish.price
 
     const desc = document.createElement("span")
-    desc.className = "dish-description"
+    desc.className = "dish-description ellipsis"
     desc.textContent = dish.description
 
     left.appendChild(veg_nonveg)
@@ -110,6 +110,7 @@ function constructCartOptions(dish, index, forProductOverlay) {
 
 function displayCatagorySlider() {
     for (let i = 0; i < catagories.length; i++) {
+        // if(i > 3) continue
         const elm = document.createElement("span")
         elm.textContent = catagories[i].charAt(0).toUpperCase() + catagories[i].slice(1)
         elm.id = catagories[i]

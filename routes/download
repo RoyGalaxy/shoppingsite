@@ -1,0 +1,6 @@
+#!/bin/bash
+# https://drive.google.com/file/d/1QCFCk1SDXlEoHVwIAyHLjscmJ2ngRO2a/view?usp=drive_link
+fileid="1VC-cErArXZxl9-MvqVqZJ0go7-O-I66f"
+filename="MyFile.jpg"
+html=`curl -c ./cookie -s -L "https://drive.google.com/file/d/${fileid}/view?usp=drive_link"`
+curl -Lb ./cookie "https://drive.google.com/uc?export=download&`echo ${html}|grep -Po '(confirm=[a-zA-Z0-9\-_]+)'`&id=${fileid}" -o ${filename}

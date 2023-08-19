@@ -80,6 +80,7 @@ const app = {
         for (let i = 0; i < this.productCatagories.length; i++) {
             const tile = document.createElement("div")
             tile.className = "tile catagory-tile"
+            tile.setAttribute("style",`background-image:url(${this.catagorisedProducts[this.productCatagories[i]][0].image})`)
             tile.addEventListener("click", () => {
                 app.openTileCatagory(app.productCatagories[i])
             })
@@ -115,11 +116,13 @@ const app = {
     showProductInformation(product){
         this.productInformationPage.classList.remove("hide");
         this.productInformationPage.setAttribute("data-indexed",product.productIndex)
+        const imageElm = document.querySelector(".primary-information")
         const nameElm = document.querySelector(".primary-information .product-name")
         const priceElm = document.querySelector(".primary-information .product-price")
         const descriptionElm = document.querySelector(".other-information .product-description")
         const optionElm = document.querySelector(".other-information .product-options")
 
+        imageElm.style.backgroundImage = `url(${product.image})`
         nameElm.textContent = product.name
         priceElm.textContent = "AED "+product.price
         descriptionElm.innerHTML = "<i class='bx bx-info-circle'></i> " + product.description
@@ -201,7 +204,6 @@ const app = {
     showScreen(id) {
         const elm = document.getElementById(id)
         elm.className.includes("hide") && elm.classList.remove("hide")
-        console.log(id)
         if(id != "list-view-menu" && id != "tile-view-menu"){
             app.currentScreenId = id
         }
@@ -281,6 +283,8 @@ class ProductTile {
     constructTile() {
         const tile = document.createElement("div")
         tile.className = "tile product-tile"
+        tile.setAttribute("style",`background-image:url(${this.product.image})`)
+        console.log(this.product.image)
         tile.addEventListener("click",(e) => {
             if(e.target == tile){
                 app.showProductInformation(this.product)
@@ -371,7 +375,3 @@ class ProductTile {
         return this.cartOption
     }
 }
-
-// app.init()
-
-// To be Continued from saving the cart function...

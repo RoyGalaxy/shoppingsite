@@ -15,13 +15,13 @@
     <!-- Model viewer -->
     <!-- <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js"></script> -->
     <!-- Console -->
-    <!-- <script src="//cdn.jsdelivr.net/npm/eruda"></script>
-    <script>eruda.init();</script> -->
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
 
 
     <script src="js/script.js" ></script>
 </head>
-<body onload="app.init();initiator()">
+<body onload="app.init()">
     <div class="loader" id="loaderScreen">
         <span>L</span>
         <span>O</span>
@@ -79,7 +79,10 @@
                 </div>
             </div>
         </div>
-        <div class="box category-slider shadow" id="catagorySlider">
+        <div class="box category-slider shadow no-scrollbar">
+            <div class="catagory-slider-inner" id="catagorySlider">
+
+            </div>
         </div>
         <div class="dishes box" id="dishesContainer">
 

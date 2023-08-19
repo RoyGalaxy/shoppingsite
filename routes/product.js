@@ -1,46 +1,73 @@
 const router = require("express").Router()
-const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("./verifyToken")
+const { verifyTokenAndAdmin } = require("./verifyToken")
 const Product = require("../models/Product")
-const multer = require("multer")
+const formidable = require("formidable")
 const path = require("path")
-const uuid = require("uuid")
-
-var StorageImage = multer.diskStorage({
-    destination: function(req, file, callback) {
-        callback(null,path.join(__dirname,"../public",file.fieldname));
-    },
-    filename: function(req, file, callback) {
-        const path = uuid.v4()+file.originalname
-        req.body[file.fieldname] = `${file.fieldname}/${path}`
-        callback(null,path);
-    }
-});
-
-
-var upload = multer({
-    storage: StorageImage
-})
+const fs = require("fs")
 
 //  CREATE
-router.post("/",verifyTokenAndAdmin,upload.any("image"), async (req, res) => {
-    console.log(req.body)
-    if (res.status(200)) {
-        const newProduct = new Product(req.body)
-        try{
-            const savedProduct = await newProduct.save()
-            res.status(200).json(savedProduct)
-        }catch(err){
-            res.status(500).json(err)
+router.post("/",verifyTokenAndAdmin,async (req, res) => {
+    try{
+        const form = new formidable.IncomingForm({ multiples: true, keepExtensions: true });
+        const [fields, files] = await form.parse(req)
+        let strFields = {};
+        // Getting fields
+        for(let field in fields){
+            strFields[field] = fields[field].join("")
         }
+        for(let file in files){
+            strFields[file] = files[file][0].filename
+        }
+
+        // uploading files
+        for(let file in files){
+            const oldPath = files[file][0].filepath
+            const newPath = path.join(__dirname,`../public/${file}`) + "/" + files[file][0].newFilename
+            const rawData = fs.readFileSync(oldPath)
+            strFields[file] = path.join("/",file,files[file][0].newFilename)
+            // console.log(`/${file}/${files[file][0].newFilename}`)
+            
+            fs.writeFile(newPath, rawData, (err) => err)
+        }
+
+        // Creating Product
+        const newProduct = new Product(strFields)
+        const savedProduct = await newProduct.save()
+        res.status(200).json(savedProduct)
+        // res.status(200).json({ success: true})
+    }catch(err){
+        console.log(err)
+        res.status(500).json(err)
     }
 })
 
 // UPDATE
-router.put("/:id",verifyTokenAndAdmin,upload.any("image"), async (req, res) => {
+router.put("/:id",verifyTokenAndAdmin, async (req, res) => {
     try {
+        const form = new formidable.IncomingForm({ multiples: true, keepExtensions: true });
+        const [fields, files] = await form.parse(req)
+        let strFields = {};
+        // Getting fields
+        for(let field in fields){
+            strFields[field] = fields[field].join("")
+        }
+        for(let file in files){
+            strFields[file] = files[file][0].filename
+        }
+
+        // uploading files
+        for(let file in files){
+            const oldPath = files[file][0].filepath
+            const newPath = path.join(__dirname,`../public/${file}`) + "/" + files[file][0].newFilename
+            const rawData = fs.readFileSync(oldPath)
+            strFields[file] = path.join("/",file,files[file][0].newFilename)
+            
+            fs.writeFile(newPath, rawData, (err) => err)
+        }
+        
         const updatedProduct = await Product.findByIdAndUpdate(req.params.id,
             {
-                $set: req.body
+                $set: strFields
             },
             { new: true }
         )

@@ -13,6 +13,26 @@
     text-decoration: none;
     /* border: 1px solid red; */
 }
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.ellipsis{
+    width: 100%;
+    text-align: left;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+}
 /* Loader */
 .loader{
     z-index: 3;
