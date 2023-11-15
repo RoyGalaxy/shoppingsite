@@ -10,6 +10,7 @@
 	<!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,900" rel="stylesheet"> -->
     <!-- Local css -->
 	<link rel="stylesheet" href="css/color-scheme.css">
+	<link rel="stylesheet" href="css/model-viewer.css">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/index.css">
     <!-- Model viewer -->
@@ -124,7 +125,7 @@
 
     <!-- List view Menu ends here -->
 
-    <!--todo Tiles view Menu starts here -->
+    <!-- Tiles view Menu starts here -->
 
     <div class="container" id="tile-view-menu">
         <header class="flex">
@@ -195,18 +196,23 @@
                     poster="food_ar/assets/breakfast.jpeg"
                     src="/food_ar/assets/breakfast.glb"
                     ios-src="food_ar/assets/breakfast.usdz"
-                    alt="A 3D model of an astronaut"
+                    alt="A 3D model of a food dish"
                     shadow-intensity="1"
                     camera-controls
                     bound="tight"
-                    auto-rotate ar>
+                    auto-rotate ar
+                >
+                    <button slot="ar-button"
+                    id="ar-button"> View in your space </button>
+                    <div class="swipe-ar-container">
+                    </div>
                 </model-viewer>
             </div>
         </div>
         <a class="floating-btn cart-btn hide" id="cartBtn" href="cart.html">Proceed to Cart</a>
     </div>
     
-    <!--todo Tiles view Menu ends here -->
+    <!-- Tiles view Menu ends here -->
     
     <!--todo Slide view Menu starts here -->
 

@@ -230,7 +230,7 @@ model-viewer{
     font-size: 16px;
 }
 
-#item-name{
+#item-name, .swipe-ar-dish .dish-name{
     font-weight: 600;
     white-space: nowrap;
     overflow: hidden;

@@ -1,0 +1,95 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+model-viewer{
+    display: block;
+    height: 100vh;
+    min-width: 100vw;
+}
+#ar-button {
+    background-image: url(../assets/img/icons/ic_view_in_ar_new_googblue_48dp.png);
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    background-position: 12px 50%;
+    background-color: #fff;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    /* transform: translateX(-50%); */
+    white-space: nowrap;
+    bottom: 132px;
+    padding: 0px 16px 0px 40px;
+    font-family: Roboto Regular, Helvetica Neue, sans-serif;
+    font-size: 14px;
+    color: #4285f4;
+    height: 36px;
+    line-height: 36px;
+    border-radius: 18px;
+    border: 1px solid #DADCE0;
+}
+#ar-button:active {
+    background-color: #E8EAED;
+}
+
+#ar-button:focus {
+    outline: none;
+}
+
+#ar-button:focus-visible {
+    outline: 1px solid #4285f4;
+}
+.swipe-ar-container{
+    display: flex;
+    position: fixed;
+    bottom: 0; left: 0;
+    background-color: red;
+    align-items: center;
+    height: clamp(150px,20vh,300px);
+    width: 100%;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    white-space: nowrap;
+    background-color: transparent;
+}
+.swipe-ar-dish{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-width: 90%;
+    height: calc(100% - 25px);
+    margin: 5px;
+    scroll-snap-align: center;
+    background: var(--primary);
+    border-radius: 10px;
+    padding: 10px;
+}
+.swipe-ar-dish .left-top{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 100%;
+    max-height: 20px;
+}
+.swipe-ar-dish img{
+    height: 20px;
+    width: 20px;
+    margin-right: 15px;
+}
+.swipe-ar-dish .dish-name{
+    display: block;
+    height: 2rem;
+    line-height: 2rem;
+    font-size: 1rem;
+    font-family: var(--font);
+    color: var(--primary-text);
+    font-weight: 500;
+    margin: 0;
+}
+.swipe-ar-dish .dish-description,.swipe-ar-dish .dish-price{
+    display: block;
+    font-size: 0.8rem;
+    font-family: var(--font);
+    color: var(--primary-text-light);
+    margin:0 0 5px 0;
+}

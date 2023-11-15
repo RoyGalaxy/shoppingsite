@@ -27,6 +27,7 @@ const app = {
                 this.renderCatagoryTiles().then(() => {
                     this.hideLoader()
                     this.showScreen("tile-view-menu")
+                    this.setArSwipeEventListener();
                 })
             })
         })
@@ -181,9 +182,25 @@ const app = {
     goBack(){
         this.switchScreens(app.currentScreenId,app.previousScreenId)
     },
-    showModelViewer(modelUrl){
-        this.modelViewer.setAttribute("src",modelUrl)
-        this.modelViewerContainer.classList.remove("hide")
+    showModelViewer(product){
+        this.modelViewer.setAttribute("src",product.model3d);
+        this.modelViewerContainer.classList.remove("hide");
+
+        const parentElements = document.querySelectorAll("model-viewer .swipe-ar-container");
+        parentElements.forEach(el => {
+            el.textContent = ''
+        })
+
+        const catagoryProducts = this.catagorisedProducts[product.catagory];
+        
+        for(let i = 0; i < catagoryProducts.length; i++){
+            const arTile = new ArMenuProductTile(catagoryProducts[i]);
+            arTile.constructTile()
+            if(catagoryProducts[i]._id === product._id){
+                const tile = document.getElementById(`arTile-${product._id}`);
+                tile.scrollIntoView();
+            }
+        }
     },
     hideModelViewer(){
         this.modelViewerContainer.classList.add("hide")
@@ -235,6 +252,22 @@ const app = {
     },
     shareToWhatsApp(){
         window.open("whatsapp://send?text=https://realitydiner.blackpepper.ae","_self")
+    },
+    setArSwipeEventListener(){
+        const parentElements = document.querySelectorAll("model-viewer .swipe-ar-container");
+        parentElements.forEach(el => {
+            el.addEventListener("scroll",e => {
+                const children = el.children;
+                for(let i = 0; i < children.length; i++){
+                    if((children[i].offsetLeft - el.scrollLeft) < 20 && (children[i].offsetLeft - el.scrollLeft) > 0){
+                        const productCatagory = children[i].getAttribute("data-catagory");
+                        const product = this.catagorisedProducts[productCatagory][i]
+
+                        this.modelViewer.setAttribute("src",product.model3d);
+                    }
+                }
+            })
+        })
     }
 }
 
@@ -284,7 +317,6 @@ class ProductTile {
         const tile = document.createElement("div")
         tile.className = "tile product-tile"
         tile.setAttribute("style",`background-image:url(${this.product.image})`)
-        console.log(this.product.image)
         tile.addEventListener("click",(e) => {
             if(e.target == tile){
                 app.showProductInformation(this.product)
@@ -299,7 +331,7 @@ class ProductTile {
         const button = document.createElement("i")
         button.className = "bx bx-cube"
         button.addEventListener("click",() => {
-            app.showModelViewer(this.product.model3d)
+            app.showModelViewer(this.product)
         })
 
         this.tileOptions.appendChild(cartOptions)
@@ -373,5 +405,53 @@ class ProductTile {
             this.cartAddBtn()
         }
         return this.cartOption
+    }
+}
+
+class ArMenuProductTile{
+    constructor(product){
+        this.product = product;
+        this.parentElements = document.querySelectorAll("model-viewer .swipe-ar-container");
+        this.quantityCounter = document.createElement("span");
+    }
+    constructTile() {
+        const tile = document.createElement("div");
+        tile.className = "swipe-ar-dish";
+        tile.id = `arTile-${this.product._id}`
+        tile.setAttribute("data-catagory",this.product.catagory)
+
+        const left = document.createElement("div");
+        left.className = "left";
+
+        const leftTop = document.createElement("div");
+        leftTop.className = "left-top"
+        const veg_nonVeg = document.createElement("img");
+        veg_nonVeg.src = "assets/img/icons/unicons/veg.jpg"
+        const dishName = document.createElement("h1");
+        dishName.className = "dish-name";
+        dishName.textContent = this.product.name;
+        leftTop.appendChild(veg_nonVeg);
+        leftTop.appendChild(dishName);
+
+        const leftCenter = document.createElement("div");
+        const dishDescription = document.createElement("span");
+        dishDescription.className = "dish-description ellipsis";
+        dishDescription.textContent = this.product.description;
+
+        // leftCenter.appendChild(dishName);
+        leftCenter.appendChild(dishDescription);
+
+        const dishPrice = document.createElement("span");
+        dishPrice.className = "dish-price";
+        dishPrice.textContent = "AED " + this.product.price;
+        leftCenter.appendChild(dishPrice)
+
+        tile.appendChild(leftTop)
+        tile.appendChild(leftCenter)
+
+        this.parentElements.forEach(el => {
+            el.appendChild(tile);
+        })
+        return this;
     }
 }
