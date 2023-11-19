@@ -7,6 +7,10 @@ model-viewer{
     height: 100vh;
     min-width: 100vw;
 }
+:root{
+    --container-height: clamp(150px,20vh,250px);
+    /* --container-height: 0px; */
+}
 #ar-button {
     background-image: url(../assets/img/icons/ic_view_in_ar_new_googblue_48dp.png);
     background-repeat: no-repeat;
@@ -42,21 +46,21 @@ model-viewer{
 .swipe-ar-container{
     display: flex;
     position: fixed;
-    bottom: 0; left: 0;
-    background-color: red;
+    bottom: 70px; left: 0;
+    background-color: transparent;
     align-items: center;
-    height: clamp(150px,20vh,300px);
+    height: var(--container-height);
     width: 100%;
     overflow-x: scroll;
+    overflow-y: hidden;
     scroll-snap-type: x mandatory;
     white-space: nowrap;
-    background-color: transparent;
 }
 .swipe-ar-dish{
     display: flex;
     flex-direction: column;
     position: relative;
-    min-width: 90%;
+    min-width: 80%;
     height: calc(100% - 25px);
     margin: 5px;
     scroll-snap-align: center;
@@ -92,4 +96,73 @@ model-viewer{
     font-family: var(--font);
     color: var(--primary-text-light);
     margin:0 0 5px 0;
+}
+.ar-menu{
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    position: fixed;
+    bottom: calc(var(--container-height) + 75px);
+    left: 0px;
+    height: 30px;
+    width: 100vw;
+}
+.ar-menu-btn{
+    display:inline-block;
+    min-height: 30px;
+    line-height: 30p;
+    width: auto;
+    padding: 2px 5px 0;
+    padding-right: 8px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Poppins';
+    font-weight: 500;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    background-color: var(--primary);
+}
+.ar-menu-tab{
+    position: absolute;
+    bottom: 35px; right: 0;
+    display:inline-block;
+    height: auto;
+    max-height: calc(100vh - calc(var(--container-height) + 150px) );
+    overflow-y: scroll;
+    width: 85vw;
+    list-style: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-family: 'Poppins';
+    margin-right: 10px;
+    background-color: var(--primary);
+}
+.ar-menu-tab h1{
+    font-weight: bold;
+    font-size: 1.25rem;
+    font-family: 'Poppins';
+    margin-bottom: 10px;
+    color: var(--primary-text);
+}
+.ar-menu-tab li{
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Poppins';
+    margin-bottom: 10px;
+    color: var(--primary-text-light);
+}
+.ar-menu-tab li.active, .ar-menu-tab li:hover, .ar-menu-tab li:active{
+    color: var(--secondary);
+}
+.ar-menu-tab li.active span, .ar-menu-tab li:active span, .ar-menu-tab li:hover span{
+    color: var(--secondary);
+}
+.cart-tab{
+    position: fixed;
+    bottom: 0; left: 0;
+    height: 65px;
+    width: 100vw;
+    background-color: var(--secondary);
 }

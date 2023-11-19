@@ -9,6 +9,10 @@ const app = {
     productInformationPage: document.querySelector(".product-information-page"),
     cartPageBtn: document.querySelector("#tile-view-menu .cart-btn"),
     backBtn: document.getElementById("backBtn"),
+    arMenuBtn: document.getElementById("ar-menu-btn"),
+    arMenuTab: document.getElementById("ar-menu-tab"),
+    activeArProductIndex: 0,
+    activeArCatagoryIndex: 0,
     products: [],
     productTiles: [],
     cart: [],
@@ -98,6 +102,8 @@ const app = {
         this.hideScreen(this.catagoryTileParentElm.id)
         const container = document.getElementById("productTiles")
         app.productTiles = []
+        this.activeArCatagoryIndex = this.productCatagories.indexOf(catagory);
+        console.log(this.activeArCatagoryIndex)
         container.innerHTML = ""
         for (let i = 0; i < this.catagorisedProducts[catagory].length; i++) {
             let dish = this.catagorisedProducts[catagory][i]
@@ -182,6 +188,7 @@ const app = {
     goBack(){
         this.switchScreens(app.currentScreenId,app.previousScreenId)
     },
+    //! Use this function to show model-viewer ar
     showModelViewer(product){
         this.modelViewer.setAttribute("src",product.model3d);
         this.modelViewerContainer.classList.remove("hide");
@@ -199,6 +206,7 @@ const app = {
             if(catagoryProducts[i]._id === product._id){
                 const tile = document.getElementById(`arTile-${product._id}`);
                 tile.scrollIntoView();
+                activeArProductIndex = i;
             }
         }
     },
@@ -253,6 +261,7 @@ const app = {
     shareToWhatsApp(){
         window.open("whatsapp://send?text=https://realitydiner.blackpepper.ae","_self")
     },
+    // Event Listeners
     setArSwipeEventListener(){
         const parentElements = document.querySelectorAll("model-viewer .swipe-ar-container");
         parentElements.forEach(el => {
@@ -262,12 +271,47 @@ const app = {
                     if((children[i].offsetLeft - el.scrollLeft) < 20 && (children[i].offsetLeft - el.scrollLeft) > 0){
                         const productCatagory = children[i].getAttribute("data-catagory");
                         const product = this.catagorisedProducts[productCatagory][i]
-
+                        this.activeArProductIndex = i;
                         this.modelViewer.setAttribute("src",product.model3d);
                     }
                 }
             })
         })
+    },
+    hideUnhideArMenu(){
+        if(this.arMenuTab.className.includes("hide")){
+            this.constructArMenu(this.productCatagories,'catagories',this.activeArCatagoryIndex);
+            this.arMenuTab.classList.remove("hide")
+            this.arMenuBtn.innerHTML = '<i class="bx bx-menu-alt-right"></i> Close'
+        }else{
+            this.arMenuTab.classList.add("hide")
+            this.arMenuBtn.innerHTML = '<i class="bx bx-menu-alt-left"></i> AR Menu'
+        }
+    },
+    constructArMenu(objects, type, activeIndex){
+        console.log(objects)
+        this.arMenuTab.innerHTML = `<h1>AR Menu </h1>`
+        for(let i = 0; i < objects.length; i++){
+            const li = document.createElement("li");
+            i == activeIndex ? li.classList.add("active") : "";
+            if(type == "catagories"){
+                li.innerHTML = `${objects[i]} <span>${this.catagorisedProducts[objects[i]].length}</span>`
+                li.addEventListener("click",()=> {
+                    const catagory = this.productCatagories[i];
+                    let index = (i == activeIndex) ? this.activeArProductIndex : -1;
+                    this.constructArMenu(this.catagorisedProducts[catagory], "products", index)
+                })
+            }
+            if(type == "products"){
+                li.innerHTML = `${objects[i].name}`
+                li.addEventListener("click",() => {
+                    const catagory = objects[i].catagory;
+                    this.showModelViewer(this.catagorisedProducts[catagory][i])
+                    this.hideUnhideArMenu();
+                })
+            }
+            this.arMenuTab.appendChild(li)
+        }
     }
 }
 

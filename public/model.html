@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/focus-visible@5.0.2/dist/focus-visible.js" defer></script>
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js"></script>
+    <link rel="stylesheet" href="assets/vendor/fonts/boxicons.css" />
     <title>Document</title>
     <link rel="stylesheet" href="css/color-scheme.css">
     <link rel="stylesheet" href="css/model-viewer.css">
@@ -27,6 +28,15 @@
         shadow-intensity="1" camera-controls touch-action="pan-y">
         <button slot="ar-button"
         id="ar-button"> View in your space </button>
+        <div class="ar-menu">
+            <span class="ar-menu-btn" id="ar-menu-btn"><i class="bx bx-menu-alt-left"></i> AR Menu</span>
+            <ul class="ar-menu-tab" id="ar-menu-tab">
+                <h1>AR Menu <span>1</span></h1>
+                <li>Burgers <span>4</span></li>
+                <li>Drinks <span>13</span></li>
+                <li>Pizzas <span>8</span></li>
+            </ul>
+        </div>
         <div class="swipe-ar-container">
             <div class="swipe-ar-dish">
                 <div class="left">
@@ -108,6 +118,9 @@
                     <!-- todo: Add "Add to cart button" -->
                 </div>
             </div>
+
+        </div>
+        <div class="cart-tab">
 
         </div>
     </model-viewer>

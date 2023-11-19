@@ -193,7 +193,7 @@
             <div class="popup-3d-model-container hide" id="model-viewer-container">
                 <i class='bx bx-x' onclick="app.hideModelViewer()"></i>
                 <model-viewer
-                    poster="food_ar/assets/breakfast.jpeg"
+                    seamless-poster
                     src="/food_ar/assets/breakfast.glb"
                     ios-src="food_ar/assets/breakfast.usdz"
                     alt="A 3D model of a food dish"
@@ -204,8 +204,18 @@
                 >
                     <button slot="ar-button"
                     id="ar-button"> View in your space </button>
+                    <div class="ar-menu">
+                        <span class="ar-menu-btn" id="ar-menu-btn" onclick="app.hideUnhideArMenu()"><i class="bx bx-menu-alt-left"></i> AR Menu</span>
+                        <ul class="ar-menu-tab hide" id="ar-menu-tab">
+                            <h1>AR Menu</h1>
+                            
+                        </ul>
+                    </div>
                     <div class="swipe-ar-container">
                     </div>
+                    <!-- <div class="cart-tab">
+
+                    </div> -->
                 </model-viewer>
             </div>
         </div>
