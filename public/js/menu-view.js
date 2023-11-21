@@ -11,6 +11,7 @@ const app = {
     backBtn: document.getElementById("backBtn"),
     arMenuBtn: document.getElementById("ar-menu-btn"),
     arMenuTab: document.getElementById("ar-menu-tab"),
+    arCartTab: document.getElementById("ar-cart-tab"),
     activeArProductIndex: 0,
     activeArCatagoryIndex: 0,
     products: [],
@@ -211,6 +212,7 @@ const app = {
         }
     },
     hideModelViewer(){
+        app.openTileCatagory(this.productCatagories[this.activeArCatagoryIndex]);
         this.modelViewerContainer.classList.add("hide")
     },
     hideAllScreens() {
@@ -472,7 +474,7 @@ class ArMenuProductTile{
         const veg_nonVeg = document.createElement("img");
         veg_nonVeg.src = "assets/img/icons/unicons/veg.jpg"
         const dishName = document.createElement("h1");
-        dishName.className = "dish-name";
+        dishName.className = "dish-name ellipsis";
         dishName.textContent = this.product.name;
         leftTop.appendChild(veg_nonVeg);
         leftTop.appendChild(dishName);
@@ -490,12 +492,106 @@ class ArMenuProductTile{
         dishPrice.textContent = "AED " + this.product.price;
         leftCenter.appendChild(dishPrice)
 
-        tile.appendChild(leftTop)
-        tile.appendChild(leftCenter)
+        left.appendChild(leftTop)
+        left.appendChild(leftCenter)
+
+        const right = document.createElement("div")
+        right.className = "right";
+
+        const cartOptions = this.constructCartOption(this.product, this.product.productIndex, false);
+        right.appendChild(cartOptions);
+
+        tile.appendChild(left);
+        tile.appendChild(right);
 
         this.parentElements.forEach(el => {
             el.appendChild(tile);
         })
+        // Show Cart tab if required
+        if(app.cart.length > 0 && app.arCartTab.className.includes("hide")){
+            console.log(app.arCartTab);
+            app.arCartTab.classList.remove("hide");
+        }
         return this;
+    }
+    incrementItem() {
+        app.products[this.product.productIndex].quantity += 1
+        this.quantityCounter.textContent = app.products[this.product.productIndex].quantity;
+        if (app.products[this.product.productIndex].quantity == 1) {
+            this.cartOptionsBtn()
+            app.cart.push(app.products[this.product.productIndex])
+        }
+        app.saveCart().then(() => {})
+        if(app.cart.length > 0 && app.cartPageBtn.className.includes("hide")){
+            app.cartPageBtn.classList.remove("hide")
+            app.arCartTab.classList.remove("hide")
+        }
+        return this
+    }
+    decrementItem() {
+        app.products[this.product.productIndex].quantity -= 1
+        this.quantityCounter.textContent = app.products[this.product.productIndex].quantity;
+        if (app.products[this.product.productIndex].quantity === 0) {
+            this.cartAddBtn()
+            const indexInCart = app.findInCart(this.product.productIndex)
+            if (indexInCart !== false) {
+                app.cart.splice(indexInCart, 1)
+            }
+        }
+        app.saveCart().then(() => {})
+        if(app.cart.length === 0 && !(app.cartPageBtn.className.includes("hide"))){
+            app.cartPageBtn.classList.add("hide");
+            app.arCartTab.classList.add("hide");
+        }
+        return this
+    }
+    cartAddBtn() {
+        this.cartOption.className = "cart-options add"
+        this.cartOption.innerHTML = "Add +"
+        if(this.cartOption.getAttribute("data-listener") !== "true"){
+            this.cartOption.addEventListener("click", (e) => {
+                e.stopPropagation()
+                this.incrementItem()
+            })
+            this.cartOption.setAttribute("data-listener","true")
+        }
+    }
+    cartOptionsBtn() {
+        this.cartOption.innerHTML = ""
+        this.cartOption.className = "cart-options"
+        const minus = document.createElement("i")
+        minus.className = "bx bx-minus minus"
+        minus.addEventListener("click", (e) => {
+            e.stopPropagation()
+            this.decrementItem()
+        })
+
+        this.quantityCounter.addEventListener("click", (e) => { e.stopPropagation() })
+        this.quantityCounter.className = "count"
+        this.quantityCounter.textContent = this.product.quantity
+
+        const plus = document.createElement("i")
+        plus.className = "bx bx-plus plus"
+        plus.addEventListener("click", (e) => {
+            e.stopPropagation()
+            this.incrementItem()
+            // updateItemCount(dish.quantity, index, forProductOverlay)
+        })
+
+        this.cartOption.appendChild(minus)
+        this.cartOption.appendChild(this.quantityCounter)
+        this.cartOption.appendChild(plus)
+    }
+    constructCartOption(dish) {
+        this.cartOption = document.createElement("div")
+        this.cartOption.addEventListener("click", (e) => { e.stopPropagation() })
+        this.cartOption.setAttribute("data-listener","false")
+        this.cartOption.className = "cart-options"
+        if (dish.quantity !== 0) {
+            this.cartOptionsBtn()
+        } else {
+            this.cartAddBtn()
+        }
+        return this.cartOption
     }
 }

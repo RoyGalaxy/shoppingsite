@@ -9,6 +9,7 @@ model-viewer{
 }
 :root{
     --container-height: clamp(150px,20vh,250px);
+    --cart-button-width: 95px;
     /* --container-height: 0px; */
 }
 #ar-button {
@@ -57,8 +58,9 @@ model-viewer{
     white-space: nowrap;
 }
 .swipe-ar-dish{
+    position: relative;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     position: relative;
     min-width: 80%;
     height: calc(100% - 25px);
@@ -68,7 +70,15 @@ model-viewer{
     border-radius: 10px;
     padding: 10px;
 }
+.swipe-ar-dish .left{
+    width: calc(100% - calc(var(--cart-button-width) + 20px));
+}
+.swipe-ar-dish .right{
+    width: calc(var(--cart-button-width) + 20px);
+    padding: 10px;
+}
 .swipe-ar-dish .left-top{
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -82,12 +92,13 @@ model-viewer{
 }
 .swipe-ar-dish .dish-name{
     display: block;
-    height: 2rem;
+    height: clamp(2rem,auto,5rem);
     line-height: 2rem;
     font-size: 1rem;
     font-family: var(--font);
     color: var(--primary-text);
     font-weight: 500;
+    -webkit-line-clamp: 1;
     margin: 0;
 }
 .swipe-ar-dish .dish-description,.swipe-ar-dish .dish-price{
@@ -95,6 +106,7 @@ model-viewer{
     font-size: 0.8rem;
     font-family: var(--font);
     color: var(--primary-text-light);
+    -webkit-line-clamp: 2;
     margin:0 0 5px 0;
 }
 .ar-menu{
@@ -159,10 +171,27 @@ model-viewer{
 .ar-menu-tab li.active span, .ar-menu-tab li:active span, .ar-menu-tab li:hover span{
     color: var(--secondary);
 }
-.cart-tab{
+.ar-cart-tab{
     position: fixed;
     bottom: 0; left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 65px;
     width: 100vw;
+    color: var(--primary);
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-decoration: none;
     background-color: var(--secondary);
+}
+.ar-cart-tab i{
+    position: relative;
+    top: 2px; left: 5px;
+    display: inline-block;
+    height: 1.25rem;
+    line-height: 1.25rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: var(--primary);
 }
