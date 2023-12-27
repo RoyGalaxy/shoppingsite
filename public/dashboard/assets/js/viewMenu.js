@@ -112,9 +112,10 @@ form.onsubmit = async (e) => {
     jsonRes.then(data => {
         if (data.price) {
             alert("Product has been updated")
-            window.location = "/dashboard/html/index.html"
+            window.location = "/dashboard/html/viewMenu.html"
         } else {
             alert("Error Updating Product")
+            conosle.log(jsonRes)
         }
     })
 }

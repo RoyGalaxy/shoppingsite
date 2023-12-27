@@ -44,7 +44,7 @@ router.post("/",verifyTokenAndAdmin,async (req, res) => {
 // UPDATE
 router.put("/:id",verifyTokenAndAdmin, async (req, res) => {
     try {
-        const form = new formidable.IncomingForm({ multiples: true, keepExtensions: true });
+        const form = new formidable.IncomingForm({ multiples: true, keepExtensions: true, allowEmptyFiles: true, minFileSize: 0 });
         const [fields, files] = await form.parse(req)
         let strFields = {};
         // Getting fields
@@ -57,12 +57,13 @@ router.put("/:id",verifyTokenAndAdmin, async (req, res) => {
 
         // uploading files
         for(let file in files){
-            const oldPath = files[file][0].filepath
-            const newPath = path.join(__dirname,`../public/${file}`) + "/" + files[file][0].newFilename
-            const rawData = fs.readFileSync(oldPath)
-            strFields[file] = path.join("/",file,files[file][0].newFilename)
-            
-            fs.writeFile(newPath, rawData, (err) => err)
+            if(files[file][0].size > 1){
+                const oldPath = files[file][0].filepath
+                const newPath = path.join(__dirname,`../public/${file}`) + "/" + files[file][0].newFilename
+                const rawData = fs.readFileSync(oldPath)
+                strFields[file] = path.join("/newFiles/",file,files[file][0].newFilename)
+                fs.writeFile(newPath, rawData, (err) => err)
+            }
         }
         
         const updatedProduct = await Product.findByIdAndUpdate(req.params.id,
@@ -73,6 +74,7 @@ router.put("/:id",verifyTokenAndAdmin, async (req, res) => {
         )
         res.status(200).json(updatedProduct)
     } catch (err) {
+        console.log(err)
         res.status(500).json(err)
     }
 })

@@ -273,7 +273,8 @@ header .right{
 .tile-catagories,.product-tiles{
     width: 100vw;
     display: grid;
-    grid-gap: 1px;
+    padding: 4px;
+    grid-gap: 4px;
     grid-template-columns: 1fr 1fr;
 }
 .tile-catagories .tile:first-child, .product-tiles .tile:first-child{
@@ -289,10 +290,11 @@ header .right{
 }
 .tile{
     position: relative;
-    height: 50vw;
-
+    height: (50vw - 4px);
+    border-radius: 5px;
     background-size: cover;
     background-position: center;
+    box-shadow: 0 0 4px rgba(0,0,0,0.2);
 }
 .product-tile{
     padding: 10px 10px 20px;

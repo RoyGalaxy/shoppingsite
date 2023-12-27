@@ -172,8 +172,8 @@ class Catagory{
         let catagoryElm = document.createElement("div")
         catagoryElm.className = `${this.index === 0 ? "border-2" : ""} border-red-500 inline-flex items-end justify-center w-48 h-28 bg-center bg-cover mr-2 rounded-md shadow-md`
         catagoryElm.id = `cat-${this.name.replace(" ","")}`
-        // catagoryElm.style.backgroundImage = `url(${app.catagorisedProducts[this.name][0].image})`
-        catagoryElm.style.backgroundImage = `url(/image/059bdb21-9fe2-48ac-bb70-31a64bb2948cbreakfast.jpeg)`
+        catagoryElm.style.backgroundImage = `url(${app.catagorisedProducts[this.name][0].image})`
+        // catagoryElm.style.backgroundImage = `url(/image/059bdb21-9fe2-48ac-bb70-31a64bb2948cbreakfast.jpeg)`
         catagoryElm.addEventListener("click", () => { app.switchActiveCatagory(this.name.replace(" ",""),this.index,true) })
 
         let catagoryTitleElm = document.createElement("h2")
