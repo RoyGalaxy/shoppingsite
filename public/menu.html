@@ -42,35 +42,35 @@
         <div class="grid grid-cols-3 w-screen justify-center px-4 py-4 gap-4 mt-40" id="products">
             
         </div>
-        <div class="z-10 fixed bottom-0 left-0 w-full flex items-center justify-center bg-red-400 h-20 text-gray-50 text-2xl font-bold uppercase" onclick="window.location = './cart.html'">
+        <!-- <div class="z-10 fixed bottom-0 left-0 w-full flex items-center justify-center bg-red-400 h-20 text-gray-50 text-2xl font-bold uppercase" onclick="window.location = './cart.html'">
             Cart
-        </div>
+        </div> -->
     </div>
 
     <div class="hidden container max-w-full bg-gray-100" id="productPage">
         <div class="z-1">
-            <i class='fixed flex items-center justify-center top-8 left-8 bx bx-arrow-back h-16 w-16 font-bold bg-gray-200 text-gray-800 text-3xl shadow-md rounded-md' onclick="app.switchPage('productPage','homePage')"></i>
+            <i class='z-1 fixed flex items-center justify-center top-8 left-8 bx bx-arrow-back h-16 w-16 font-bold bg-gray-200 text-gray-800 text-3xl shadow-md rounded-md' onclick="app.switchPage('productPage','homePage')"></i>
             <i class='fixed flex items-center justify-center top-8 right-8 bx bx-cube-alt h-16 w-16 font-bold bg-gray-200 text-gray-800 text-3xl shadow-md rounded-md' onclick="app.show3dModel()"></i>
             <img src="/image/9fb35e58-20e5-4b8c-8b79-9a3992b2a98cCamel Truffle Burger.jpg" alt="" class="w-full max-h-screen aspect-square object-center object-cover">
             <div class="flex flex-col items-center pb-20 bg-white">
                 <h1 class="text-3xl my-8 font-bold tracking-wide">Gold Burger</h1>
                 <span class="text-xl font-semibold text-red-400 tracking-wide">AED 28.00</span>
                 <p class="px-16 my-12 text-xl">Some random and short description</p>
-                <div class="mb-12 flex items-center justify-center">
+                <!-- <div class="mb-12 flex items-center justify-center">
                    <i class="bx bx-minus h-12 w-12 flex items-center justify-center bg-red-200 text-2xl font-bold rounded-full shadow-md mx-4" onclick="app.decrementItem()"></i> 
                    <span class="item-count text-2xl font-bold">0</span>
                    <i class="bx bx-plus h-12 w-12 flex items-center justify-center bg-red-600 text-2xl text-gray-50 font-bold rounded-full shadow-md mx-4" onclick="app.incrementItem()"></i> 
-                </div>
+                </div> -->
             </div>
-            <button class="z-10 fixed bottom-0 left-0 w-full flex items-center justify-center bg-red-700 h-20 text-gray-50 text-2xl font-bold uppercase" onclick="app.addToCart()">Add To Cart</button>
+            <!-- <button class="z-10 fixed bottom-0 left-0 w-full flex items-center justify-center bg-red-700 h-20 text-gray-50 text-2xl font-bold uppercase" onclick="app.addToCart()">Add To Cart</button> -->
         </div>
         <div class="hidden z-100 fixed top-0 left-0 backdrop-blur h-screen w-screen flex items-center justify-center">
-            <i class='fixed flex items-center justify-center top-8 left-8 bx bx-arrow-back h-16 w-16 font-bold bg-gray-200 text-gray-800 text-3xl shadow-md rounded-md' onclick="app.hide3dModel()"></i>
             <model-viewer
-                class="bg-transparent"
+                class="bg-transparent z-1 fixed"
                 alt="Some Error Occred"
                 src="./model3d/653afcf9-13a2-4e48-84e5-906dd12a2621breakfast.glb" ar poster="food_ar/assets/breakfast.jpeg" shadow-intensity="1" camera-controls touch-action="pan-y">
             </model-viewer>
+            <i class='z-10 fixed flex items-center justify-center top-8 left-8 bx bx-arrow-back h-16 w-16 font-bold bg-gray-200 text-gray-800 text-3xl shadow-md rounded-md' onclick="app.hide3dModel()"></i>
         </div>
     </div>
 

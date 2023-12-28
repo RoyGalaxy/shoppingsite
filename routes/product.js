@@ -43,9 +43,11 @@ router.post("/",verifyTokenAndAdmin,async (req, res) => {
 
 // UPDATE
 router.put("/:id",verifyTokenAndAdmin, async (req, res) => {
+    console.log('Request Received')
     try {
         const form = new formidable.IncomingForm({ multiples: true, keepExtensions: true, allowEmptyFiles: true, minFileSize: 0 });
         const [fields, files] = await form.parse(req)
+        console.log(fields)
         let strFields = {};
         // Getting fields
         for(let field in fields){

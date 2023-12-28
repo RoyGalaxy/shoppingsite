@@ -193,9 +193,9 @@ class Product{
         let productElm = document.createElement("div")
         productElm.className = "relative flex flex-col basis-4/12 shadow-lg rounded-md bg-white"
         productElm.addEventListener("click",(e) => {
-            if(e.target != addToCart && e.target != cartIcon){
+            // if(e.target != addToCart && e.target != cartIcon){
                 this.openProductPage(this.product)
-            }
+            // }
         })
 
         let imageElm = document.createElement("img")
@@ -213,22 +213,22 @@ class Product{
         priceElm.className = "grid place-items-center text-red-400 text-lg font-semibold h-10"
         priceElm.textContent = `AED ${this.product.price}`
 
-        const addToCart = document.createElement("div")
-        addToCart.className = "absolute flex justify-center items-center h-10 w-10 bg-red-400 bottom-4 right-4 rounded-md add-to-cart"
-        addToCart.addEventListener("click", () => {
-            let product = this.product
-            app.incrementItem(product.productIndex)
-            app.addToCart(product.productIndex)
-        })
+        // const addToCart = document.createElement("div")
+        // addToCart.className = "absolute flex justify-center items-center h-10 w-10 bg-red-400 bottom-4 right-4 rounded-md add-to-cart"
+        // addToCart.addEventListener("click", () => {
+        //     let product = this.product
+        //     app.incrementItem(product.productIndex)
+        //     app.addToCart(product.productIndex)
+        // })
         
-        const cartIcon = document.createElement("i")
-        cartIcon.className = "bx bx-plus text-2xl text-gray-50"
+        // const cartIcon = document.createElement("i")
+        // cartIcon.className = "bx bx-plus text-2xl text-gray-50"
 
-        addToCart.appendChild(cartIcon)
+        // addToCart.appendChild(cartIcon)
 
         infoElm.appendChild(titleElm)
         infoElm.appendChild(priceElm)
-        infoElm.appendChild(addToCart)
+        // infoElm.appendChild(addToCart)
 
         productElm.appendChild(imageElm)
         productElm.appendChild(infoElm)
@@ -241,7 +241,7 @@ class Product{
         document.querySelector("#productPage h1").textContent = product.name
         document.querySelector("#productPage span").textContent = `AED ${product.price}`
         document.querySelector("#productPage p").textContent = product.description
-        document.querySelector("#productPage .item-count").textContent = app.products[product.productIndex].quantity
+        // document.querySelector("#productPage .item-count").textContent = app.products[product.productIndex].quantity
     }
 }
 
