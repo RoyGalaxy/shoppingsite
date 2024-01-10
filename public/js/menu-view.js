@@ -377,7 +377,7 @@ class ProductTile {
         const button = document.createElement("i")
         button.className = "bx bx-cube"
         button.addEventListener("click",() => {
-            app.showModelViewer(this.product)
+            modelViewer.show(this.product)
         })
 
         this.tileOptions.appendChild(cartOptions)

@@ -5,12 +5,12 @@ const app = {
     productCatagories: [],
     catagorisedProducts: {},
     products: [],
-    cart: JSON.parse(localStorage.cart) || [],
+    cart: localStorage.cart ? JSON.parse(localStorage.cart) : [],
     activeCatagoryIndex: 0,
     async init(){
-        await this.getProducts()
-        await this.createCatagorySlider()
-        await this.createProducts()
+        await this.getProducts();
+        await this.createCatagorySlider();
+        await this.createProducts();
     },
     async getProducts() {
         try {
@@ -22,9 +22,8 @@ const app = {
             console.log(err)
         }
         for (let i = 0; i < this.products.length; i++) {
-            this.products[i].quantity = 0; // Take this quantity from the cart instead ..
-            this.products[i].productIndex = i
-            this.products[i].quantity = this.cart.filter(item => item.productId == this.products[i]._id)[0]?.quantity || 0;
+            this.products[i].productIndex = i;
+            //! Quantity assignment operator deelted from here
             if (!this.productCatagories.includes(this.products[i].catagory)) {
                 this.productCatagories.push(this.products[i].catagory)
             }
@@ -79,58 +78,8 @@ const app = {
             this.productParent.appendChild(catagoryProductContainer)
         }
     },
-    incrementItem(index){
-        console.log(index, !isNaN(index) ? "true" : "false")
-        app.products[!isNaN(index) ? index : this.activeProduct.productIndex].quantity += 1
-        document.querySelector("#productPage .item-count").textContent = app.products[!isNaN(index) ? index : this.activeProduct.productIndex].quantity;
-    },
-    decrementItem(){
-        app.products[this.activeProduct.productIndex].quantity -= 1
-        if (app.products[this.activeProduct.productIndex].quantity <= 0) {
-            app.products[this.activeProduct.productIndex].quantity = 0
-        }
-        document.querySelector("#productPage .item-count").textContent = app.products[this.activeProduct.productIndex].quantity;
-    },
-    addToCart(index){
-        let product = app.products[!isNaN(index) ? index : this.activeProduct.productIndex]
-        if(product.quantity == 0){
-            this.incrementItem(index)
-        }
-        const inCart = app.cart.filter(item => (item.productId == product._id) || (item._id == product._id))
-        if(inCart?.length !== 0){
-            app.cart = app.cart.map(item => {
-                if((item.productId == product._id) || (item._id == product._id)){
-                    item.quantity = product.quantity
-                }
-                return item
-            })
-        }else app.cart.push(product)
-        this.saveCart()
-    },
-    saveCart() {
-        const user = JSON.parse(localStorage.user)
-        let products = app.cart.map(item => { return { "productId": item._id || item.productId, "quantity": item.quantity } })
-        localStorage.cart = JSON.stringify(products)
-        if (!user?.accessToken) {
-            return
-        }
-        let headersList = {
-            "Accept": "*/*",
-            "token": `Bearer ${user.accessToken}`,
-            "Content-Type": "application/json"
-        }
-        let bodyContent = JSON.stringify({
-            "products": app.cart.map(item => { return { "productId": item._id, "quantity": item.quantity } })
-        });
-        fetch(`/api/carts/${user._id}`, {
-            method: 'PUT',
-            headers: headersList,
-            body: bodyContent
-        }).then(() => {}) 
-    },
     switchActiveCatagory(name,index,scroll){
         let catagories = this.catagoryParent.children;
-        
         !catagories[index].className.includes("border-2 border-red-500")  && catagories[index].classList.add("border-2")
         index !== this.activeCatagoryIndex && catagories[this.activeCatagoryIndex].classList.remove("border-2")
         this.activeCatagoryIndex = index
@@ -143,7 +92,7 @@ const app = {
         if(slide){
             const catElm = document.getElementById(`cat-${name}`)
             catElm.parentNode.parentNode.scrollTo({
-                left: ((catElm.offsetWidth * this.activeCatagoryIndex) + catElm.offsetWidth) - (innerWidth/2 + (8* app.activeCatagoryIndex)),
+                left: ((catElm.offsetWidth * (app.activeCatagoryIndex + 1) ) + 8 * app.activeCatagoryIndex) - (innerWidth/2 + catElm.offsetWidth/2),
                 behavior: "smooth"
             })
         }
@@ -151,7 +100,6 @@ const app = {
     },
     show3dModel(){
         this.modelScreen.src = this.activeProduct.model3d
-        console.log(this.activeProduct.model3d)
         this.modelScreen.parentNode.classList.remove("hidden")
     },
     hide3dModel(){
@@ -195,6 +143,7 @@ class Product{
         productElm.addEventListener("click",(e) => {
             // if(e.target != addToCart && e.target != cartIcon){
                 this.openProductPage(this.product)
+                modelViewer.activeProduct = this.product;
             // }
         })
 
@@ -203,28 +152,17 @@ class Product{
         imageElm.src = this.product.image
 
         const infoElm = document.createElement("div")
-        infoElm.className = "flex flex-col justify-center items-center py-4"
+        infoElm.className = "flex flex-col justify-center items-center py-4 w-full"
 
         const titleElm = document.createElement("h1")
-        titleElm.className = "text-xl font-medium truncate mb-4 text-gray-600"
+        titleElm.className = "text-xl font-medium truncate mb-4 py-4 text-gray-600 w-full text-center"
         titleElm.textContent = this.product.name
 
         const priceElm = document.createElement("h2")
         priceElm.className = "grid place-items-center text-red-400 text-lg font-semibold h-10"
         priceElm.textContent = `AED ${this.product.price}`
 
-        // const addToCart = document.createElement("div")
-        // addToCart.className = "absolute flex justify-center items-center h-10 w-10 bg-red-400 bottom-4 right-4 rounded-md add-to-cart"
-        // addToCart.addEventListener("click", () => {
-        //     let product = this.product
-        //     app.incrementItem(product.productIndex)
-        //     app.addToCart(product.productIndex)
-        // })
-        
-        // const cartIcon = document.createElement("i")
-        // cartIcon.className = "bx bx-plus text-2xl text-gray-50"
-
-        // addToCart.appendChild(cartIcon)
+        // ! Add TO Cart Code was deleted frm here (not useful)
 
         infoElm.appendChild(titleElm)
         infoElm.appendChild(priceElm)
@@ -245,8 +183,26 @@ class Product{
     }
 }
 
+//! Update the Loader 
+const fakeLoader = () => {
+    const launchPage = document.getElementById('launchPage');
+    const loader = document.getElementById('loaderPage');
+    launchPage.classList.add('hidden');
+    loader.classList.remove('hidden');
+    app.init().then(() => {})
+    setTimeout(() => {
+        const homePage = document.getElementById('homePage');
+        document.body.requestFullscreen();
+        loader.classList.add('hidden');
+        homePage.classList.remove('hidden');
+    }, 2000);
+}
+
+/**  Event Listseners **/
+
+// Scroll Event Handler
 let scrollTimer = -1;
-this.addEventListener("scroll",() => {
+document.body.addEventListener("scroll",() => {
     if(scrollTimer != -1){
         clearTimeout(scrollTimer)
     }

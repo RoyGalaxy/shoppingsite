@@ -10,6 +10,7 @@ model-viewer{
 :root{
     --container-height: clamp(150px,20vh,250px);
     --cart-button-width: 95px;
+    --goto-cart-button-height: 70px;
     /* --container-height: 0px; */
 }
 #ar-button {
@@ -44,10 +45,20 @@ model-viewer{
 #ar-button:focus-visible {
     outline: 1px solid #4285f4;
 }
+.ellipsis{
+    width: 100%;
+    text-align: left;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+}
 .swipe-ar-container{
     display: flex;
     position: fixed;
-    bottom: 70px; left: 0;
+    bottom: var(--goto-cart-button-height); left: 0;
     background-color: transparent;
     align-items: center;
     height: var(--container-height);
@@ -139,9 +150,9 @@ model-viewer{
     bottom: 35px; right: 0;
     display:inline-block;
     height: auto;
-    max-height: calc(100vh - calc(var(--container-height) + 150px) );
+    max-height: calc(100vh - calc(var(--container-height) + 180px) );
     overflow-y: scroll;
-    width: 85vw;
+    width: clamp(200px,85vw,500px);
     list-style: none;
     padding: 12px;
     border-radius: 10px;
