@@ -25,7 +25,6 @@ router.post("/",verifyTokenAndAdmin,async (req, res) => {
             const newPath = path.join(__dirname,`../public/${file}`) + "/" + files[file][0].newFilename
             const rawData = fs.readFileSync(oldPath)
             strFields[file] = path.join("/",file,files[file][0].newFilename)
-            // console.log(`/${file}/${files[file][0].newFilename}`)
             
             fs.writeFile(newPath, rawData, (err) => err)
         }
@@ -34,7 +33,6 @@ router.post("/",verifyTokenAndAdmin,async (req, res) => {
         const newProduct = new Product(strFields)
         const savedProduct = await newProduct.save()
         res.status(200).json(savedProduct)
-        // res.status(200).json({ success: true})
     }catch(err){
         console.log(err)
         res.status(500).json(err)
@@ -43,11 +41,9 @@ router.post("/",verifyTokenAndAdmin,async (req, res) => {
 
 // UPDATE
 router.put("/:id",verifyTokenAndAdmin, async (req, res) => {
-    console.log('Request Received')
     try {
         const form = new formidable.IncomingForm({ multiples: true, keepExtensions: true, allowEmptyFiles: true, minFileSize: 0 });
         const [fields, files] = await form.parse(req)
-        console.log(fields)
         let strFields = {};
         // Getting fields
         for(let field in fields){
@@ -63,7 +59,7 @@ router.put("/:id",verifyTokenAndAdmin, async (req, res) => {
                 const oldPath = files[file][0].filepath
                 const newPath = path.join(__dirname,`../public/${file}`) + "/" + files[file][0].newFilename
                 const rawData = fs.readFileSync(oldPath)
-                strFields[file] = path.join("/newFiles/",file,files[file][0].newFilename)
+                strFields[file] = path.join("/",file,files[file][0].newFilename)
                 fs.writeFile(newPath, rawData, (err) => err)
             }
         }
