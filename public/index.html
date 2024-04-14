@@ -22,7 +22,7 @@
 
     <script src="js/script.js" ></script>
 </head>
-<body onload="app.init()">
+<body onload="modelViewer.init();app.init()">
     <div class="loader" id="loaderScreen">
         <span>L</span>
         <span>O</span>
@@ -38,46 +38,32 @@
 
     <!-- List view Menu starts here -->
 
-    <div class="container" id="list-view-menu">
+    <div class="container hidden" id="list-view-menu">
         <header class="flex">
             <div class="left">
                 <i class='bx bxl-microsoft shadow' onclick ="app.switchScreens('list-view-menu','tile-view-menu')"></i>
             </div>
             <div class="right">
-                <div class="search-box shadow">
+                <!-- <div class="search-box shadow">
                     <i class='bx bx-search-alt-2'></i>
                     <input type="text" class="search" id="search" placeholder="Search..." autocomplete="off">
-                </div>
+                </div> -->
                 <i class='bx bx-share-alt share-btn shadow' onclick="app.showScreen('sharePage')"></i>
             </div>
         </header>
         <div class="box shadow">
             <div class="restraunt-info flex">
                 <h2 class="restraunt-name" id="restraunt_name">Black Pepper</h2>
-                <div class="rating flex">4.5 <i class='bx bxs-star'></i></div>
+                <!-- <div class="rating flex">4.5 <i class='bx bxs-star'></i></div> -->
             </div>
-            <div class="offers flex hide">
+            <div class="offers flex hidden">
                 <div class="offer flex">
                     <i class='bx bxs-offer'></i>
                     <div class="box offer-box">
                         <span class="offer-title">50% OFF up to $100</span>
                         <span class="offer-description">use code WELCOME50</span>
                     </div>
-                </div>
-                <div class="offer flex">
-                    <i class='bx bxs-offer'></i>
-                    <div class="box offer-box">
-                        <span class="offer-title">50% OFF up to $100</span>
-                        <span class="offer-description">use code WELCOME50</span>
-                    </div>
-                </div>
-                <div class="offer flex">
-                    <i class='bx bxs-offer'></i>
-                    <div class="box offer-box">
-                        <span class="offer-title">50% OFF up to $100</span>
-                        <span class="offer-description">use code WELCOME50</span>
-                    </div>
-                </div>
+                </div>                
             </div>
         </div>
         <div class="box category-slider shadow no-scrollbar">
@@ -88,7 +74,7 @@
         <div class="dishes box" id="dishesContainer">
 
         </div>
-        <div class="box product hide" id="productOverlay">
+        <div class="box product hidden" id="productOverlay">
             <div class="top-container flex">
                 <i class='bx bx-x' id="closeProductOverlay"></i>
             </div>
@@ -119,6 +105,19 @@
                 </div>
             </div>
         </div>
+        <div class="product-information-page hidden">
+            <div class="primary-information">
+                <i class='bx bx-x' onclick="app.hideProductInformation(0)"></i>
+                <h2 class="product-name">Gold Burger</h2>
+                <h3 class="product-price">$120</h3>
+            </div>
+            <div class="other-information">
+                <span class="product-description">An indeed Special Burger</span>
+                <div class="product-options">
+
+                </div>
+            </div>
+        </div>
         <a class="floating-btn cart-btn" id="cartBtn" href="cart.html">Proceed to Cart</a>
         <span class="watermark">Realitydiner Powered by Nimantrit Foods</span>
     </div>
@@ -131,55 +130,32 @@
         <header class="flex">
             <div class="left">
                 <i class='bx bx-list-ul shadow' onclick ="app.switchScreens('tile-view-menu','list-view-menu')"></i>
-                <i class='bx bx-chevron-left back-btn hide shadow' id="backBtn" onclick="app.goBack()"></i>
+                <i class='bx bx-chevron-left back-btn hidden shadow' id="backBtn" onclick="app.goBack()"></i>
             </div>
             <div class="right">
-                <div class="search-box shadow">
+                <!-- <div class="search-box shadow">
                     <i class='bx bx-search-alt-2'></i>
                     <input type="text" class="search" id="search" placeholder="Search..." autocomplete="off">
-                </div>
+                </div> -->
                 <i class='bx bx-share-alt share-btn shadow' onclick="app.showScreen('sharePage')"></i>
             </div>
         </header>
         <div class="box shadow">
             <div class="restraunt-info flex">
                 <h2 class="restraunt-name" id="restraunt_name">Black Pepper</h2>
-                <div class="rating flex">4.5 <i class='bx bxs-star'></i></div>
-            </div>
-            <div class="offers flex hide">
-                <div class="offer flex">
-                    <i class='bx bxs-offer'></i>
-                    <div class="box offer-box">
-                        <span class="offer-title">50% OFF up to $100</span>
-                        <span class="offer-description">use code WELCOME50</span>
-                    </div>
-                </div>
-                <div class="offer flex">
-                    <i class='bx bxs-offer'></i>
-                    <div class="box offer-box">
-                        <span class="offer-title">50% OFF up to $100</span>
-                        <span class="offer-description">use code WELCOME50</span>
-                    </div>
-                </div>
-                <div class="offer flex">
-                    <i class='bx bxs-offer'></i>
-                    <div class="box offer-box">
-                        <span class="offer-title">50% OFF up to $100</span>
-                        <span class="offer-description">use code WELCOME50</span>
-                    </div>
-                </div>
+                <!-- <div class="rating flex">4.5 <i class='bx bxs-star'></i></div> -->
             </div>
         </div>
         <div class="tiles-container" id="tilesContainer">
             <div class="tile-catagories" id="tileCatagories">
                 
             </div>
-            <div class="product-tiles hide" id="productTiles">
+            <div class="product-tiles hidden" id="productTiles">
                 
             </div>
-            <div class="product-information-page hide">
+            <div class="product-information-page hidden">
                 <div class="primary-information">
-                    <i class='bx bx-x' onclick="app.hideProductInformation()"></i>
+                    <i class='bx bx-x' onclick="app.hideProductInformation(1)"></i>
                     <h2 class="product-name">Gold Burger</h2>
                     <h3 class="product-price">$120</h3>
                 </div>
@@ -190,8 +166,8 @@
                     </div>
                 </div>
             </div>
-            <div class="popup-3d-model-container hide" id="model-viewer-container">
-                <i class='bx bx-x' onclick="app.hideModelViewer()"></i>
+            <div class="popup-3d-model-container hidden model-viewer-container" id="model-viewer-container">
+                <i class='bx bx-x' onclick="modelViewer.hide()"></i>
                 <model-viewer
                     seamless-poster
                     src="/food_ar/assets/breakfast.glb"
@@ -206,27 +182,27 @@
                     id="ar-button"> View in your space </button>
                     <div class="ar-menu">
                         <span class="ar-menu-btn" id="ar-menu-btn" onclick="app.hideUnhideArMenu()"><i class="bx bx-menu-alt-left"></i> AR Menu</span>
-                        <ul class="ar-menu-tab hide" id="ar-menu-tab">
+                        <ul class="ar-menu-tab hidden" id="ar-menu-tab">
                             <h1>AR Menu</h1>
                             
                         </ul>
                     </div>
                     <div class="swipe-ar-container">
                     </div>
-                    <a class="ar-cart-tab hide" id="ar-cart-tab" href="cart.html">
+                    <a class="ar-cart-tab hidden" id="ar-cart-tab" href="cart.html">
                         Go To Cart <i class="bx bx-cart-alt"></i>
                     </a>
                 </model-viewer>
             </div>
         </div>
-        <a class="floating-btn cart-btn hide" id="cartBtn" href="cart.html">Proceed to Cart</a>
+        <a class="floating-btn cart-btn hidden" id="cartBtn" href="cart.html">Proceed to Cart</a>
     </div>
     
     <!-- Tiles view Menu ends here -->
     
     <!--todo Slide view Menu starts here -->
 
-    <div class="container share-page hide" id="sharePage">
+    <div class="container share-page hidden" id="sharePage">
         <span><i class='bx bx-x' onclick="app.hideScreen('sharePage')"></i></span>
         <div class="sharing-url-container">
             <div class="whatsapp sharing-url" onclick="app.shareToWhatsApp()">
@@ -244,52 +220,11 @@
         </div>
     </div>
 
-    <div class="container" id="slide-view-menu">
-        <header class="flex">
-            <div class="left"></div>
-            <div class="right">
-                <div class="search-box shadow">
-                    <i class='bx bx-search-alt-2'></i>
-                    <input type="text" class="search" id="search" placeholder="Search..." autocomplete="off">
-                </div>
-                <i class='bx bx-share-alt share-btn shadow'></i>
-            </div>
-        </header>
-        <div class="box shadow">
-            <div class="restraunt-info flex">
-                <h2 class="restraunt-name" id="restraunt_name">Black Pepper</h2>
-                <div class="rating flex">4.5 <i class='bx bxs-star'></i></div>
-            </div>
-            <div class="offers flex hide">
-                <div class="offer flex">
-                    <i class='bx bxs-offer'></i>
-                    <div class="box offer-box">
-                        <span class="offer-title">50% OFF up to $100</span>
-                        <span class="offer-description">use code WELCOME50</span>
-                    </div>
-                </div>
-                <div class="offer flex">
-                    <i class='bx bxs-offer'></i>
-                    <div class="box offer-box">
-                        <span class="offer-title">50% OFF up to $100</span>
-                        <span class="offer-description">use code WELCOME50</span>
-                    </div>
-                </div>
-                <div class="offer flex">
-                    <i class='bx bxs-offer'></i>
-                    <div class="box offer-box">
-                        <span class="offer-title">50% OFF up to $100</span>
-                        <span class="offer-description">use code WELCOME50</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!--todo Slide view Menu ends here -->
 
 
     <script src="js/index.js"></script>
+    <script src="js/model-viewer.js"></script>
     <script src="js/menu-view.js"></script>
     <!-- Loads <model-viewer> for modern browsers: -->
     <script

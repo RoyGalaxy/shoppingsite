@@ -192,7 +192,7 @@ const fakeLoader = () => {
     app.init().then(() => {})
     setTimeout(() => {
         const homePage = document.getElementById('homePage');
-        document.body.requestFullscreen();
+        document?.body?.requestFullscreen(); // hideBrowserWindow
         loader.classList.add('hidden');
         homePage.classList.remove('hidden');
     }, 2000);

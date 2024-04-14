@@ -2,15 +2,15 @@ const currencySymbol = "AED"
 const backBtns = document.querySelectorAll(".back-btn")
 let loader;
 let user = localStorage.user ? JSON.parse(localStorage.user) : {}
-let dishes = []
 let cart = localStorage.cart ? { products: JSON.parse(localStorage.cart) } : {}
+let dishes = []
 const deliveryCharge = 1
 
 function hideLoader(){
-    loader = document.querySelector(".loader")
-    loader.classList.add("hide")
+    loader = document.querySelector(".loader");
+    loader.classList.add("hide");
 }
-
+// ! function used by checkout page - fix it
 async function fetchProducts() {
     try {
         let res = await fetch("/api/products/")
@@ -128,21 +128,6 @@ function findItemInCart(id) {
             return cart.products[i]
         }
     }
-}
-
-function sortProducts() {
-    dishes.sort((a, b) => {
-        let fa = a.catagory.toLowerCase(),
-            fb = b.catagory.toLowerCase();
-
-        if (fa < fb) {
-            return -1;
-        }
-        if (fa > fb) {
-            return 1;
-        }
-        return 0;
-    });
 }
 
 function checkLogin() {

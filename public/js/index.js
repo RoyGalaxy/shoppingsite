@@ -1,25 +1,25 @@
-const productOverlay = document.getElementById("productOverlay")
-const closeProductOverlayBtn = document.getElementById("closeProductOverlay")
-const dishesContainer = document.getElementById("dishesContainer")
-const searchBar = document.getElementById("search")
-const catagorySlider = document.getElementById("catagorySlider")
-const modelViewer = document.querySelector("model-viewer")
-const productName = document.querySelector(".product-name")
-const productPrice = document.querySelector(".product-price")
-const productDesc = document.querySelector(".product-description")
-let productCartOption = document.querySelector("#productOverlay .cart-options")
-const cartBtn = document.getElementById("cartBtn")
+const productOverlay = document.getElementById("productOverlay");
+const closeProductOverlayBtn = document.getElementById("closeProductOverlay");
+const dishesContainer = document.getElementById("dishesContainer");
+const catagorySlider = document.getElementById("catagorySlider");
+const modelViewerElement = document.querySelector("model-viewer");
+const productName = document.querySelector(".product-name");
+const productPrice = document.querySelector(".product-price");
+const productDesc = document.querySelector(".product-description");
+let productCartOption = document.querySelector("#productOverlay .cart-options");
+const cartBtn = document.getElementById("cartBtn");
 let currentCatagory;
-let catagories = []
 
 
-function constructProduct(dish, index) {
-    const dishContainer = document.createElement("div")
-    dishContainer.className = "dish flex"
-    dishContainer.id = dish._id
+function constructProduct(dish) {
+    const dishContainer = document.createElement("div");
+    dishContainer.className = "dish flex";
+    dishContainer.id = dish._id;
     dishContainer.addEventListener("click", (e) => {
-        toggleProduct(dish, index, cartOption)
-        productOverlay.classList.toggle("hide")
+        // toggleProduct(dish, index, cartOption);
+        // productOverlay.classList.toggle("hidden");
+        const pageIndex = 0; // for list view menu
+        app.showProductInformation(dish,pageIndex);
     })
 
     const left = document.createElement("div")
@@ -53,7 +53,7 @@ function constructProduct(dish, index) {
     img.src = dish.image
     img.className = "dish-image"
 
-    let cartOption = constructCartOptions(dish, index)
+    let cartOption = constructCartOptions(dish)
 
     right.appendChild(img)
     right.appendChild(cartOption)
@@ -63,7 +63,7 @@ function constructProduct(dish, index) {
     return dishContainer
 }
 
-function constructCartOptions(dish, index, forProductOverlay) {
+function constructCartOptions(dish, forProductOverlay) {
     let cartOption = document.createElement("div")
     cartOption.addEventListener("click", (e) => { e.stopPropagation() })
     cartOption.className = "cart-options"
@@ -72,11 +72,11 @@ function constructCartOptions(dish, index, forProductOverlay) {
         minus.className = "bx bx-minus minus"
         minus.addEventListener("click", (e) => {
             e.stopPropagation()
-            dish.quantity = decrementItem(dish._id)
+            dish.quantity = decrementItem(dish.productIndex)
             if (dish.quantity === 0) {
-                toggleCartOption(dish, index, forProductOverlay)
+                toggleCartOption(dish, forProductOverlay)
             } else {
-                updateItemCount(dish.quantity, index, forProductOverlay)
+                updateItemCount(dish.quantity, dish.productIndex, forProductOverlay)
             }
         })
 
@@ -89,8 +89,8 @@ function constructCartOptions(dish, index, forProductOverlay) {
         plus.className = "bx bx-plus plus"
         plus.addEventListener("click", (e) => {
             e.stopPropagation()
-            dish.quantity = incrementItem(dish._id)
-            updateItemCount(dish.quantity, index, forProductOverlay)
+            dish.quantity = incrementItem(dish.productIndex)
+            updateItemCount(dish.quantity, dish.productIndex, forProductOverlay)
         })
 
         cartOption.appendChild(minus)
@@ -100,15 +100,16 @@ function constructCartOptions(dish, index, forProductOverlay) {
         cartOption.className = "cart-options add"
         cartOption.textContent = "Add +"
         cartOption.addEventListener("click", (e) => {
+            console.log("Event Running")
             e.stopPropagation()
-            dish.quantity = incrementItem(dish._id)
-            toggleCartOption(dish, index, forProductOverlay)
+            dish.quantity = incrementItem(dish.productIndex)
+            toggleCartOption(dish, forProductOverlay)
         })
     }
     return cartOption
 }
 
-function displayCatagorySlider() {
+function displayCatagorySlider(catagories) {
     for (let i = 0; i < catagories.length; i++) {
         // if(i > 3) continue
         const elm = document.createElement("span")
@@ -124,19 +125,11 @@ function displayCatagorySlider() {
                 currentCatagory.classList.remove("active")
             }
             currentCatagory = this
-            const dish = findInCatagory(this.id)[0]
+            const dish = app.catagorisedProducts[this.id][0];
             scrollToElm(document.getElementById(dish._id))
         })
         catagorySlider.appendChild(elm)
     }
-}
-
-// Utility Functions
-function findInCatagory(catagory) {
-    let newDishes = dishes.filter((item, index) => {
-        return item.catagory.toLowerCase() == catagory.toLowerCase()
-    });
-    return newDishes
 }
 
 function updateItemCount(count, index, forProductOverlay) {
@@ -145,15 +138,15 @@ function updateItemCount(count, index, forProductOverlay) {
     if (forProductOverlay) productCartOption.children[1].textContent = count;
 }
 
-function toggleCartOption(dish, index, toggleInProductOverlay) {
-    let cartOption = constructCartOptions(dish, index)
-    const elm = dishesContainer.children[index].children[1]
+function toggleCartOption(dish, toggleInProductOverlay) {
+    let cartOption = constructCartOptions(dish)
+    const elm = dishesContainer.children[dish.productIndex].children[1]
     elm.removeChild(elm.children[1])
     elm.appendChild(cartOption)
     if (toggleInProductOverlay) {
         let elm = productCartOption.parentNode
         elm.removeChild(elm.children[0])
-        let cartOption = constructCartOptions(dish, index, true)
+        let cartOption = constructCartOptions(dish, true)
         elm.appendChild(cartOption)
         productCartOption = cartOption
     }
@@ -161,29 +154,29 @@ function toggleCartOption(dish, index, toggleInProductOverlay) {
     toggleCartBtn()
 }
 
-function toggleProduct(dish, index) {
-    modelViewer.src = dish.model3d
+function toggleProduct(dish) {
+    modelViewerElement.src = dish.model3d
     productName.textContent = dish.name
     productPrice.textContent = dish.price
     productDesc.textContent = dish.description
     const elm = productCartOption.parentNode
     elm.removeChild(productCartOption)
-    productCartOption = constructCartOptions(dish, index, true)
+    productCartOption = constructCartOptions(dish, true)
     elm.appendChild(productCartOption)
 }
 
-function incrementItem(id) {
-    const product = findProductById(id)
-    product.quantity += 1
+function incrementItem(productIndex) {
+    // const product = findProductById(id)
+    app.products[productIndex].quantity += 1
     saveCart()
-    return product.quantity
+    return app.products[productIndex].quantity;
 }
 
-function decrementItem(id) {
-    const product = findProductById(id)
-    product.quantity -= 1
+function decrementItem(productIndex) {
+    // const product = findProductById(id)
+    app.products[productIndex].quantity -= 1
     saveCart()
-    return product.quantity
+    return app.products[productIndex].quantity
 }
 
 function scrollToElm(elm) {
@@ -192,51 +185,36 @@ function scrollToElm(elm) {
 }
 
 function toggleCartBtn() {
-    if (cart.products?.length == 0 && !cartBtn.className.includes("hide") || cart.products?.length >= 1 && cartBtn.className.includes("hide")) {
-        cartBtn.classList.toggle("hide")
+    if (cart.products?.length == 0 && !cartBtn.className.includes("hidden") || cart.products?.length >= 1 && cartBtn.className.includes("hidden")) {
+        cartBtn.classList.toggle("hidden")
     }
 }
 // Event Handlers
 closeProductOverlayBtn.addEventListener("click", () => {
-    productOverlay.classList.toggle("hide")
-})
-searchBar.addEventListener("keyup", function () {
-    let matchingDishes = [...new Set(dishes.filter(item => item.name.toLowerCase().includes(this.value.toLowerCase().trim())))];
-    dishesContainer.innerHTML = ""
-    for (let i = 0; i < matchingDishes.length; i++) {
-        if (!matchingDishes[i].quantity) matchingDishes[i].quantity = 0
-        // Check for the each product to be already in cart or not
-        let dish = findItemInCart(matchingDishes[i]._id)
-        if (dish) {
-            matchingDishes[i].quantity = dish.quantity
-        }
-        let product = constructProduct(matchingDishes[i], i)
-        dishesContainer.appendChild(product)
-    }
+    productOverlay.classList.toggle("hidden")
 })
 
 // Initiator
 const initiator = () => {
     fetchCart().then(() => {
-        console.log(cart.products)
+
         toggleCartBtn()
         // Display products from Datatbase
         fetchProducts().then(() => {
-            // Filter out Distinct catagories out of dish
-            sortProducts()
-            catagories = [...new Set(dishes.map(item => item.catagory.trim().toLowerCase()))];
-            displayCatagorySlider()
+            displayCatagorySlider(app.productCatagories)
             for (let i = 0; i < dishes.length; i++) {
-                if (!dishes[i].quantity) dishes[i].quantity = 0
+                // set product Index
+                if (!app.products[i].quantity) app.products[i].quantity = 0
                 // Check for the each product to be already in cart or not
-                let dish = findItemInCart(dishes[i]._id)
+                let dish = findItemInCart(app.products[i]._id)
                 if (dish) {
-                    dishes[i].quantity = dish.quantity
+                    app.products[i].quantity = dish.quantity
                 }
-                let product = constructProduct(dishes[i], i)
+                let product = constructProduct(app.products[i], i)
                 dishesContainer.appendChild(product)
             }
         })
+
         app.hideLoader()
     })
 }

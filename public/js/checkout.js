@@ -142,7 +142,7 @@ function setLoading(isLoading) {
 
 // Event Handlers
 window.onload = () => {
-	locationBtn.onclick = getLocation
+	locationBtn.onclick = getLocation;
 	fetchCart().then(() => {
 		fetchProducts().then(() => {
 			for(let i = 0; i < cart.products.length; i++){

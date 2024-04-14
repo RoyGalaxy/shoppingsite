@@ -1,11 +1,13 @@
+// import {fetchProducts} from 'PRODUCT.js';
+
 const app = {
     listMenuScreen: document.getElementById("list-view-menu"),
     tileMenuScreen: document.getElementById("tile-view-menu"),
-    swipeMenuScreen: document.getElementById("slide-view-menu"),
     loaderScreen: document.getElementById("loaderScreen"),
     catagoryTileParentElm: document.getElementById("tileCatagories"),
     modelViewerContainer: document.getElementById("model-viewer-container"),
-    modelViewer: document.querySelector(".popup-3d-model-container model-viewer"),
+    modelViewerElm: document.querySelector(".popup-3d-model-container model-viewer"),
+    // productInformationPages: document.querySelectorAll(".product-information-page"),
     productInformationPage: document.querySelector(".product-information-page"),
     cartPageBtn: document.querySelector("#tile-view-menu .cart-btn"),
     backBtn: document.getElementById("backBtn"),
@@ -23,11 +25,12 @@ const app = {
         this.screens = [
             this.listMenuScreen,
             this.tileMenuScreen,
-            this.swipeMenuScreen
         ]
         this.catagoryTileParentElm.innerHTML = ""
-        this.getProducts().then(() => {
-            this.hideAllScreens()
+        this.fetchProducts().then(() => {
+            this.catagoriseProducts();
+            this.processProducts();
+            this.hideAllScreens();
             this.updateCartFromLocalStorage().then(() => {
                 this.renderCatagoryTiles().then(() => {
                     this.hideLoader()
@@ -37,15 +40,7 @@ const app = {
             })
         })
     },
-    async getProducts() {
-        try {
-            let res = await fetch("/api/products/")
-            let jsonRes = await res.json()
-            this.products = await jsonRes
-        }
-        catch (err) {
-            console.log(err)
-        }
+    async processProducts(){
         for (let i = 0; i < this.products.length; i++) {
             this.products[i].quantity = 0; // Take this quantity from the cart instead ..
             this.products[i].productIndex = i
@@ -53,35 +48,57 @@ const app = {
                 this.productCatagories.push(this.products[i].catagory)
             }
         }
-        this.catagoriseProducts()
     },
+    //* REFACTORED CODE 
+    async fetchProducts() {
+        try {
+            let res = await fetch("/api/products/")
+            let jsonRes = await res.json();
+            this.products = await jsonRes;
+        }
+        catch (err) {
+            console.log(err);
+        }
+    },
+    fetchFromLocalStorage(data){
+        return JSON.parse(localStorage[data]);
+    },
+    findProductById(id){
+        for (let i = 0; i < this.products.length; i++) {
+            if (this.products[i]._id === id) {
+                return this.products[i];
+            }
+        }
+        return -1;
+    },
+    // TODO: REFACTOR
+    // TODO: FIX THE CART THING IN BOTH FILES
     async updateCartFromLocalStorage(){
         if(!localStorage.cart){
-            return
+            return;
         }
-        let cart = JSON.parse(localStorage.cart)
+        let cart = this.fetchFromLocalStorage('cart');
         for (let i = 0; i < cart.length; i++) {
-            for (let j = 0; j < app.products.length; j++) {
-                
-                if(cart[i]._id === app.products[j]._id || cart[i].productId === app.products[j]._id){
-                    app.products[j].quantity = cart[i].quantity;
-                    app.cart.push(app.products[j])
-                    break;
-                }
+            let index = this.findProductById(cart[i]._id);
+            if(index >= 0){
+                app.products[index].quantity = cart[i].quantity;
+                app.cart.push(app.products[index]);
             } 
         }
-        if(app.cart.length > 0 && this.cartPageBtn.className.includes("hide")){
-            this.cartPageBtn.classList.remove("hide")
+        if(app.cart.length > 0 && this.cartPageBtn.className.includes("hidden")){
+            this.cartPageBtn.classList.remove("hidden")
         }
     },
+    // TODO: REFACTOR
     catagoriseProducts() {
-        for (let i = 0; i < this.productCatagories.length; i++) {
-            this.catagorisedProducts[this.productCatagories[i]] = []
-        }
-        for (let i = 0; i < this.products.length; i++) {
+        for (let i = 0; i < this.products.length; i++){
+            if(this.catagorisedProducts[this.products[i].catagory] === undefined){
+                this.catagorisedProducts[this.products[i].catagory] = []
+            }
             this.catagorisedProducts[this.products[i].catagory].push(this.products[i])
         }
     },
+    // TODO: REFACTOR
     async renderCatagoryTiles() {
         for (let i = 0; i < this.productCatagories.length; i++) {
             const tile = document.createElement("div")
@@ -99,12 +116,12 @@ const app = {
             this.catagoryTileParentElm.appendChild(tile)
         }
     },
+    // TODO: REFACTOR
     openTileCatagory(catagory) {
         this.hideScreen(this.catagoryTileParentElm.id)
         const container = document.getElementById("productTiles")
         app.productTiles = []
         this.activeArCatagoryIndex = this.productCatagories.indexOf(catagory);
-        console.log(this.activeArCatagoryIndex)
         container.innerHTML = ""
         for (let i = 0; i < this.catagorisedProducts[catagory].length; i++) {
             let dish = this.catagorisedProducts[catagory][i]
@@ -121,28 +138,37 @@ const app = {
         }
         this.showScreen(container.id)
     },
-    showProductInformation(product){
-        this.productInformationPage.classList.remove("hide");
-        this.productInformationPage.setAttribute("data-indexed",product.productIndex)
-        const imageElm = document.querySelector(".primary-information")
-        const nameElm = document.querySelector(".primary-information .product-name")
-        const priceElm = document.querySelector(".primary-information .product-price")
-        const descriptionElm = document.querySelector(".other-information .product-description")
-        const optionElm = document.querySelector(".other-information .product-options")
+    // TODO: REFACTOR
+    showProductInformation(product,pageIndex){
+        this.productInformationPage[pageIndex].classList.remove("hidden");
+        this.productInformationPage[pageIndex].setAttribute("data-indexed",product.productIndex);
+        const imageElm = document.querySelectorAll(".primary-information")[pageIndex];
+        const nameElm = document.querySelectorAll(".primary-information .product-name")[pageIndex];
+        const priceElm = document.querySelectorAll(".primary-information .product-price")[pageIndex];
+        const descriptionElm = document.querySelectorAll(".other-information .product-description")[pageIndex];
+        const optionElm = document.querySelectorAll(".other-information .product-options")[pageIndex];
 
-        imageElm.style.backgroundImage = `url(${product.image})`
-        nameElm.textContent = product.name
-        priceElm.textContent = "AED "+product.price
-        descriptionElm.innerHTML = "<i class='bx bx-info-circle'></i> " + product.description
-        optionElm.appendChild(app.productTiles[product.productIndex - app.catagorisedProducts[product.catagory][0].productIndex].cartOption)
+        imageElm.style.backgroundImage = `url(${product.image})`;
+        nameElm.textContent = product.name;
+        priceElm.textContent = "AED "+product.price;
+        descriptionElm.innerHTML = "<i class='bx bx-info-circle'></i> " + product.description;
+        if(pageIndex === 1){
+            optionElm.appendChild(app.productTiles[product.productIndex- app.catagorisedProducts[product.catagory][0].productIndex].cartOption);
+        }else{
+            optionElm.appendChild(constructCartOptions(product,false));
+        }
     },
-    hideProductInformation(){
-        const index = this.productInformationPage.getAttribute("data-indexed")
-        const cartOption = app.productTiles[index - app.catagorisedProducts[app.products[index].catagory][0].productIndex].cartOption
-        const tileOptions = app.productTiles[index - app.catagorisedProducts[app.products[index].catagory][0].productIndex].tileOptions
-        tileOptions.insertBefore(cartOption,tileOptions.firstChild)
-        app.productInformationPage.classList.add("hide")
+    // TODO: REFACTOR
+    hideProductInformation(pageIndex){
+        if(pageIndex === 1){
+            const index = this.productInformationPage[pageIndex].getAttribute("data-indexed")
+            const cartOption = app.productTiles[index - app.catagorisedProducts[app.products[index].catagory][0].productIndex].cartOption
+            const tileOptions = app.productTiles[index - app.catagorisedProducts[app.products[index].catagory][0].productIndex].tileOptions
+            tileOptions.insertBefore(cartOption,tileOptions.firstChild)
+        }
+        app.productInformationPage[pageIndex].classList.add("hidden");
     },
+    // TODO: REFACTOR
     async saveCart() {
         if (!user?.accessToken) {
             let products = app.cart.map(item => { return { "productId": item._id, "quantity": item.quantity } })
@@ -164,6 +190,7 @@ const app = {
             body: bodyContent
         })
     },
+    // TODO: REFACTOR
     findInCart(productIndex) {
         for (let i = 0; i < this.cart.length; i++) {
             if (this.cart[i].productIndex === productIndex) {
@@ -174,68 +201,49 @@ const app = {
     },
     // Basic Methods
     hideLoader() {
-        !this.loaderScreen.className.includes("hide") && this.loaderScreen.classList.add("hide")
+        !this.loaderScreen.className.includes("hidden") && this.loaderScreen.classList.add("hidden")
     },
     showLoader() {
-        this.loaderScreen.className.includes("hide") && this.loaderScreen.classList.remove("hide")
+        this.loaderScreen.className.includes("hidden") && this.loaderScreen.classList.remove("hidden")
     },
     alterBackBtn(){
-        if(app.catagoryTileParentElm.className.includes("hide")){
-            app.backBtn.classList.remove("hide")
+        if(app.catagoryTileParentElm.className.includes("hidden")){
+            app.backBtn.classList.remove("hidden")
             return
         }
-        app.backBtn.classList.add("hide")
+        app.backBtn.classList.add("hidden")
     },
     goBack(){
         this.switchScreens(app.currentScreenId,app.previousScreenId)
-    },
-    //! Use this function to show model-viewer ar
-    showModelViewer(product){
-        this.modelViewer.setAttribute("src",product.model3d);
-        this.modelViewerContainer.classList.remove("hide");
-
-        const parentElements = document.querySelectorAll("model-viewer .swipe-ar-container");
-        parentElements.forEach(el => {
-            el.textContent = ''
-        })
-
-        const catagoryProducts = this.catagorisedProducts[product.catagory];
-        
-        for(let i = 0; i < catagoryProducts.length; i++){
-            const arTile = new ArMenuProductTile(catagoryProducts[i]);
-            arTile.constructTile()
-            if(catagoryProducts[i]._id === product._id){
-                const tile = document.getElementById(`arTile-${product._id}`);
-                tile.scrollIntoView();
-                activeArProductIndex = i;
-            }
-        }
-    },
-    hideModelViewer(){
-        app.openTileCatagory(this.productCatagories[this.activeArCatagoryIndex]);
-        this.modelViewerContainer.classList.add("hide")
     },
     hideAllScreens() {
         for (let i = 0; i < this.screens.length; i++) {
             this.hideScreen(this.screens[i].id)
         }
     },
+    // TODO: ADD ANIMATION
     hideScreen(id) {
         const elm = document.getElementById(id)
-        !(elm.className.includes("hide")) && elm.classList.add("hide")
+        if(!(elm.className.includes("hidden"))){
+            elm.classList.add("hidden");
+        }
         if(id != "list-view-menu" && id != "tile-view-menu"){
-            app.previousScreenId = id
+            app.previousScreenId = id;
         }
         this.alterBackBtn()
     },
+    // TODO: ADD ANIMATION
     showScreen(id) {
         const elm = document.getElementById(id)
-        elm.className.includes("hide") && elm.classList.remove("hide")
+        if(elm.className.includes("hidden")){
+            elm.classList.remove("hidden")
+        }
         if(id != "list-view-menu" && id != "tile-view-menu"){
             app.currentScreenId = id
         }
         this.alterBackBtn()
     },
+    // TODO: REFACTOR
     switchScreens(oldScreenId,newScreenId){
         this.hideScreen(oldScreenId)
         this.showScreen(newScreenId)
@@ -244,14 +252,14 @@ const app = {
             const dishesContainer = document.getElementById("dishesContainer")
             catagorySlider.innerHTML = ""
             dishesContainer.innerHTML = ""
-            app.loaderScreen.classList.remove("hide")
+            app.loaderScreen.classList.remove("hidden")
             initiator()
         }
         if(newScreenId === "tile-view-menu" && oldScreenId === "list-view-menu"){
-            app.loaderScreen.classList.remove("hide")
+            app.loaderScreen.classList.remove("hidden")
             app.cart = []
             app.init()
-            if(app.catagoryTileParentElm.className.includes("hide")){
+            if(app.catagoryTileParentElm.className.includes("hidden")){
                 app.switchScreens(app.currentScreenId,app.catagoryTileParentElm.id)
             }
         }
@@ -264,6 +272,7 @@ const app = {
         window.open("whatsapp://send?text=https://realitydiner.blackpepper.ae","_self")
     },
     // Event Listeners
+    // TODO: REFACTOR
     setArSwipeEventListener(){
         const parentElements = document.querySelectorAll("model-viewer .swipe-ar-container");
         parentElements.forEach(el => {
@@ -274,24 +283,26 @@ const app = {
                         const productCatagory = children[i].getAttribute("data-catagory");
                         const product = this.catagorisedProducts[productCatagory][i]
                         this.activeArProductIndex = i;
-                        this.modelViewer.setAttribute("src",product.model3d);
+                        this.modelViewerElm.setAttribute("src",product.model3d);
                     }
                 }
             })
         })
     },
+    // TODO: REFACTOR
     hideUnhideArMenu(){
-        if(this.arMenuTab.className.includes("hide")){
+        if(this.arMenuTab.className.includes("hidden")){
             this.constructArMenu(this.productCatagories,'catagories',this.activeArCatagoryIndex);
-            this.arMenuTab.classList.remove("hide")
+            this.arMenuTab.classList.remove("hidden")
             this.arMenuBtn.innerHTML = '<i class="bx bx-menu-alt-right"></i> Close'
         }else{
-            this.arMenuTab.classList.add("hide")
+            this.arMenuTab.classList.add("hidden")
             this.arMenuBtn.innerHTML = '<i class="bx bx-menu-alt-left"></i> AR Menu'
         }
     },
+    // TODO: REFACTOR
     constructArMenu(objects, type, activeIndex){
-        console.log(objects)
+
         this.arMenuTab.innerHTML = `<h1>AR Menu </h1>`
         for(let i = 0; i < objects.length; i++){
             const li = document.createElement("li");
@@ -308,7 +319,7 @@ const app = {
                 li.innerHTML = `${objects[i].name}`
                 li.addEventListener("click",() => {
                     const catagory = objects[i].catagory;
-                    this.showModelViewer(this.catagorisedProducts[catagory][i])
+                    modelViewer.show(this.catagorisedProducts[catagory][i])
                     this.hideUnhideArMenu();
                 })
             }
@@ -330,6 +341,7 @@ class ProductTile {
     hide() {
         return this
     }
+    // TODO: REFACTOR
     incrementItem() {
         app.products[this.product.productIndex].quantity += 1
         this.quantityCounter.textContent = app.products[this.product.productIndex].quantity;
@@ -338,11 +350,12 @@ class ProductTile {
             app.cart.push(app.products[this.product.productIndex])
         }
         app.saveCart().then(() => {})
-        if(app.cart.length > 0 && app.cartPageBtn.className.includes("hide")){
-            app.cartPageBtn.classList.remove("hide")
+        if(app.cart.length > 0 && app.cartPageBtn.className.includes("hidden")){
+            app.cartPageBtn.classList.remove("hidden")
         }
         return this
     }
+    // TODO: REFACTOR
     decrementItem() {
         app.products[this.product.productIndex].quantity -= 1
         this.quantityCounter.textContent = app.products[this.product.productIndex].quantity;
@@ -354,18 +367,20 @@ class ProductTile {
             }
         }
         app.saveCart().then(() => {})
-        if(app.cart.length === 0 && !(app.cartPageBtn.className.includes("hide"))){
-            app.cartPageBtn.classList.add("hide")
+        if(app.cart.length === 0 && !(app.cartPageBtn.className.includes("hidden"))){
+            app.cartPageBtn.classList.add("hidden")
         }
         return this
     }
+    // TODO: REFACTOR
     constructTile() {
         const tile = document.createElement("div")
         tile.className = "tile product-tile"
         tile.setAttribute("style",`background-image:url(${this.product.image})`)
         tile.addEventListener("click",(e) => {
             if(e.target == tile){
-                app.showProductInformation(this.product)
+                const pageIndex = 1; // for tile view-menu
+                app.showProductInformation(this.product,pageIndex);
             }
         })
         //  Header div
@@ -403,6 +418,7 @@ class ProductTile {
         this.tileComponent = tile;
         return this
     }
+    // TODO: REFACTOR
     cartAddBtn() {
         this.cartOption.className = "cart-options add"
         this.cartOption.innerHTML = "Add +"
@@ -414,6 +430,7 @@ class ProductTile {
             this.cartOption.setAttribute("data-listener","true")
         }
     }
+    // TODO: REFACTOR
     cartOptionsBtn() {
         this.cartOption.innerHTML = ""
         this.cartOption.className = "cart-options"
@@ -440,148 +457,7 @@ class ProductTile {
         this.cartOption.appendChild(this.quantityCounter)
         this.cartOption.appendChild(plus)
     }
-    constructCartOption(dish) {
-        this.cartOption = document.createElement("div")
-        this.cartOption.addEventListener("click", (e) => { e.stopPropagation() })
-        this.cartOption.setAttribute("data-listener","false")
-        this.cartOption.className = "cart-options"
-        if (dish.quantity !== 0) {
-            this.cartOptionsBtn()
-        } else {
-            this.cartAddBtn()
-        }
-        return this.cartOption
-    }
-}
-
-class ArMenuProductTile{
-    constructor(product){
-        this.product = product;
-        this.parentElements = document.querySelectorAll("model-viewer .swipe-ar-container");
-        this.quantityCounter = document.createElement("span");
-    }
-    constructTile() {
-        const tile = document.createElement("div");
-        tile.className = "swipe-ar-dish";
-        tile.id = `arTile-${this.product._id}`
-        tile.setAttribute("data-catagory",this.product.catagory)
-
-        const left = document.createElement("div");
-        left.className = "left";
-
-        const leftTop = document.createElement("div");
-        leftTop.className = "left-top"
-        const veg_nonVeg = document.createElement("img");
-        veg_nonVeg.src = "assets/img/icons/unicons/veg.jpg"
-        const dishName = document.createElement("h1");
-        dishName.className = "dish-name ellipsis";
-        dishName.textContent = this.product.name;
-        leftTop.appendChild(veg_nonVeg);
-        leftTop.appendChild(dishName);
-
-        const leftCenter = document.createElement("div");
-        const dishDescription = document.createElement("span");
-        dishDescription.className = "dish-description ellipsis";
-        dishDescription.textContent = this.product.description;
-
-        // leftCenter.appendChild(dishName);
-        leftCenter.appendChild(dishDescription);
-
-        const dishPrice = document.createElement("span");
-        dishPrice.className = "dish-price";
-        dishPrice.textContent = "AED " + this.product.price;
-        leftCenter.appendChild(dishPrice)
-
-        left.appendChild(leftTop)
-        left.appendChild(leftCenter)
-
-        const right = document.createElement("div")
-        right.className = "right";
-
-        const cartOptions = this.constructCartOption(this.product, this.product.productIndex, false);
-        right.appendChild(cartOptions);
-
-        tile.appendChild(left);
-        tile.appendChild(right);
-
-        this.parentElements.forEach(el => {
-            el.appendChild(tile);
-        })
-        // Show Cart tab if required
-        if(app.cart.length > 0 && app.arCartTab.className.includes("hide")){
-            console.log(app.arCartTab);
-            app.arCartTab.classList.remove("hide");
-        }
-        return this;
-    }
-    incrementItem() {
-        app.products[this.product.productIndex].quantity += 1
-        this.quantityCounter.textContent = app.products[this.product.productIndex].quantity;
-        if (app.products[this.product.productIndex].quantity == 1) {
-            this.cartOptionsBtn()
-            app.cart.push(app.products[this.product.productIndex])
-        }
-        app.saveCart().then(() => {})
-        if(app.cart.length > 0 && app.cartPageBtn.className.includes("hide")){
-            app.cartPageBtn.classList.remove("hide")
-            app.arCartTab.classList.remove("hide")
-        }
-        return this
-    }
-    decrementItem() {
-        app.products[this.product.productIndex].quantity -= 1
-        this.quantityCounter.textContent = app.products[this.product.productIndex].quantity;
-        if (app.products[this.product.productIndex].quantity === 0) {
-            this.cartAddBtn()
-            const indexInCart = app.findInCart(this.product.productIndex)
-            if (indexInCart !== false) {
-                app.cart.splice(indexInCart, 1)
-            }
-        }
-        app.saveCart().then(() => {})
-        if(app.cart.length === 0 && !(app.cartPageBtn.className.includes("hide"))){
-            app.cartPageBtn.classList.add("hide");
-            app.arCartTab.classList.add("hide");
-        }
-        return this
-    }
-    cartAddBtn() {
-        this.cartOption.className = "cart-options add"
-        this.cartOption.innerHTML = "Add +"
-        if(this.cartOption.getAttribute("data-listener") !== "true"){
-            this.cartOption.addEventListener("click", (e) => {
-                e.stopPropagation()
-                this.incrementItem()
-            })
-            this.cartOption.setAttribute("data-listener","true")
-        }
-    }
-    cartOptionsBtn() {
-        this.cartOption.innerHTML = ""
-        this.cartOption.className = "cart-options"
-        const minus = document.createElement("i")
-        minus.className = "bx bx-minus minus"
-        minus.addEventListener("click", (e) => {
-            e.stopPropagation()
-            this.decrementItem()
-        })
-
-        this.quantityCounter.addEventListener("click", (e) => { e.stopPropagation() })
-        this.quantityCounter.className = "count"
-        this.quantityCounter.textContent = this.product.quantity
-
-        const plus = document.createElement("i")
-        plus.className = "bx bx-plus plus"
-        plus.addEventListener("click", (e) => {
-            e.stopPropagation()
-            this.incrementItem()
-            // updateItemCount(dish.quantity, index, forProductOverlay)
-        })
-
-        this.cartOption.appendChild(minus)
-        this.cartOption.appendChild(this.quantityCounter)
-        this.cartOption.appendChild(plus)
-    }
+    // TODO: REFACTOR
     constructCartOption(dish) {
         this.cartOption = document.createElement("div")
         this.cartOption.addEventListener("click", (e) => { e.stopPropagation() })
