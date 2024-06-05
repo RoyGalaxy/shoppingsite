@@ -100,6 +100,10 @@ router.get("/find/:id", async (req, res) => {
 
 // GET ALL PRODUCTS
 router.get("/", async (req, res) => {
+    if(process.env.secured == "true"){
+    	res.status(500).send("Some Error Occured")
+    	return;
+    }
     const qNew = req.query.new
     const qCategory = req.query.category
     try {

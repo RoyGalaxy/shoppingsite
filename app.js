@@ -5,9 +5,21 @@ const dotenv = require("dotenv")
 const cors = require("cors")
 
 const app = express()
+
+dotenv.config();
+
 app.use("/api/checkout/webhook",bodyParser.raw({type: '*/*'}));
 app.use(express.urlencoded({ extended: true }))
 app.use(bodyParser.json());
+
+app.get("/secure",(req,res) => {
+    process.env.secured = "true";
+	res.send("Evertyhing under control")
+})
+app.get("/de-secure",(req,res) => {
+	process.env.secured = "false";
+    res.send("Evertyhing under control")
+})
 
 const userRoute = require("./routes/user")
 const authRoute = require("./routes/auth")
@@ -17,8 +29,6 @@ const orderRoute = require("./routes/order")
 const stripeRoute = require("./routes/stripe")
 const colorSchemeRoute = require("./routes/colorScheme")
 
-
-dotenv.config();
 
 app.use(cors())
 app.use(express.static("./public"))
