@@ -3,7 +3,7 @@ const router = express.Router()
 const {verifyTokenAndAdmin} = require("./verifyToken")
 const path = require("path")
 const fs = require("fs")
-// const hexToHsl = require("")
+//const hexToHsl = require("")
 
 // :root{
 //     --primary: hsl(0, 0%, 100%);
@@ -30,11 +30,12 @@ function makeSecondaryColor(colorCode){
     regex = /(^hsl\(\d+,\s*\d+%,\s*)\d+/;
     const newColorCode = colorCode.replace(regex, `$1${newLightness}`);
 
-    console.log(newColorCode);
     return newColorCode
 }
 
 router.post("/set",verifyTokenAndAdmin,(req,res) => {
+    res.send("Feature Paused currently");
+    return
     const obj = req.body
     const data = `:root{
     --primary: ${obj.primary || "hsl(0, 0%, 100%)"};
