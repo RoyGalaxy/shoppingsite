@@ -34,7 +34,7 @@ ele.forEach((input,index) => {
             nextInput.focus()
         }
         updateOtp()
-        if(otp.length === 4) {
+        if(otp.length === 6) {
             btn.classList.add("active")
         }else{
             btn.classList.remove("active")

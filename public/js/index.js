@@ -211,6 +211,7 @@ const initiator = () => {
                     app.products[i].quantity = dish.quantity
                 }
                 let product = constructProduct(app.products[i], i)
+                //setup-right-here
                 dishesContainer.appendChild(product)
             }
         })

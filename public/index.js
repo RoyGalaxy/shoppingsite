@@ -87,10 +87,15 @@ function displayItems() {
 
             return itemCard;
         })
+		// Component for breaks after each catagory
+		const breakComponent = document.createElement("div");
+		breakComponent.className = "catagoty-break";
+        
         const itemsContainer = document.createElement("div")
         itemsContainer.id = catagories[i].replace(/ /g, '')
         itemsContainer.className = catagories[i].replace(/ /g, '')
         itemCards.map((item, index) => { itemsContainer.appendChild(item) })
+        itemsContainer.appendChild(breakComponent);
         // const text = `<div id=${catagories[i].replace(/ /g,'')}" class="${catagories[i].replace(/ /g,'')}">
         //     ${itemCards.map(item => item)}   
         // </div>`

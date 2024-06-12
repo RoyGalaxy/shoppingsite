@@ -9,6 +9,7 @@ const app = express()
 dotenv.config();
 
 app.use("/api/checkout/webhook",bodyParser.raw({type: '*/*'}));
+app.use("/api/whatsapp/webhook",bodyParser.raw({type: '*/*'}));
 app.use(express.urlencoded({ extended: true }))
 app.use(bodyParser.json());
 

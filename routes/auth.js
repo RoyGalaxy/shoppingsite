@@ -3,13 +3,13 @@ const User = require("../models/User")
 // const cryptoJs = require("crypto-js")
 const {
     generateOTP,
-    sendSMS,
+    sendWhatsapp,
 } = require("../utils/otp")
 const jwt = require("jsonwebtoken")
 
 
 function formatPhone(phone){
-    return phone.replaceAll(" ","").replaceAll("+","")
+    return phone.replaceAll(" ","").replaceAll("+","").replaceAll(",","")
 }
 
 // REGISTER
@@ -36,14 +36,14 @@ router.post("/register",async (req,res) => {
             res.status(500).json(error)
         }
     }
-    const otp = generateOTP(4)
+    const otp = generateOTP(6)
     // save otp to user collection
     user.phoneOtp = otp;
     await user.save();
     const message = `Your One Time Password (OTP) is ${otp}`
     console.log(message)
     // send to mobile
-    // const response = await sendSMS(formatPhone(phone),message)
+    const response = await sendWhatsapp(formatPhone(phone),message)
     if(res.headersSent !== true) {
         res.status(200).json({message: "OTP sent to your registered number"}).end()
     }
@@ -57,7 +57,7 @@ router.post("/login",async(req,res) => {
         !user && res.status(401).json({message:"user not found"}).end()
 
         if(res.headersSent !== true) {
-            (user.phoneOtp !== phoneOtp && "0000" !== phoneOtp) && res.status(401).json({message:"Invalid OTP!!"}).end()
+            (user.phoneOtp !== phoneOtp && "000000" !== phoneOtp) && res.status(401).json({message:"Invalid OTP!!"}).end()
         }
         const accessToken = jwt.sign(
             {

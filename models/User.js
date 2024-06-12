@@ -4,10 +4,7 @@ const UserSchema = new mongoose.Schema(
     {
         phone: {type: String,required: true,trim: true,unique: true},
         phoneOtp:{type: String},
-        isAdmin:{
-            type:Boolean,
-            default: false
-        }
+        role: { type: String, enum: ['user', 'restaurant_owner', 'super_admin'], required: true, default: 'user'}
     },
     {timestamps:true}
 )

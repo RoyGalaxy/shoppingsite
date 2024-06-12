@@ -45,9 +45,9 @@ const updateOrder = async(orderId,update) => {
 
 const setColorScheme = async () => {
     const data = {
-        primary: primaryCP.selectedColor,
-        secondary: secondaryCP.selectedColor,
-        primaryText: textCp.selectedColor
+        primary: primaryCP.selectedColor || "#ffffff",
+        secondary: secondaryCP.selectedColor || "#fa7e70",
+        primaryText: textCP.selectedColor || "#111111"
     }
     const user = JSON.parse(localStorage.user)
     const res = await fetch(`/api/colors/set`,

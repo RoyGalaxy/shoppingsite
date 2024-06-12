@@ -1,15 +1,11 @@
 .box {
-    width: 80%;
-    margin-left: calc(10% - 0.5rem);
+    width: 90%;
+    margin: 0 auto;
 }
 /* .custom-btn{
   width: 70%;
   margin: 3rem auto 1rem;
 } */
-.otp-input{
-    display: flex;
-    justify-content: center;
-}
 .title{
     text-align: center;
     margin-left: 1rem;
@@ -40,20 +36,25 @@ label {
     padding-top: 20px;
 }
 .otp-input{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
     width: 100%;
     height: auto;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 .otp-input input{
     border: none;
-    max-width: 20%;
-    height: 60px;
+    max-width: 14%;
+    height: 55px;
     text-align: center;
+    margin-right: 10px;
     border-radius: 5px;
     background-color: #f0f0f0;
     font-size: 25px;
+}
+.otp-input input:last-child{
+    margin-right: 0;
 }
 .otp-input input::-webkit-inner-spin-button,
 .otp-input input::-webkit-outer-spin-button{

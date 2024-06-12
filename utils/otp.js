@@ -1,6 +1,4 @@
 const generateOTP = (otp_length) => {
-    // Declare a digits variable
-    // which stores all digits
     var digits = "0123456789";
     let OTP = "";
     for (let i = 0; i < otp_length; i++) {
@@ -9,33 +7,39 @@ const generateOTP = (otp_length) => {
     return OTP;
 };
 
-async function sendSMS(phone,message){
-    const body = {
-        MobileNumbers: [`${phone}`],
-        Message: message,
-        SenderName: "ToBePrecise",
-        ReportRequired: true,
-    }
+async function sendWhatsapp(phone, message) {
 
-    const res = await fetch("https://restapi.tobeprecisesms.com/api/SendSMS/SingleSMS/?Username=testsms&Password=TSpc@9710",{
-        method: "POST",
+    const response = await fetch('https://graph.facebook.com/v19.0/177232718809404/messages', {
+        method: 'POST',
         headers: {
-            "Content-type": "application/json"
+            'Authorization': 'Bearer EAAO7ZApFTEgwBO5CnBUpIu1dA4Y3jWo9efsjr7E1xTndLTlTbFAuWncOS1pZCVMvoJG2UZAqySpoOktaV0FGrfvOkOZCjBKX1UZCZBYoXzpiZByU0dUhEDl5HxnQWCvxg0mb0I3JVtq1fqPOmhYHx4neeHuwpP1biPkAhzmuexuLAj4QyjtdMQFII2Lk642KjZBuM2pFYrNZACgmAvC0QjOkZD',
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify(body)
+        body: JSON.stringify({
+            "messaging_product": "whatsapp",
+            "to": phone,
+            "type": "template",
+            "template": {
+                "name": "otp",
+                "language": {
+                    "code": "en_US"
+                }
+            }
+        })
     })
-    const jsonRes = await res.json()
-    const data = await jsonRes
+    const data = await response.json();
+    console.log(data);
+
     return data
 }
 
-async function getCredit(){
-    try{
+async function getCredit() {
+    try {
         const res = await fetch("https://restapi.tobeprecisesms.com/api/Credits/GetBalance/?Username=testsms&Password=TSpc@9710")
         const jsonRes = await res.json()
         const data = await jsonRes
         return data
-    }catch(err){
+    } catch (err) {
         console.log(err)
         return false
     }
@@ -43,6 +47,6 @@ async function getCredit(){
 
 module.exports = {
     generateOTP,
-    sendSMS,
+    sendWhatsapp,
     getCredit
 }
