@@ -16,9 +16,10 @@ function constructProduct(dish) {
     dishContainer.className = "dish flex";
     dishContainer.id = dish._id;
     dishContainer.addEventListener("click", (e) => {
-        // toggleProduct(dish, index, cartOption);
+        // toggleProduct(dish, dish.productIndex, cartOption);
         // productOverlay.classList.toggle("hidden");
         const pageIndex = 0; // for list view menu
+        // TODO: fix bugs
         app.showProductInformation(dish,pageIndex);
     })
 
@@ -100,8 +101,6 @@ function constructCartOptions(dish, forProductOverlay) {
         cartOption.className = "cart-options add"
         cartOption.textContent = "Add +"
         cartOption.addEventListener("click", (e) => {
-            console.log("Event Running")
-            e.stopPropagation()
             dish.quantity = incrementItem(dish.productIndex)
             toggleCartOption(dish, forProductOverlay)
         })
@@ -168,14 +167,25 @@ function toggleProduct(dish) {
 function incrementItem(productIndex) {
     // const product = findProductById(id)
     app.products[productIndex].quantity += 1
-    saveCart()
+    if (app.products[productIndex].quantity == 1) {
+        app.cart.push(app.products[productIndex])
+    }
+    app.saveCart().then(() => {});
     return app.products[productIndex].quantity;
 }
 
 function decrementItem(productIndex) {
     // const product = findProductById(id)
     app.products[productIndex].quantity -= 1
-    saveCart()
+    if (app.products[productIndex].quantity <= 0) {
+        // Double check for negative value
+        app.products[productIndex].quantity = 0;
+        const indexInCart = app.findInCart(app.products[productIndex]._id)
+        if (indexInCart !== false) {
+            app.cart.splice(indexInCart, 1)
+        }
+    }
+    app.saveCart().then(() => {})
     return app.products[productIndex].quantity
 }
 
@@ -185,7 +195,7 @@ function scrollToElm(elm) {
 }
 
 function toggleCartBtn() {
-    if (cart.products?.length == 0 && !cartBtn.className.includes("hidden") || cart.products?.length >= 1 && cartBtn.className.includes("hidden")) {
+    if (app.cart.length == 0 && !cartBtn.className.includes("hidden") || app.cart.length >= 1 && cartBtn.className.includes("hidden")) {
         cartBtn.classList.toggle("hidden")
     }
 }
@@ -196,8 +206,20 @@ closeProductOverlayBtn.addEventListener("click", () => {
 
 // Initiator
 const initiator = () => {
-    fetchCart().then(() => {
+    // Most work done already by app.init();
+    if(app.cart.length === 0 && !(app.cartPageBtn.className.includes("hidden"))){
+        cartBtn.classList.toggle("hidden")
+    }
+    toggleCartBtn()
+    displayCatagorySlider(app.productCatagories)
+    for(product of app.products){
+        let product_elm = constructProduct(product);
+        dishesContainer.appendChild(product_elm)
+    }
+    app.hideLoader()
 
+    return;
+    fetchCart().then(() => {
         toggleCartBtn()
         // Display products from Datatbase
         fetchProducts().then(() => {

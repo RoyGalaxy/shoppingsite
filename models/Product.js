@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 
 const OrderSchema = new mongoose.Schema(
     {
-        restaurantId: { type: Schema.Types.ObjectId, ref: 'Restaurant', required: true },
+        restaurantId: { type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant', required: true },
         name: { type: String, required: true, unique: true },
         arabicName: { type: String, required: true, unique: true },
         description: { type: String, default: "" },

@@ -16,6 +16,8 @@
     <!-- Model viewer -->
     <!-- <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js"></script> -->
     <!-- Console -->
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
     
 
     <script src="js/script.js" ></script>
@@ -41,29 +43,14 @@
             <div class="left">
                 <i class='bx bxl-microsoft shadow' onclick ="app.switchScreens('list-view-menu','tile-view-menu')"></i>
             </div>
+            <div class="center">
+                <h2>Black Pepper</h2>
+            </div>
             <div class="right">
-                <!-- <div class="search-box shadow">
-                    <i class='bx bx-search-alt-2'></i>
-                    <input type="text" class="search" id="search" placeholder="Search..." autocomplete="off">
-                </div> -->
                 <i class='bx bx-share-alt share-btn shadow' onclick="app.showScreen('sharePage')"></i>
             </div>
         </header>
-        <div class="box shadow">
-            <div class="restraunt-info flex">
-                <h2 class="restraunt-name" id="restraunt_name">Black Pepper</h2>
-                <!-- <div class="rating flex">4.5 <i class='bx bxs-star'></i></div> -->
-            </div>
-            <div class="offers flex hidden">
-                <div class="offer flex">
-                    <i class='bx bxs-offer'></i>
-                    <div class="box offer-box">
-                        <span class="offer-title">50% OFF up to $100</span>
-                        <span class="offer-description">use code WELCOME50</span>
-                    </div>
-                </div>                
-            </div>
-        </div>
+        
         <div class="box category-slider shadow no-scrollbar">
             <div class="catagory-slider-inner" id="catagorySlider">
 
@@ -125,25 +112,18 @@
     <!-- Tiles view Menu starts here -->
 
     <div class="container" id="tile-view-menu">
-        <header class="flex">
+        <header class="flex header">
             <div class="left">
                 <i class='bx bx-list-ul shadow' onclick ="app.switchScreens('tile-view-menu','list-view-menu')"></i>
                 <i class='bx bx-chevron-left back-btn hidden shadow' id="backBtn" onclick="app.goBack()"></i>
             </div>
+            <div class="center">
+                <h2>Black Pepper</h2>
+            </div>
             <div class="right">
-                <!-- <div class="search-box shadow">
-                    <i class='bx bx-search-alt-2'></i>
-                    <input type="text" class="search" id="search" placeholder="Search..." autocomplete="off">
-                </div> -->
                 <i class='bx bx-share-alt share-btn shadow' onclick="app.showScreen('sharePage')"></i>
             </div>
         </header>
-        <div class="box shadow">
-            <div class="restraunt-info flex">
-                <h2 class="restraunt-name" id="restraunt_name">Black Pepper</h2>
-                <!-- <div class="rating flex">4.5 <i class='bx bxs-star'></i></div> -->
-            </div>
-        </div>
         <div class="tiles-container" id="tilesContainer">
             <div class="tile-catagories" id="tileCatagories">
                 

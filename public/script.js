@@ -221,7 +221,7 @@ async function saveCart(){
         headers: headersList,
         body: bodyContent        
     });
-    localStorage.cartItems = JSON.stringify(cartItems)
+    localStorage.cart = JSON.stringify(cartItems)
     cartItems = localStorage.cartItems ? JSON.parse(localStorage.cartItems) : []
     
     

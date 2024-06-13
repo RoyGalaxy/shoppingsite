@@ -26,9 +26,10 @@ const app = {
             this.listMenuScreen,
             this.tileMenuScreen,
         ]
+        // Remove Existing tiles when switching screens
         this.catagoryTileParentElm.innerHTML = ""
-        this.fetchProducts().then(() => {
-            this.catagoriseProducts();
+        this.fetchProducts().then((products) => {
+            this.products = products
             this.processProducts();
             this.hideAllScreens();
             this.updateCartFromLocalStorage().then(() => {
@@ -40,7 +41,29 @@ const app = {
             })
         })
     },
+    async fetchProducts() {
+        try {
+            let res = await fetch("/api/products/")
+            let jsonRes = await res.json();
+            let products = await jsonRes;
+            return products;
+        }
+        catch (err) {
+            console.log(err);
+        }
+    },
+    // TODO: REFACTOR
+    catagoriseProducts() {
+        for (let i = 0; i < this.products.length; i++){
+            // Create an array in the object if not already exists then push the product
+            if(this.catagorisedProducts[this.products[i].catagory] === undefined){
+                this.catagorisedProducts[this.products[i].catagory] = []
+            }
+            this.catagorisedProducts[this.products[i].catagory].push(this.products[i])
+        }
+    },
     async processProducts(){
+        this.catagoriseProducts()
         for (let i = 0; i < this.products.length; i++) {
             this.products[i].quantity = 0; // Take this quantity from the cart instead ..
             this.products[i].productIndex = i
@@ -50,23 +73,16 @@ const app = {
         }
     },
     //* REFACTORED CODE 
-    async fetchProducts() {
-        try {
-            let res = await fetch("/api/products/")
-            let jsonRes = await res.json();
-            this.products = await jsonRes;
-        }
-        catch (err) {
-            console.log(err);
-        }
-    },
     fetchFromLocalStorage(data){
-        return JSON.parse(localStorage[data]);
+        if(localStorage[data] !== undefined && localStorage[data] !== null){
+            return JSON.parse(localStorage[data]);
+        }
+        return -1;
     },
     findProductById(id){
         for (let i = 0; i < this.products.length; i++) {
             if (this.products[i]._id === id) {
-                return this.products[i];
+                return i
             }
         }
         return -1;
@@ -74,28 +90,25 @@ const app = {
     // TODO: REFACTOR
     // TODO: FIX THE CART THING IN BOTH FILES
     async updateCartFromLocalStorage(){
-        if(!localStorage.cart){
-            return;
-        }
+        // Reset Cart
+        app.cart = []
         let cart = this.fetchFromLocalStorage('cart');
+        if(cart == -1) return;
+        // update the quantity from cart and set to app.cart
         for (let i = 0; i < cart.length; i++) {
-            let index = this.findProductById(cart[i]._id);
+            let index = this.findProductById(cart[i].productId);
             if(index >= 0){
                 app.products[index].quantity = cart[i].quantity;
-                app.cart.push(app.products[index]);
+                app.cart.push({
+                    productId: app.products[index]._id,
+                    quantity: app.products[index].quantity
+                });
             } 
         }
         if(app.cart.length > 0 && this.cartPageBtn.className.includes("hidden")){
             this.cartPageBtn.classList.remove("hidden")
-        }
-    },
-    // TODO: REFACTOR
-    catagoriseProducts() {
-        for (let i = 0; i < this.products.length; i++){
-            if(this.catagorisedProducts[this.products[i].catagory] === undefined){
-                this.catagorisedProducts[this.products[i].catagory] = []
-            }
-            this.catagorisedProducts[this.products[i].catagory].push(this.products[i])
+        }else if(!this.cartPageBtn.className.includes('hidden') && app.cart.length == 0){
+            this.cartPageBtn.classList.add('hidden')
         }
     },
     // TODO: REFACTOR
@@ -126,7 +139,7 @@ const app = {
         for (let i = 0; i < this.catagorisedProducts[catagory].length; i++) {
             let dish = this.catagorisedProducts[catagory][i]
             for (let j = 0; j < app.cart.length; j++) {
-                if(this.catagorisedProducts[catagory][i]._id === app.cart[j]._id){
+                if(this.catagorisedProducts[catagory][i]._id === app.cart[j].productId){
                     dish.quantity = app.cart[j].quantity
                     break;
                 }
@@ -140,8 +153,8 @@ const app = {
     },
     // TODO: REFACTOR
     showProductInformation(product,pageIndex){
-        this.productInformationPage[pageIndex].classList.remove("hidden");
-        this.productInformationPage[pageIndex].setAttribute("data-indexed",product.productIndex);
+        this.productInformationPage.classList.remove("hidden");
+        this.productInformationPage.setAttribute("data-indexed",product.productIndex);
         const imageElm = document.querySelectorAll(".primary-information")[pageIndex];
         const nameElm = document.querySelectorAll(".primary-information .product-name")[pageIndex];
         const priceElm = document.querySelectorAll(".primary-information .product-price")[pageIndex];
@@ -166,7 +179,7 @@ const app = {
             const tileOptions = app.productTiles[index - app.catagorisedProducts[app.products[index].catagory][0].productIndex].tileOptions
             tileOptions.insertBefore(cartOption,tileOptions.firstChild)
         }
-        app.productInformationPage[pageIndex].classList.add("hidden");
+        app.productInformationPage.classList.add("hidden");
     },
     // TODO: REFACTOR
     async saveCart() {
@@ -190,14 +203,49 @@ const app = {
             body: bodyContent
         })
     },
+    incrementItem(product) {
+        this.products[product.productIndex].quantity += 1
+        this.quantityCounter.textContent = app.products[this.product.productIndex].quantity;
+        if (app.products[this.product.productIndex].quantity == 1) {
+            this.cartOptionsBtn()
+            app.cart.push(app.products[this.product.productIndex])
+        }
+        app.saveCart().then(() => {})
+        if(app.cart.length > 0 && app.cartPageBtn.className.includes("hidden")){
+            app.cartPageBtn.classList.remove("hidden")
+        }
+        return this
+    },
     // TODO: REFACTOR
-    findInCart(productIndex) {
+    decrementItem() {
+        app.products[this.product.productIndex].quantity -= 1
+        // update the qunatity in the UI
+        this.quantityCounter.textContent = app.products[this.product.productIndex].quantity;
+        if (app.products[this.product.productIndex].quantity <= 0) {
+            // Double check for negative value
+            app.products[this.product.productIndex].quantity = 0;
+            this.cartAddBtn()
+            const indexInCart = app.findInCart(this.product._id)
+            console.log(indexInCart)
+            if (indexInCart >= 0) {
+                console.log('this one')
+                app.cart.splice(indexInCart, 1)
+            }
+        }
+        app.saveCart().then(() => {})
+        if(app.cart.length === 0 && !(app.cartPageBtn.className.includes("hidden"))){
+            app.cartPageBtn.classList.add("hidden")
+        }
+        return this
+    },
+    // TODO: REFACTOR
+    findInCart(productId) {
         for (let i = 0; i < this.cart.length; i++) {
-            if (this.cart[i].productIndex === productIndex) {
+            if (this.cart[i]._id === productId || this.cart[i].productId === productId) {
                 return i
             }
         }
-        return false;
+        return -1;
     },
     // Basic Methods
     hideLoader() {
@@ -245,8 +293,6 @@ const app = {
     },
     // TODO: REFACTOR
     switchScreens(oldScreenId,newScreenId){
-        this.hideScreen(oldScreenId)
-        this.showScreen(newScreenId)
         if(newScreenId === "list-view-menu" && oldScreenId === "tile-view-menu"){
             const catagorySlider = document.getElementById("catagorySlider")
             const dishesContainer = document.getElementById("dishesContainer")
@@ -257,12 +303,13 @@ const app = {
         }
         if(newScreenId === "tile-view-menu" && oldScreenId === "list-view-menu"){
             app.loaderScreen.classList.remove("hidden")
-            app.cart = []
             app.init()
             if(app.catagoryTileParentElm.className.includes("hidden")){
                 app.switchScreens(app.currentScreenId,app.catagoryTileParentElm.id)
             }
         }
+        this.hideScreen(oldScreenId)
+        this.showScreen(newScreenId)
     },
     copyToClipboard(){
         navigator.clipboard.writeText("https://realitydiner.blackpepper.ae")
@@ -358,12 +405,16 @@ class ProductTile {
     // TODO: REFACTOR
     decrementItem() {
         app.products[this.product.productIndex].quantity -= 1
+        // update the qunatity in the UI
         this.quantityCounter.textContent = app.products[this.product.productIndex].quantity;
-        if (app.products[this.product.productIndex].quantity === 0) {
+        if (app.products[this.product.productIndex].quantity <= 0) {
+            // Double check for negative value
+            app.products[this.product.productIndex].quantity = 0;
             this.cartAddBtn()
-            const indexInCart = app.findInCart(this.product.productIndex)
+            const indexInCart = app.findInCart(this.product._id)
             if (indexInCart !== false) {
                 app.cart.splice(indexInCart, 1)
+                console.table(indexInCart, app.cart)
             }
         }
         app.saveCart().then(() => {})
@@ -379,8 +430,8 @@ class ProductTile {
         tile.setAttribute("style",`background-image:url(${this.product.image})`)
         tile.addEventListener("click",(e) => {
             if(e.target == tile){
-                const pageIndex = 1; // for tile view-menu
-                app.showProductInformation(this.product,pageIndex);
+                // const pageIndex = 1; // for tile view-menu
+                // app.showProductInformation(this.product,pageIndex);
             }
         })
         //  Header div

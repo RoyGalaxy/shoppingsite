@@ -2,7 +2,7 @@ const currencySymbol = "AED"
 const backBtns = document.querySelectorAll(".back-btn")
 let loader;
 let user = localStorage.user ? JSON.parse(localStorage.user) : {}
-let cart = localStorage.cart ? { products: JSON.parse(localStorage.cart) } : {}
+let cart = localStorage.cart ? { products: JSON.parse(localStorage.cart) } : { }
 let dishes = []
 const deliveryCharge = 1
 
@@ -50,6 +50,7 @@ async function fetchCart(fromLoginPage) {
                 const data = await jsonRes
                 // cart = (data != undefined) ? data : {products: []}
                 cart = data || await createCart()
+                localStorage.cart = cart;
             } catch (e) {
                 console.log(e)
             }
@@ -99,12 +100,11 @@ async function saveCart(fromCartPage) {
     if (!fromCartPage) {
         cart.products = dishes.filter(dish => dish.quantity >= 1)
     }
-    if (!user?.accessToken) {
-        let products = cart.products.map(item => { return { "productId": item._id, "quantity": item.quantity } })
-        localStorage.cart = JSON.stringify(products)
+    let products = cart.products.map(item => { return { "productId": item._id, "quantity": item.quantity } })
+    localStorage.cart = JSON.stringify(products)
+    if (!user.accessToken) {
         return
     }
-    localStorage.cart = JSON.stringify(cart.products)
     let headersList = {
         "Accept": "*/*",
         "token": `Bearer ${user.accessToken}`,
@@ -120,6 +120,7 @@ async function saveCart(fromCartPage) {
     })
     const jsonRes = await res.json()
     const data = await jsonRes
+    return data;
 }
 
 function findItemInCart(id) {
