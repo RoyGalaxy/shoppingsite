@@ -7,8 +7,8 @@ const app = {
     catagoryTileParentElm: document.getElementById("tileCatagories"),
     modelViewerContainer: document.getElementById("model-viewer-container"),
     modelViewerElm: document.querySelector(".popup-3d-model-container model-viewer"),
-    // productInformationPages: document.querySelectorAll(".product-information-page"),
-    productInformationPage: document.querySelector(".product-information-page"),
+    productInformationPages: document.querySelectorAll(".product-information-page"),
+    // productInformationPage: document.querySelector(".product-information-page"),
     cartPageBtn: document.querySelector("#tile-view-menu .cart-btn"),
     backBtn: document.getElementById("backBtn"),
     arMenuBtn: document.getElementById("ar-menu-btn"),
@@ -153,13 +153,14 @@ const app = {
     },
     // TODO: REFACTOR
     showProductInformation(product,pageIndex){
-        this.productInformationPage.classList.remove("hidden");
-        this.productInformationPage.setAttribute("data-indexed",product.productIndex);
+        this.productInformationPages[pageIndex].classList.remove("hidden");
+        this.productInformationPages[pageIndex].setAttribute("data-indexed",product.productIndex);
         const imageElm = document.querySelectorAll(".primary-information")[pageIndex];
         const nameElm = document.querySelectorAll(".primary-information .product-name")[pageIndex];
-        const priceElm = document.querySelectorAll(".primary-information .product-price")[pageIndex];
+        const priceElm = document.querySelectorAll(".other-information .product-price")[pageIndex];
         const descriptionElm = document.querySelectorAll(".other-information .product-description")[pageIndex];
         const optionElm = document.querySelectorAll(".other-information .product-options")[pageIndex];
+        const arBtn = document.querySelectorAll(".primary-information .ar-launch-button")[pageIndex];
 
         imageElm.style.backgroundImage = `url(${product.image})`;
         nameElm.textContent = product.name;
@@ -167,19 +168,24 @@ const app = {
         descriptionElm.innerHTML = "<i class='bx bx-info-circle'></i> " + product.description;
         if(pageIndex === 1){
             optionElm.appendChild(app.productTiles[product.productIndex- app.catagorisedProducts[product.catagory][0].productIndex].cartOption);
-        }else{
-            optionElm.appendChild(constructCartOptions(product,false));
+        }else{            
+            // reset pre-existing buttons
+            optionElm.innerHTML = "";
+            optionElm.appendChild(constructCartOptions(product,true));
         }
+        arBtn.addEventListener('click', () => {
+            modelViewer.show(product);
+        })
     },
     // TODO: REFACTOR
     hideProductInformation(pageIndex){
         if(pageIndex === 1){
-            const index = this.productInformationPage[pageIndex].getAttribute("data-indexed")
+            const index = this.productInformationPages[pageIndex].getAttribute("data-indexed")
             const cartOption = app.productTiles[index - app.catagorisedProducts[app.products[index].catagory][0].productIndex].cartOption
             const tileOptions = app.productTiles[index - app.catagorisedProducts[app.products[index].catagory][0].productIndex].tileOptions
             tileOptions.insertBefore(cartOption,tileOptions.firstChild)
         }
-        app.productInformationPage.classList.add("hidden");
+        app.productInformationPages[pageIndex].classList.add("hidden");
     },
     // TODO: REFACTOR
     async saveCart() {
@@ -202,41 +208,6 @@ const app = {
             headers: headersList,
             body: bodyContent
         })
-    },
-    incrementItem(product) {
-        this.products[product.productIndex].quantity += 1
-        this.quantityCounter.textContent = app.products[this.product.productIndex].quantity;
-        if (app.products[this.product.productIndex].quantity == 1) {
-            this.cartOptionsBtn()
-            app.cart.push(app.products[this.product.productIndex])
-        }
-        app.saveCart().then(() => {})
-        if(app.cart.length > 0 && app.cartPageBtn.className.includes("hidden")){
-            app.cartPageBtn.classList.remove("hidden")
-        }
-        return this
-    },
-    // TODO: REFACTOR
-    decrementItem() {
-        app.products[this.product.productIndex].quantity -= 1
-        // update the qunatity in the UI
-        this.quantityCounter.textContent = app.products[this.product.productIndex].quantity;
-        if (app.products[this.product.productIndex].quantity <= 0) {
-            // Double check for negative value
-            app.products[this.product.productIndex].quantity = 0;
-            this.cartAddBtn()
-            const indexInCart = app.findInCart(this.product._id)
-            console.log(indexInCart)
-            if (indexInCart >= 0) {
-                console.log('this one')
-                app.cart.splice(indexInCart, 1)
-            }
-        }
-        app.saveCart().then(() => {})
-        if(app.cart.length === 0 && !(app.cartPageBtn.className.includes("hidden"))){
-            app.cartPageBtn.classList.add("hidden")
-        }
-        return this
     },
     // TODO: REFACTOR
     findInCart(productId) {
@@ -293,12 +264,14 @@ const app = {
     },
     // TODO: REFACTOR
     switchScreens(oldScreenId,newScreenId){
+        this.hideScreen(oldScreenId)
+        this.showScreen(newScreenId)
         if(newScreenId === "list-view-menu" && oldScreenId === "tile-view-menu"){
+            app.loaderScreen.classList.remove("hidden")
             const catagorySlider = document.getElementById("catagorySlider")
             const dishesContainer = document.getElementById("dishesContainer")
             catagorySlider.innerHTML = ""
             dishesContainer.innerHTML = ""
-            app.loaderScreen.classList.remove("hidden")
             initiator()
         }
         if(newScreenId === "tile-view-menu" && oldScreenId === "list-view-menu"){
@@ -308,8 +281,6 @@ const app = {
                 app.switchScreens(app.currentScreenId,app.catagoryTileParentElm.id)
             }
         }
-        this.hideScreen(oldScreenId)
-        this.showScreen(newScreenId)
     },
     copyToClipboard(){
         navigator.clipboard.writeText("https://realitydiner.blackpepper.ae")
@@ -430,8 +401,8 @@ class ProductTile {
         tile.setAttribute("style",`background-image:url(${this.product.image})`)
         tile.addEventListener("click",(e) => {
             if(e.target == tile){
-                // const pageIndex = 1; // for tile view-menu
-                // app.showProductInformation(this.product,pageIndex);
+                const pageIndex = 1; // for tile view-menu
+                app.showProductInformation(this.product,pageIndex);
             }
         })
         //  Header div

@@ -93,10 +93,11 @@
         <div class="product-information-page hidden">
             <div class="primary-information">
                 <i class='bx bx-x' onclick="app.hideProductInformation(0)"></i>
+                <button class="ar-launch-button"> View in AR </button>
                 <h2 class="product-name">Gold Burger</h2>
-                <h3 class="product-price">$120</h3>
             </div>
             <div class="other-information">
+                <h3 class="product-price">$120</h3>
                 <span class="product-description">An indeed Special Burger</span>
                 <div class="product-options">
 
@@ -133,50 +134,51 @@
             </div>
             <div class="product-information-page hidden">
                 <div class="primary-information">
+                    <button class="ar-launch-button"> View in AR </button>
                     <i class='bx bx-x' onclick="app.hideProductInformation(1)"></i>
                     <h2 class="product-name">Gold Burger</h2>
-                    <h3 class="product-price">$120</h3>
                 </div>
                 <div class="other-information">
+                    <h5 class="product-price">$120</h5>
                     <span class="product-description">An indeed Special Burger</span>
                     <div class="product-options">
 
                     </div>
                 </div>
             </div>
-            <div class="popup-3d-model-container hidden model-viewer-container" id="model-viewer-container">
-                <i class='bx bx-x' onclick="modelViewer.hide()"></i>
-                <model-viewer
-                    seamless-poster
-                    src="/food_ar/assets/breakfast.glb"
-                    ios-src="food_ar/assets/breakfast.usdz"
-                    alt="A 3D model of a food dish"
-                    shadow-intensity="1"
-                    camera-controls
-                    bound="tight"
-                    auto-rotate ar
-                >
-                    <button slot="ar-button"
-                    id="ar-button"> View in your space </button>
-                    <div class="ar-menu">
-                        <span class="ar-menu-btn" id="ar-menu-btn" onclick="app.hideUnhideArMenu()"><i class="bx bx-menu-alt-left"></i> AR Menu</span>
-                        <ul class="ar-menu-tab hidden" id="ar-menu-tab">
-                            <h1>AR Menu</h1>
-                            
-                        </ul>
-                    </div>
-                    <div class="swipe-ar-container">
-                    </div>
-                    <a class="ar-cart-tab hidden" id="ar-cart-tab" href="cart.html">
-                        Go To Cart <i class="bx bx-cart-alt"></i>
-                    </a>
-                </model-viewer>
-            </div>
         </div>
         <a class="floating-btn cart-btn hidden" id="cartBtn" href="cart.html">Proceed to Cart</a>
     </div>
     
     <!-- Tiles view Menu ends here -->
+    <div class="popup-3d-model-container hidden model-viewer-container" id="model-viewer-container">
+        <i class='bx bx-x' onclick="modelViewer.hide()"></i>
+        <model-viewer
+            seamless-poster
+            src="/food_ar/assets/breakfast.glb"
+            ios-src="food_ar/assets/breakfast.usdz"
+            alt="A 3D model of a food dish"
+            shadow-intensity="1"
+            camera-controls
+            bound="tight"
+            auto-rotate ar
+        >
+            <button slot="ar-button"
+            id="ar-button"> View in your space </button>
+            <div class="ar-menu">
+                <span class="ar-menu-btn" id="ar-menu-btn" onclick="app.hideUnhideArMenu()"><i class="bx bx-menu-alt-left"></i> AR Menu</span>
+                <ul class="ar-menu-tab hidden" id="ar-menu-tab">
+                    <h1>AR Menu</h1>
+                    
+                </ul>
+            </div>
+            <div class="swipe-ar-container">
+            </div>
+            <a class="ar-cart-tab hidden" id="ar-cart-tab" href="cart.html">
+                Go To Cart <i class="bx bx-cart-alt"></i>
+            </a>
+        </model-viewer>
+    </div>
     
     <!--todo Slide view Menu starts here -->
 

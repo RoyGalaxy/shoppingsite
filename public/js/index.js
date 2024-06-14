@@ -143,8 +143,8 @@ function toggleCartOption(dish, toggleInProductOverlay) {
     elm.removeChild(elm.children[1])
     elm.appendChild(cartOption)
     if (toggleInProductOverlay) {
-        let elm = productCartOption.parentNode
-        elm.removeChild(elm.children[0])
+        let elm = document.querySelectorAll(".other-information .product-options")[0];
+        elm.innerHTML = "";
         let cartOption = constructCartOptions(dish, true)
         elm.appendChild(cartOption)
         productCartOption = cartOption
