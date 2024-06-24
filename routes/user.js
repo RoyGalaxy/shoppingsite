@@ -1,9 +1,9 @@
 const router = require("express").Router()
-const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("./verifyToken")
+const { verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("./verifyToken")
 const cryptoJs = require("crypto-js")
 const User = require("../models/User")
 
-// CREATE USER
+// UPDATE USER
 router.put("/:id",verifyTokenAndAuthorization,async(req,res) => {
     if(req.body.password){
         req.body.password = cryptoJs.AES.encrypt(req.body.password,process.env.PASS_SEC).toString()

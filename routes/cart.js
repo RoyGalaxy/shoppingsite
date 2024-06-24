@@ -1,11 +1,11 @@
 const router = require("express").Router()
-const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("./verifyToken")
+const { verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("./verifyToken")
 const Cart = require("../models/Cart")
 const { update } = require("../models/Cart")
 
 //  CREATE
 
-router.post("/", verifyToken, async (req, res) => {
+router.post("/", verifyTokenAndAuthorization, async (req, res) => {
     if(req.body.products._id){
         req.body.productId = req.body._id
     }

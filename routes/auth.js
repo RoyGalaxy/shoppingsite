@@ -14,20 +14,21 @@ function formatPhone(phone){
 
 // REGISTER
 router.post("/register",async (req,res) => {
-    let {phone,isAdmin} = req.body
+    let {phone,role} = req.body
     // check duplicate phone Number
     let user = await User.findOne({ phone });
     if (!user?.phone) {
+        role = role ? role : 'user';
         try{
             const newUser = new User({
                 phone: phone,
-                isAdmin: isAdmin
+                role: role
             })
 
             user = await newUser.save()
             res.status(200).json({
                 type: "success",
-                message: "User created and OTP sent to mobile number",
+                message: "User created",
                 data: {
                     userId: user._id,
                 },
@@ -43,7 +44,7 @@ router.post("/register",async (req,res) => {
     const message = `Your One Time Password (OTP) is ${otp}`
     console.log(message)
     // send to mobile
-    const response = await sendWhatsapp(formatPhone(phone),message)
+    // const response = await sendWhatsapp(formatPhone(phone),message)
     if(res.headersSent !== true) {
         res.status(200).json({message: "OTP sent to your registered number"}).end()
     }

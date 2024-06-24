@@ -7,7 +7,7 @@ const restaurantSchema = new Schema({
     arabicName: { type: String, required: true},
     phone: {type: String, required: true},
     email: { type: String, required: true},
-    status: { type: Boolean, enum: ['approved', 'rejected', 'pending'], default: 'pending'},
+    status: { type: String, enum: ['approved', 'rejected', 'pending'], default: 'pending'},
     logoUrl: {type: String, requied: true}
 })
 
