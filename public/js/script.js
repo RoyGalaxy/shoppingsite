@@ -49,15 +49,18 @@ async function fetchCart(fromLoginPage) {
                 const jsonRes = await res.json()
                 const data = await jsonRes
                 // cart = (data != undefined) ? data : {products: []}
-                cart = data || await createCart()
-                localStorage.cart = cart;
+                let resCart = await createCart()
+                let jsonCart = await resCart.json()
+                let dataCart = await jsonCart;
+                cart = data || dataCart
+                
+                localStorage.cart = json.stringify(cart);
             } catch (e) {
                 console.log(e)
             }
         }
     } else {
         cart.products = localStorage.cart ? JSON.parse(localStorage.cart) : []
-        return
     }
 }
 
@@ -73,7 +76,7 @@ async function createCart() {
         userId: user._id,
         products: products || []
     }
-    const res = await fetch("/api/carts/", {
+    const res = await fetch(`/api/carts/${user._id}`, {
         method: "POST",
         headers: headersList,
         body: JSON.stringify(body)

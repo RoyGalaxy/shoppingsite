@@ -15,15 +15,15 @@ const verifyToken = (req,res,next) => {
     }
 }
 
-
 const verifyTokenAndAuthorization = (req,res,next)=>{
-    verifyToken(req,res,()=>{
-        const user = User.findById(req.user.id);
-        if(!user) res.status(403).json('You are not allowed to do that!')
-        if(req.user.id === req.params.id || user.role === 'super_admin' || user.role === 'restaurant_owner'){
+    verifyToken(req,res,async ()=>{
+
+        const user = await User.findById(req.user.id);
+        if(!user) res.status(403).json('{"message":"You are not authenticated"}')
+        if(user._id == req.params.id || user.role === 'super_admin' || user.role === 'restaurant_owner'){
             next()
         }else{
-            res.status(403).json("You are not allowed to do that!")
+            res.status(403).json('{"message":"You are not authenticated"}')
         }
     })
 }
@@ -34,7 +34,7 @@ const verifyTokenAndAdmin = (req,res,next)=>{
         if(user.role == 'super_admin' || user.role == 'restaurant_owner'){
             next()
         }else{
-            res.status(403).json("You are not allowed to do that!")
+            res.status(403).json({message: "You are not allowed to do that!"})
         }
     })
 }

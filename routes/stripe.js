@@ -40,6 +40,7 @@ async function createOrder(cust, data) {
 }
 
 router.post("/create-payment-intent", async (req, res) => {
+	console.log(req.body)
 	const { user, items, shipping } = req.body;
 	const amount = calculateAmount(items) || 0
 

@@ -14,11 +14,11 @@ function formatPhone(phone){
 
 // REGISTER
 router.post("/register",async (req,res) => {
-    let {phone,role} = req.body
+    let {phone} = req.body
     // check duplicate phone Number
     let user = await User.findOne({ phone });
     if (!user?.phone) {
-        role = role ? role : 'user';
+        let role = 'user';
         try{
             const newUser = new User({
                 phone: phone,
