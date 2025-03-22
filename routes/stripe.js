@@ -39,22 +39,63 @@ async function createOrder(cust, data) {
 	}
 }
 
+router.post("/create-checkout-session", async (req, res) => {
+	try {
+		const session = await stripe.checkout.sessions.create({
+			payment_method_types: ["card"],
+			line_items: [
+				{
+					price_data: {
+						currency: "usd",
+						product_data: { name: "Product Name" },
+						unit_amount: 1000,
+					},
+					quantity: 1,
+				},
+			],
+			mode: "payment",
+			success_url: "http://localhost:5173/success",
+			cancel_url: "http://localhost:5173/cancel",
+			custom_text: {
+				submit: {
+					message: "Secure payment powered by Stripe",
+				},
+			},
+		});
+
+		res.json({ url: session.url });
+	} catch (error) {
+		console.log(error)
+		res.status(500).json({ error: error.message });
+	}
+});
+
 router.post("/create-payment-intent", async (req, res) => {
 	console.log(req.body)
 	const { user, items, shipping } = req.body;
-	const amount = calculateAmount(items) || 0
+	// const amount = calculateAmount(items) || 0
+	const amount = 1000
 
 	const customer = await stripe.customers.create({
-		name: user.phone,
+		// name: user.phone,
+		name: '+918824707969',
 		metadata: {
-			userId: user._id,
+			// userId: user._id,
+			userId: 'v012ghjewer'
 		}
 	})
 
 	const options = {
 		description: 'Food Delivery Service',
-		shipping,
-		amount: (amount * 100)+(deliveryCharge * 100),
+		shipping: {
+			name: '+918824707969',
+			address: {
+				line1: `Longitude: 1`,
+				line2: `Latitude: 1`,
+				country: "AE"
+			}
+		},
+		amount: 1000,
 		currency: 'aed',
 		customer: customer.id,
 		payment_method_types: ["card"]
