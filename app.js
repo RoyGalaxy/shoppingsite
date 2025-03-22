@@ -31,7 +31,11 @@ const orderRoute = require("./routes/order")
 const stripeRoute = require("./routes/stripe")
 const colorSchemeRoute = require("./routes/colorScheme")
 
-app.use(cors())
+app.use(cors({
+    origin: "*", // Change to specific domains if needed
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+}));
 app.use(express.static("./public"))
 app.use(express.json())
 app.use("/api/users", userRoute)
