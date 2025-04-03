@@ -2,18 +2,26 @@ const mongoose = require("mongoose")
 
 const OrderSchema = new mongoose.Schema(
     {
-        userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
-        restaurantId: { type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant', required: true},
+        userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+        restaurantId: {type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant', required: true},
         paymentIntentId: { type: String },
-        cutomerId: { type: String },
-        products: [{
-            productId: { type: String },
-            quantity: { type: Number, default: 1 }
+        items: [{
+            itemId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
+            name: { type: String, required: true },
+            quantity: { type: Number, required: true },
+            price: { type: Number, required: true }
         }],
         amount: { type: Number, required: true },
-        address: { type: Object, required: true },
-        status: { type: String, enum: ['pending', 'accepted', 'cancelled'] ,default: "pending" },
-        payment_status: { type: String, required: true }
+        address: {
+            addressLine1: { type: String, required: true },
+            addressLine2: { type: String },
+            postalCode: { type: String, required: true },
+            city: { type: String, required: true },
+            state: { type: String, required: true },
+        },
+        status: { type: String, enum: ['pending', 'accepted', 'cancelled'], default: "pending" },
+        paymentMethod: { type: String, default: "COD" },
+        paymentStatus: { type: String, required: true }
     },
     { timestamps: true }
 )

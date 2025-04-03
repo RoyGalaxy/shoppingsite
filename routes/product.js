@@ -6,7 +6,7 @@ const path = require("path")
 const fs = require("fs")
 
 //  CREATE
-router.post("/",verifyTokenAndAdmin,async (req, res) => {
+router.post("/", verifyTokenAndAdmin, async (req, res) => {
     try{
         const form = new formidable.IncomingForm({ multiples: true, keepExtensions: true });
         const [fields, files] = await form.parse(req)
@@ -24,7 +24,7 @@ router.post("/",verifyTokenAndAdmin,async (req, res) => {
             const oldPath = files[file][0].filepath
             const newPath = path.join(__dirname,`../public/${file}`) + "/" + files[file][0].newFilename
             const rawData = fs.readFileSync(oldPath)
-            strFields[file] = path.join("/",file,files[file][0].newFilename)
+            strFields[file] = "/" + file + '/' + files[file][0].newFilename
             
             fs.writeFile(newPath, rawData, (err) => err)
         }
@@ -70,7 +70,7 @@ router.put("/:id",verifyTokenAndAdmin, async (req, res) => {
             },
             { new: true }
         )
-        res.status(200).json(updatedProduct)
+        res.status(200).json({success: true, message: "Product has been updated!"})
     } catch (err) {
         console.log(err)
         res.status(500).json(err)
@@ -89,7 +89,7 @@ router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
 })
 
 // GET Product
-router.get("/find/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
     try {
         const product = await Product.findById(req.params.id)
         res.status(200).json(product)
@@ -99,22 +99,23 @@ router.get("/find/:id", async (req, res) => {
 })
 
 // GET ALL PRODUCTS
-router.get("/", async (req, res) => {
+router.get("/restaurant/:restaurantId", async (req, res) => {
     if(process.env.secured == "true"){
     	res.status(500).send("Some Error Occured")
     	return;
     }
-    const qNew = req.query.new
-    const qCategory = req.query.category
+    const restaurantId = req.params.restaurantId;
+    const newOnly = req.query.new
+    const category = req.query.category
     try {
         let products;
 
-        if (qNew) {
-            products = await Product.find().sort({ createdAt: -1 }).limit(5)
-        } else if (qCategory) {
-            products = await Product.find({ category: qCategory })
+        if (newOnly) {
+            products = await Product.find().sort({ createdAt: -1, restaurantId }).limit(5)
+        } else if (category) {
+            products = await Product.find({ category, restaurantId })
         } else {
-            products = await Product.find()
+            products = await Product.find({restaurantId})
         }
         res.status(200).json(products)
     } catch (err) {

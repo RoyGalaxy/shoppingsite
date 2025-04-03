@@ -4,9 +4,22 @@ const bodyParser = require("body-parser")
 const dotenv = require("dotenv")
 const cors = require("cors")
 
+const Product = require('./models/Product')
+
+
+
 const app = express()
 
 dotenv.config();
+
+
+app.use((req, res, next) => {
+    res.setHeader(
+        "Content-Security-Policy",
+        "font-src 'self' https://js.stripe.com data:; "
+    );
+    next();
+});
 
 app.use("/api/checkout/webhook", bodyParser.raw({ type: '*/*' }));
 app.use("/api/whatsapp/webhook", bodyParser.raw({ type: '*/*' }));
@@ -32,9 +45,11 @@ const stripeRoute = require("./routes/stripe")
 const colorSchemeRoute = require("./routes/colorScheme")
 
 app.use(cors({
-    origin: "*", // Change to specific domains if needed
+    origin: "http://localhost:5173", // Your frontend URL
+    // origin: "https://realitydiner.onrender.com",
     methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"]
 }));
 app.use(express.static("./public"))
 app.use(express.json())
@@ -55,6 +70,5 @@ mongoose
         app.listen(process.env.PORT || 3000, () => {
             console.log("server started at port:", process.env.PORT || 3000)
         })
-
     })
     .catch(err => console.log(err))
