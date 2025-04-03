@@ -46,7 +46,7 @@ const colorSchemeRoute = require("./routes/colorScheme")
 
 app.use(cors({
     // origin: "http://localhost:5173", // Your frontend URL
-    origin: "https://realitydiner.onrender.com",
+    origin: "https://realitydiner-1.onrender.com",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"]
