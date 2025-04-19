@@ -36,9 +36,8 @@ router.post("/register",async (req,res) => {
     // save otp to user collection
     user.phoneOtp = otp;
     await user.save();
-    const message = `Your One Time Password (OTP) is ${otp}`
     // send to mobile
-    // const response = await sendWhatsapp(formatPhone(phone),message)
+    const response = await sendWhatsapp(formatPhone(mobile),otp)
     return res.status(200).json({
         success: true,
         message: "OTP Sent"
@@ -159,6 +158,35 @@ router.post("/client/login", async (req, res) => {
             role: user.role,
             isVerified: user.isVerified,
             accessToken
+        });
+    } catch (error) {
+        res.status(500).json(error);
+    }
+});
+
+// ADMIN LOGIN
+router.post("/admin/login", async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        console.log(email,password)
+        if (
+            email !== process.env.ADMIN_EMAIL ||
+            password !== process.env.ADMIN_PASSWORD
+        ) {
+            return res.status(401).json({ success: false, message: "Invalid admin credentials" });
+        }
+        const accessToken = jwt.sign(
+            {
+                id: "admin",
+                role: "admin"
+            },
+            process.env.JWT_SEC,
+            { expiresIn: "30d" }
+        );
+        return res.status(200).json({
+            success: true,
+            role: "admin",
+            token: accessToken
         });
     } catch (error) {
         res.status(500).json(error);

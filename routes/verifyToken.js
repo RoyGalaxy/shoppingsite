@@ -18,9 +18,9 @@ const verifyToken = (req,res,next) => {
 const verifyTokenAndAuthorization = (req,res,next)=>{
     verifyToken(req,res,async ()=>{
 
-        const user = await User.findById(req.user.id);
+        const user = await User.findById(req?.user?.id);
         if(!user) res.status(403).json('{"message":"You are not authenticated"}')
-        if(user._id == req.params.id || user.role === 'super_admin' || user.role === 'restaurant_owner'){
+        if(user._id == req.body.userId || user.role === 'super_admin' || user.role === 'restaurant_owner'){
             next()
         }else{
             res.status(403).json('{"message":"You are not authenticated"}')
@@ -30,8 +30,8 @@ const verifyTokenAndAuthorization = (req,res,next)=>{
 
 const verifyTokenAndAdmin = (req,res,next)=>{
     verifyToken(req,res,async ()=>{
-        const user = await User.findById(req.user.id);
-        if(user.role == 'super_admin' || user.role == 'restaurant_owner'){
+        const user = req.user.id != 'admin' ? await User.findById(req.user.id) : req.user;
+        if(user.role == 'admin' || user.role == 'restaurant_owner'){
             next()
         }else{
             res.status(403).json({message: "You are not allowed to do that!"})
@@ -39,15 +39,20 @@ const verifyTokenAndAdmin = (req,res,next)=>{
     })
 }
 
-const verifyTokenAndSuperAdmin = (req,res,next) => {
-    verifyToken(req,res,async () => {
-        const user = await User.findById(req.user.id);
-        if(user.role == 'super_admin'){
-            next()
-        }else{
-            res.status(403).json("You are not allowed to do that!")
+const verifyTokenAndSuperAdmin = (req, res, next) => {
+    verifyToken(req, res, async () => {
+        // const user = await User.findById(req.user.id);
+        
+        // // Check if the user credentials match environment variables
+        // if (user.email === process.env.ADMIN_EMAIL && 
+        //     user.password === process.env.ADMIN_PASSWORD && 
+        //     user.role === 'super_admin') {
+        if(req.user.role == 'admin') {
+            next();
+        } else {
+            res.status(403).json("You are not allowed to do that!");
         }
-    })
+    });
 }
 
 module.exports = { verifyTokenAndAuthorization, verifyTokenAndAdmin, verifyTokenAndSuperAdmin}

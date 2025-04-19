@@ -9,6 +9,11 @@ const fs = require("fs")
 // Create New Restaurant
 router.post('/create/:id', verifyTokenAndAdmin, async (req,res) => {
     try{
+        // Check if the user is an accepted restaurant owner
+        const user = await User.findById(req.params.id);
+        if (!user || user.role !== 'restaurant_owner' || user.isVerified !== true) {
+            return res.status(403).json({ success: false, message: "Only accepted restaurant owners can create a restaurant." });
+        }
         const form = new formidable.IncomingForm({ multiples: true, keepExtensions: true });
         const [fields, files] = await form.parse(req)
         fields['ownerId'] = [req.params.id];
@@ -97,6 +102,21 @@ router.get('/', async (req, res) => {
         res.status(500).json({ message: "Error fetching restaurants", error: err.message });
     }
 });
+
+// Get Restaurant by ID
+router.get('/restaurant/:id', verifyTokenAndSuperAdmin, async (req, res) => {
+    try {
+        const restaurant = await Restaurant.findById(req.params.id);
+        if (!restaurant) {
+            return res.status(404).json({ message: "Restaurant not found" });
+        }
+        res.status(200).json(restaurant);
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "Error fetching restaurant details", error: err.message });
+    }
+})
 
 
 // Approve restaurant

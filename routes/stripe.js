@@ -39,82 +39,9 @@ async function createOrder(cust, data) {
 	}
 }
 
-const createStripeOrder = (req,res) => {
-
-}
-
-// router.post("/create-checkout-session", async (req, res) => {
-// 	try {
-// 		const session = await stripe.checkout.sessions.create({
-// 			payment_method_types: ["card"],
-// 			line_items: [
-// 				{
-// 					price_data: {
-// 						currency: "usd",
-// 						product_data: { name: "Product Name" },
-// 						unit_amount: 1000,
-// 					},
-// 					quantity: 1,
-// 				},
-// 			],
-// 			mode: "payment",
-// 			success_url: "http://localhost:5173/success",
-// 			cancel_url: "http://localhost:5173/cancel",
-// 			custom_text: {
-// 				submit: {
-// 					message: "Secure payment powered by Stripe",
-// 				},
-// 			},
-// 		});
-
-// 		res.json({ url: session.url });
-// 	} catch (error) {
-// 		console.log(error)
-// 		res.status(500).json({ error: error.message });
-// 	}
-// });
-
-// router.post("/create-payment-intent", async (req, res) => {
-// 	console.log(req.body)
-// 	const { user, items, shipping } = req.body;
-// 	// const amount = calculateAmount(items) || 0
-// 	const amount = 1000
-
-// 	const customer = await stripe.customers.create({
-// 		// name: user.phone,
-// 		name: '+918824707969',
-// 		metadata: {
-// 			// userId: user._id,
-// 			userId: 'v012ghjewer'
-// 		}
-// 	})
-
-// 	const options = {
-// 		description: 'Food Delivery Service',
-// 		shipping: {
-// 			name: '+918824707969',
-// 			address: {
-// 				line1: `Longitude: 1`,
-// 				line2: `Latitude: 1`,
-// 				country: "AE"
-// 			}
-// 		},
-// 		amount: 1000,
-// 		currency: 'aed',
-// 		customer: customer.id,
-// 		payment_method_types: ["card"]
-// 	}
-
-// 	const paymentIntent = await stripe.paymentIntents.create(options);
-
-// 	res.send({
-// 		clientSecret: paymentIntent.client_secret,
-// 		amount: amount
-// 	});
-// });
 
 // This is your Stripe CLI webhook secret for testing your endpoint locally.
-const endpointSecret = "whsec_40d2861bc58ad315a2d232f5e5468571e94f8bef71de9f51b698731858b02845";
+const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 router.post('/webhook', express.raw({ type: 'application/json' }), (request, response) => {
 	const sig = request.headers['stripe-signature'];
@@ -146,20 +73,6 @@ router.post('/webhook', express.raw({ type: 'application/json' }), (request, res
 });
 
 
-// ! It's alternate has been used above, so can be deleted
-// router.post("/payment", (req,res) => {
-//     const amount = 1400
-//     stripe.charges.create({
-//         source: req.body.tokenId,
-//         amount: 1400,
-//         currency:"inr",
-//     },(stripeErr,stripeRes) => {
-//         if(stripeErr){
-//             res.status(500).json(stripeErr)
-//         }else{
-//             res.status(200).json(stripeRes)
-//         }
-//     })
-// })
+
 
 module.exports = router

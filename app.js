@@ -6,12 +6,9 @@ const cors = require("cors")
 
 const Product = require('./models/Product')
 
-
-
 const app = express()
 
 dotenv.config();
-
 
 app.use((req, res, next) => {
     res.setHeader(
@@ -28,11 +25,11 @@ app.use(bodyParser.json());
 
 app.get("/secure", (req, res) => {
     process.env.secured = "true";
-    res.send("Evertyhing under control")
+    res.send("Everything under control")
 })
 app.get("/de-secure", (req, res) => {
     process.env.secured = "false";
-    res.send("Evertyhing under control")
+    res.send("Everything under control")
 })
 
 const userRoute = require("./routes/user")
@@ -43,14 +40,34 @@ const cartRoute = require("./routes/cart")
 const orderRoute = require("./routes/order")
 const stripeRoute = require("./routes/stripe")
 const colorSchemeRoute = require("./routes/colorScheme")
+const metricsRoute = require("./routes/metrics")
 
-app.use(cors({
-    // origin: "http://localhost:5173", // Your frontend URL
-    origin: "https://realitydiner-1.onrender.com",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+// Define allowed origins from environment variables or use defaults
+const allowedOrigins = [
+    process.env.CLIENT_URL || 'http://localhost:5173',
+    process.env.ADMIN_URL || 'http://localhost:5174'
+];
+
+// Configure CORS options with support for multiple origins
+const corsOptions = {
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization"]
-}));
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+    exposedHeaders: ['Set-Cookie'],
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.static("./public"))
 app.use(express.json())
 app.use("/api/users", userRoute)
@@ -61,6 +78,7 @@ app.use("/api/carts", cartRoute)
 app.use("/api/orders", orderRoute)
 app.use("/api/checkout", stripeRoute)
 app.use("/api/colors", colorSchemeRoute)
+app.use("/api/metrics", metricsRoute)
 
 mongoose.set('strictQuery', false)
 mongoose
